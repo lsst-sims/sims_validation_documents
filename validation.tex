@@ -1,0 +1,67 @@
+%\documentclass[prd, nofootinbib, floatfix, 12pt]{revtex4}
+%\documentclass[useAMS,usenatbib,11pt,preprint]{aastex}
+\documentclass[]{article}
+
+\usepackage[paperwidth=8.5in,paperheight=11in,centering,hmargin=1in,vmargin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsbsy}
+
+\topmargin0.0cm
+\textheight8.5in
+
+\input epsf
+\usepackage{amsmath,amssymb,subfigure}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{color}
+%\usepackage{ulem}
+%\usepackage{epstopdf}
+
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document} 
+\sloppy
+\title
+{Validation of the Simulations Catalogs}
+
+%\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+
+\label{firstpage}
+
+% \date{\today}
+
+\maketitle 
+\section{Introduction \label{sec:intro}}
+The purpose of this document is to work in concert with the "Requirements for the 
+LSST Simulation Framework" (hereafter Requirements; \cite{requirements}) to validate the
+base catalogs and catalogs generation framework for use in the context of
+LSST investigations. 
+\section{Validation of the Requirements on the Catalog Simulations}
+This section will show in detail whether each requirement is being met and if it is not
+being met what the impact on the project measureables and design goals is.
+\subsection{Requirement 1: The LSST catalogs simulations shall contain representations of stars,
+galaxies, asteroids, and variable sources}
+\subsection{Requirement 2: At high Galactic latitudes the average source densities of stars and galaxies
+shall be within 18\% of the observed counts (to the 5$\sigma$ point source coadded depth of LSST)}
+\subsection{Requirement 3: Size, ellipticity and redshift distributions of galaxies shall be representative of those observed by extant
+telescopes and, for a fiducial image quality of 0.7 arcsec, deviations from the observed distributions shall
+contribute $< 20\%$ of the observed effective density of galaxies, $n_{eff}$, used in the weak lensing samples (with a fiducial value of
+$n_{eff} = 34$ galaxies per arcmin$^2$}
+\subsection{Requirement 4: For the photometric calibration simulations
+the distribution of stellar colors shall encompass the colors of white dwarfs through red giant branch stars.
+The median color distributions of stars must trace the observed colar locus for these stars to within 0.1 magnitudes
+(averaged over intervals of 0.3 magnitudes in color).}
+\subsection{Requirement 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
+shall have an accuracy better than 1.6 mas}
+\subsection{Requirement 6: The system shall be capable of incorporating new astrophysical catalogs without requiring
+a redesign of the class-schema framework}
+\end{document}
