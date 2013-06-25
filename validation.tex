@@ -168,7 +168,7 @@ $n_{eff} = 34$ galaxies per arcmin$^2$}
 %\begin{figure}
 %\centering
 %\includegraphics[width=5in]{validation_figures/COSMO_base_ellip.eps}
-%\caption{\label{fig:ellip}}
+s%\caption{\label{fig:ellip}}
 %\end{figure}
 \begin{figure}
 \centering
@@ -193,14 +193,15 @@ $n_{eff} = 34$ galaxies per arcmin$^2$}
 
 \subsection{Requirement 4: For the photometric calibration simulations
 the distribution of stellar colors shall encompass the colors of white dwarfs through red giant branch stars.
-The median color distributions of stars must trace the observed colar locus for these stars to within 0.1 magnitudes
-(averaged over intervals of 0.3 magnitudes in color).{\bf This will be reworded XXX}}
-{\bf XXX Make the plots showing that the distributions span the color ranges described in the requirements document}
+The median color distributions of stars must trace the observed colar locus for these stars to within 0.02 magnitudes
+of the principal color (s,w,x,y) to the designed 5$\sigma$ single epoch limiting magnitude in the r-band.
+{\bf update this for the most recent statement in the requirements document}}
 For several reasons from calibration through to stellar populations work the Galactic model must have realistic color distributions.
 This goes beyond simply spanning the proper color ranges.  The main sequence stellar locus must also agree with the location of the
 stellar locus from other projects.  In Figure \ref{fig:starcolorspan} we show that the more trivial requirement that the stellar
 colors span the ranges given in the requirements document is met.  Dashed lines in each panel show the requirements.  The measured
-color distribution is plotted in the solid histogram.
+color distribution is plotted in the histogram.  The main sequence and red giant branch (RGB) contributions are plotted separately from
+the white dwarf population.  Together the two distributions cover the required range.  The y-axis is log scale.
 
 To verify the veracity of the main sequence stellar locus, we use the principal colors of the stellar locus defined by \cite{ivezic04}.
 We use stars selected from the same fields as used in the number counts analysis for all fields south of a galactic latitude of -30.
@@ -209,11 +210,35 @@ magnitudes in the SDSS bandpasses using the best fit spectrum for each star.  We
 the principal colors for each star using the relations in \cite{ivezic04}, but removing the r-band dependence in $P\prime_{2}$.  Figure
 \ref{fig:principalcolors} shows that the principal colors as calculated from the base catalog are in very good agreement with
 the location of the stellar locus in the SDSS (zero color).  The base catalog easily meets the requirement of $\pm0.05mag$ deviation
-from the stellar locus to single epoch depth in all 4 principal colors.
+from the stellar locus to single epoch depth in all 4 principal colors.  The scatter and trend with magnitude in the s color is due to 
+the sensitivity of u-band on $[$Fe$/$H$]$.  Figure \ref{fig:sfeh} shows this dependence.  The transition from high metalicity disk stars to low 
+metalicity halo stars introduces the scatter and slope.
+
+Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviation from the color locus defined by the four principal colors by less than 
+0.02 magnitudes is met in all four bands.
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/star_lsst_color_hist.eps}
+\caption{Normalized counts of main sequence, red giant branch and white dwarf stars.  Heavy dashed lines show the requirements stated in the requirements document.\label{fig:starcolorspan}}
+\end{figure}
+
 \begin{figure}
 \centering
 \includegraphics[width=5in]{validation_figures/principal_colors_vr.eps}
 \caption{Principal colors for the base catalog compared to the location of the stellar locus in the SDSS.\label{fig:principalcolors}}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/s_met.eps}
+\caption{The principal color 's' as a function of metalicity.\label{fig:sfeh}}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/principal_colors_hist.eps}
+\caption{Hisograms of the principal colors of stars in the base catalog to the stretch depth of r < 24.8. The mean and standard deviation for each 
+histogram are given in the legend in the upper right.\label{fig:principalcolorshist}}
 \end{figure}
 \subsection{Requirement 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
 shall have an accuracy better than 1.6 mas}
