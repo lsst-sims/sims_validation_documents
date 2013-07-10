@@ -163,13 +163,95 @@ underpredicts at the faintest magnitudes, but meets the requirement (Figure \ref
 telescopes and, for a fiducial image quality of 0.7 arcsec, deviations from the observed distributions shall
 contribute $< 20\%$ of the observed effective density of galaxies, $n_{eff}$, used in the weak lensing samples (with a fiducial value of
 $n_{eff} = 34$ galaxies per arcmin$^2$}
-{\bf XXX I still don't don't know exactly these all fit together, so I'm not going to write much until we talk more.}
-{\bf XXX I need to to figure out the size comparison.  I may just do what Rob did in the past and compare to HST.}
+\subsubsection{Measuring $n_{eff}$}
+We use the framework described in \cite{chang} to calculate $n_{eff}$ for the distributions in the 
+base galaxy catalog.  In summary, we use Equation 9 to calculate $n_{err}$:
+\begin{equation}
+n_{eff} = \frac{1}{\Omega}\sum^N_i\frac{\sigma^2_{SN}}{\sigma^2_{SN}+\sigma^2_{m,i}}
+\end{equation}
+where $\sigma_{SN}$ is the intrinsic shape noise and $\sigma_{m,i}$ is the shape measurement noise for the i$^{th}$ galaxy.
+
+The shape noise is just taken from the ellipticity distribution.  For the distribution used in \cite{chang} $\sigma_{SN} = 0.26$.
+The measurement noise can be approximated using Equation 13:
+\begin{equation}
+\sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}/{R}\right)^c\right]
+\end{equation}
+Where $\nu$ is the signal to noise ratio of the measurement, $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the relative size of the galaxy to
+the point spread function.  We adopt the values from \cite{chang} of (a,b,c) = (1.58,5.03,0.39).  We choose a fiducial
+PSF size of 0.7 arcsec. We use an estimate for the limiting magnitude of the coadded images on which the measurements are being
+done of 26.7.  This takes into account the fact that the measurements are on extended sources as well as the fact that the SRD value 
+of 27.5 in r is for dark sky observations at zenith.  We get this value by adjusting the limiting magnitude until our calculation
+matches the value presented in \cite{chang} of 28. for the case of $k=1$.
+
+For each galaxy $r_{gal}$ can be calculate from the flux ratio of the bulge and disk components as well as the effective half light 
+radii of each component (see Appendix B in \cite{chang} for a derivation of this calculation).
+
+Using this framework, we can test the sensitivity of the measured $n_{eff}$ on the ellipticity and size distributions.  For all calculations that follow we 
+use the k=1 criterion meaning that galaxies with $\sigma_m < \sigma_{SN}$ are culled from the sample.
+
+\subsubsection{Galaxy radius measurements}
+There are many definitions of galaxy size: half light radius, first moment radius, second moment radius, Petrosian radius, Kron radius, etc.
+We must choose one of these measurement to compare to observed data.  One aspect informing which measurement we use is whether it is included 
+in our reference catalog.  We have chosen to use the COSMOS ACS catalog \cite{cosmos} because of the size ($~2deg^2$), depth ($~26.$ in i), and
+quality (space based).  
+
+The COSMOS catalog reports the second moments and the 
+half light radius, so either the second moment radius or half light radius could be used for comparison.  A major concern is that the measurements
+on the base catalog are effectively infinite signal to noise, whereas the measurements from COSMOS are not.  We find that the second moment 
+radii are strongly affected by noisy measurements where the half light radius is much less sensitive.  To test this, we sample from truncated Sersic
+profiles for each galaxy.  The truncation determines where the profile falls below the noise as the noise should contribute to the moments symmetrically.
+As the truncation shrinks we see that both the width and mean of the second moment radius distribution decrease.  We see this in the
+half light radius distribution as well, but at a much lower level.  See Figure \ref{fig:mom_hist} and Figure \ref{fig:hl_hist}.  Figure
+\ref{fig:mom_hl_line} shows that the half light distribution shape measurements are flat down to truncation at 3 half light radii, where 
+the second moment radius distribution is not stable even going from 100 to 10 half light radii.  For these reasons, we choose to compare the half light 
+radius distribution to the half light radius distribution from the COSMOS catalog.
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/half_light_hist.eps}
+\caption{\label{fig:hl_hist}}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/Second_moment_hist.eps}
+\caption{\label{fig:mom_hist}}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/sec_mom_half_light_mean_sigma.eps}
+\caption{\label{fig:mom_hl_line}}
+\end{figure}
+
+To test the sensitivity of $n_eff$ on the input half light radius distribution, we model the the half light distribution as a log normal distribution (see Figure
+\ref{fig:hl_dist}).  Assuming that half light distribution is driven by the disk components, we choose the bulge distribution from the base catalog and then
+choose a lognormal distribution with varying shape parameters to probe the size distribution space.
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/ln_fit.eps}
+\caption{{\bf XXX This figure needs to be remade, it was done with only objects 20 - 24.5.}\label{fig:hl_dist}}
+\end{figure}
+
+Figure \ref{fig:size_sens} shows the sensitivity to the size distribution.  The x axis is related to the width of the 
+distribution and the y axis is related to the location of the peak of the distribution. Over-plotted are points corresponding
+to the best fit log normal distributions to the COSMOS data set, the base catalog data set, and the base catalog data set convolved 
+with a 0.1 arcsec psf.
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/size_sensitivity.eps}
+\caption{{\bf XXX This figure needs to be remade, it was done with only objects 20 - 24.5.}\label{fig:size_sens}}
+\end{figure}
+
+\subsubsection{Ellipticity}
+Our ellipticity distribution is far narrower than that measured by the COSMOS survey.  This has direct impact on the measured
+$n_{eff}$ through the intrinsic shape noise term.  I'm in the process of trying to correct for this, and will flesh this out when that is done.
+
+
 %\begin{figure}
 %\centering
 %\includegraphics[width=5in]{validation_figures/COSMO_base_ellip.eps}
-s%\caption{\label{fig:ellip}}
+%\caption{\label{fig:ellip}}
 %\end{figure}
+\subsubsection{Redshift distributions}
+The redshift distributions are in very good agreement with the \cite{coil} empirical redshift distributions.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{validation_figures/Nofz_18_24.eps}
@@ -193,7 +275,7 @@ s%\caption{\label{fig:ellip}}
 
 \subsection{Requirement 4: For the photometric calibration simulations
 the distribution of stellar colors shall encompass the colors of white dwarfs through red giant branch stars.
-The median color distributions of stars must trace the observed colar locus for these stars to within 0.02 magnitudes
+The median color distributions of stars must trace the observed color locus for these stars to within 0.02 magnitudes
 of the principal color (s,w,x,y) to the designed 5$\sigma$ single epoch limiting magnitude in the r-band.
 {\bf update this for the most recent statement in the requirements document}}
 For several reasons from calibration through to stellar populations work the Galactic model must have realistic color distributions.
