@@ -51,10 +51,15 @@ being met what the impact on the project measureables and design goals is.
 \subsection{Requirement 1: The LSST catalogs simulations shall contain representations of stars,
 galaxies, asteroids, and variable sources}
 \subsubsection{Stars}
-Stars are represented as point sources.  SEDs and kenimatics are assigned to stars using SDSS colors produced by the Galfast (\cite{galfast})
-model.  A three dimensional dust model is applied to un-extincted magnitudes using the smooth model of \cite{amores} and normalizing to the
-measured extinction values from \cite{sfd}.  Binary stars are included in the luminosity funcitons from which the stellar colors are sampled,
-but are assumed to be unresoved and non-variable (except for a selection of eclipsing binarys described later).
+Stars are represented as point sources.  SEDs and kinematics are assigned to stars using SDSS colors produced by the Galfast (\cite{galfast})
+model.  Galfast generates stars according to the density laws in \cite{juric} which are derived from fitting SDSS data to a thick and thin disk along with a halo. Using this input and an input luminosity function Galfast samples stars from these distributions in a 4-dimensional probability density function $\rho$(x,y,z,M). After this stage, using Fe/H and kinematics models from \cite{ivezic} and \cite{bond} that are also derived from SDSS data, the stars are assigned further statistics along
+with photometry in the desired bands. Finally, observational errors are added to account for the real-life properties of the telescope and the catalog is outputted. SEDs are matched to a star by a best-fit comparison in SDSS colors and come from 3 sources: 1) stars down to M-type dwarfs are from the Kurucz models, 2) M-type dwarfs come from \cite{bochanski} and 3) white dwarf spectra are from \cite{bergeron}. A three dimensional dust model is applied to un-extincted magnitudes using the smooth
+model of \cite{amores} and normalizing to the
+measured extinction values from \cite{sfd}.  Binary stars are included in the luminosity functions from which the stellar colors are sampled but are assumed to be unresolved and non-variable (except for a selection of eclipsing binarys described later).
+%Stars are represented as point sources.  SEDs and kenimatics are assigned to stars using SDSS colors produced by the Galfast (\cite{galfast})
+%model.  A three dimensional dust model is applied to un-extincted magnitudes using the smooth model of \cite{amores} and normalizing to the
+%measured extinction values from \cite{sfd}.  Binary stars are included in the luminosity funcitons from which the stellar colors are sampled,
+%but are assumed to be unresoved and non-variable (except for a selection of eclipsing binarys described later).
 
 Stellar  populations in the model:
 \begin{itemize}
@@ -68,7 +73,7 @@ Stellar  populations in the model:
 
 \subsubsection{Galaxies}
 The galaxy model is based on haloes form the Millenium simulation (\cite{millenium}) with physical attributes assigend by \cite{dilucia}.  
-Numbers were adjusted to meet observed relations (see \ref{sec:galaxycounts}).  Each galaxy is described by a three component model consisting 
+Numbers were adjusted to meet observed relations (see \ref{sec:galcounts}).  Each galaxy is described by a three component model consisting 
 of two Sersic models (bulge and disk) and point source (AGN).  The three are scaled given flux ratios provided by the semi-analytic catalog.  Inclination dependent
 dust is applied to the disk.  The bulge can also have internal extinction, but is chosen randomly from a realistic distribution.  The
 AGN component is the \cite{vandenberk} mean AGN spectrum.
@@ -113,7 +118,8 @@ Investigations supported:
 shall be within 18\% of the observed counts (to the 5$\sigma$ point source coadded depth of LSST)}
 
 \subsubsection{Stars}
-{\bf XXX I need to do this for the 180. fields and for the Besancon with our dust model.  Also need to add the lat=0 fields if we are going to do them.}
+{\bf XXX  The figures in this section are going to change.  We are still o.k. down to -30j (I think), but at -10 we deviate by 2x.  Using the GALFAST dust model
+does not change things significantly.}
 We take six representative fields at varying galactic latitude at two longitudinal values (one toward the bulge and one away).  We compare number 
 counts of main sequence stars to the coadded limiting magnitude in i-band {\bf XXX is this to maximize the number of stars detected in the disk?}
  from the galfast model using the composite dust model
@@ -121,7 +127,8 @@ of \cite{amores} normalized to \cite{sfd} to the Besancon {\bf sp and reference}
 the cumulative number counts as a function of magnitude for the Besancon (dashed) and Galfast (solid) models.  We are interested in the
 fractional cumulative contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of Besancon counts to Galfast counts for the six test fields
 The dashed lines are the $\pm30\%$ limits for the low latitude sizing model constraints and the dash-dot lines are the $\pm18\%$ limits motivated
-by science requirements.  Since the number counts are dominated by the faint end, it's most important where the lines end up at faint magnitudes for 
+by science requirements.  We have a more lenient requirement on simulations at galactic latitudes $\pm 30^o$ because the main science driver (weak lensing)
+is not as strong and the models have much higher uncertainty.  Since the number counts are dominated by the faint end, it's most important where the lines end up at faint magnitudes for 
 sizing considerations.  For science consideratons, the single epoch depth is also an interesting location to test the ratios.  For all cases the 
 requirements are met at the single epoch depth.  At the coadd depth, all the fields pass the requirements except for the -10 case which under
 predicts relative to the Besancon model by ~5\% over the required value.
@@ -155,7 +162,7 @@ underpredicts at the faintest magnitudes, but meets the requirement (Figure \ref
 \end{figure}
 \begin{figure}
 \centering
-\includegraphics[width=5in]{validation_figures/Ngals-i.eps}
+\includegraphics[width=5in]{validation_figures/CumulativeFraction_i.eps}
 \caption{Durham counts divided by the counts from the base catalog.  Error bars are from adding the error bars from the data points in quadrature. \label{fig:gratio}}
 \end{figure}
 
@@ -174,7 +181,7 @@ where $\sigma_{SN}$ is the intrinsic shape noise and $\sigma_{m,i}$ is the shape
 The shape noise is just taken from the ellipticity distribution.  For the distribution used in \cite{chang} $\sigma_{SN} = 0.26$.
 The measurement noise can be approximated using Equation 13:
 \begin{equation}
-\sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}/{R}\right)^c\right]
+\sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}{R}\right)^c\right]
 \end{equation}
 Where $\nu$ is the signal to noise ratio of the measurement, $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the relative size of the galaxy to
 the point spread function.  We adopt the values from \cite{chang} of (a,b,c) = (1.58,5.03,0.39).  We choose a fiducial
@@ -291,7 +298,7 @@ In order to avoid complications associated with the difference between the LSST 
 magnitudes in the SDSS bandpasses using the best fit spectrum for each star.  We then calculate
 the principal colors for each star using the relations in \cite{ivezic04}, but removing the r-band dependence in $P\prime_{2}$.  Figure
 \ref{fig:principalcolors} shows that the principal colors as calculated from the base catalog are in very good agreement with
-the location of the stellar locus in the SDSS (zero color).  The base catalog easily meets the requirement of $\pm0.05mag$ deviation
+the location of the stellar locus in the SDSS (zero color).  The base catalog easily meets the requirement of $\pm0.02mag$ deviation
 from the stellar locus to single epoch depth in all 4 principal colors.  The scatter and trend with magnitude in the s color is due to 
 the sensitivity of u-band on $[$Fe$/$H$]$.  Figure \ref{fig:sfeh} shows this dependence.  The transition from high metalicity disk stars to low 
 metalicity halo stars introduces the scatter and slope.
@@ -301,7 +308,7 @@ Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviatio
 \begin{figure}
 \centering
 \includegraphics[width=5in]{validation_figures/star_lsst_color_hist.eps}
-\caption{Normalized counts of main sequence, red giant branch and white dwarf stars.  Heavy dashed lines show the requirements stated in the requirements document.\label{fig:starcolorspan}}
+\caption{{\bf XXX make sure these are actually normalized} Normalized counts of main sequence, red giant branch and white dwarf stars.  Heavy dashed lines show the requirements stated in the requirements document.\label{fig:starcolorspan}}
 \end{figure}
 
 \begin{figure}
@@ -327,5 +334,47 @@ shall have an accuracy better than 1.6 mas}
 {\bf XXX Need help from AJC and Yusra on this one.}
 \subsection{Requirement 6: The system shall be capable of incorporating new astrophysical catalogs without requiring
 a redesign of the class-schema framework}
-{\bf XXX Still not sure here.  Do we simply show a snippet of code that describes how one would add a new catalog?}
+The ability to create new catalogs is available within the framework by the creation of user-designed subclasses and class mixins. A new type of catalog can be generated as a new class using the InstanceCatalog base class and other user-designed catalog classes (also using the InstanceCatalog base class) and class mixins. The columns desired in the new catalog are defined as class attributes. The data for these columns is gathered from the database directly or using methods defined in the class
+for the catalog itself, in class mixins designed by the user, or in the base classes. These data gathering methods can take the form of a "get\_'column\_name'" method or in the form of compound columns with their own "get\_" methods. The required database column is then referred to in the "column\_by\_name()" method which returns the column values from the database. For example, the CustomCatalog below uses various aspects of this framework to write a new catalog to file:
+
+\begin{verbatim}
+class BasicCatalog(InstanceCatalog):
+    """Simple catalog with columns directly from the database"""
+    catalog_type = 'basic_catalog'
+    refIdCol = 'id'
+    column_outputs = ['id', 'ra_J2000', 'dec_J2000']
+    # transformations specify conversions when moving from the database
+    # to the catalog.  In this case, we take RA/DEC in radians and convert
+    # to degrees.
+    transformations = {"ra_J2000":np.degrees,
+                       "dec_J2000":np.degrees}
+
+class AstrometryMixin(object):
+    @compound('ra_corrected', 'dec_corrected')
+    def get_points_corrected(self):
+        ra_J2000 = self.column_by_name('ra_J2000')
+        dec_J2000 = self.column_by_name('dec_J2000')
+    # ... do the conversions: these are just standins
+    ra_corrected = ra_J2000 + 0.001
+    dec_corrected = dec_J2000 - 0.001
+    return ra_corrected, dec_corrected
+
+class CustomCatalog(BasicCatalog, AstrometryMixin):
+    catalog_type = 'custom_catalog'
+    refIdCol = 'id'
+    column_outputs = ['id', 'redshift', 'points_corrected']
+    transformations = {"ra_corrected":np.degrees,
+                       "dec_corrected":np.degrees}
+
+# Now to create a catalog, we connect to a database and call write_catalog
+db = GalaxyObj()
+catalog = CustomCatalog(db)
+catalog.write_catalog("out.txt")
+
+# out.txt has the following columns:
+# id redshift ra_corrected dec_corrected
+\end{verbatim}
+
+The InstanceCatalog metaclass verifies that all new columns desired in the user-defined catalog have associated means of gathering the required data from the database. If no method exists nor is there an associated database entry for the column directly then an error is raised. Furthermore, the error is raised before data begins transfer from the database because the instantiation of the class initiates a dry run of the table output. After the dry run the necessary database columns are verified
+against the actual columns in the database and if there is a discrepancy the error is raised. As a result, the user is protected from errors after the data is pulled from the database and since all the necessary columns are determined during the dry run only one single query of the database is required to pull all necessary data.
 \end{document}
