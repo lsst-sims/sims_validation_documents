@@ -1,4 +1,7 @@
 *.aux
 *.dvi
 *.log
+*.bbl
+*.blg
+*.pdf
 validation_figures/*.eps
