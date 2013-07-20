@@ -446,32 +446,44 @@ on the sizing model, but a more complicated impact on the database performance s
 
 At galactic latitudes closer than to the plane than $b < |30^o|$ are difficult to model due to the rising density and resulting confusion and deblending issues.
 For these reasons, the criterion for stellar number counts at low latitudes are relaxed to $\pm 30\%$.  We do not have accurate observed densities for the plane 
-of the galaxy, so we compare to the Besancon (\cite{besancon}) reference implementation of a galactic model.
+of the galaxy, so we compare to the Besan\c{c}on (\cite{besancon}) reference implementation of a galactic model.
 
 \subsubsection{Stars}
-{\bf XXX  The figures in this section are going to change.  We are still o.k. down to -30 (I think), but at -10 we deviate by 2x.  Using the GALFAST dust model
-does not change things significantly.}
-We take six representative fields at varying galactic latitude at two longitudinal values (one toward the bulge, $b=0$, and one away, $b=180$).  We compare number 
+We take six representative fields at varying galactic latitude at two longitudinal values (one toward the bulge, $b=0$, and one away, $b=180$).  
+We compare number 
 counts of main sequence stars to the coadded limiting magnitude in i-band 
  from the galfast model using the composite dust model
-of \cite{amores} normalized to \cite{sfd} to the Besancon {\bf sp and reference} model with their dust model.  Figure \ref{fig:scounts_180} shows 
-the cumulative number counts as a function of magnitude for the Besancon (dashed) and Galfast (solid) models.  We are interested in the
-fractional cumulative contribution.  In Figure \ref{fig:sratio_180} we plot the ratio of Besancon counts to Galfast counts for the six test fields
-The dashed lines are the $\pm30\%$ limits for the low latitude sizing model constraints and the dash-dot lines are the $\pm18\%$ limits motivated
-by science requirements.  
-Since the number counts are dominated by the faint end, it's most important where the lines end up at faint magnitudes for 
-sizing considerations.  For science consideratons, the single epoch depth is also an interesting location to test the ratios.  For all cases, except
-for $b=-10$, the 
-requirements are met at the single epoch depth.   We repeated this analysis using the GALFAST dust model and the results do not change significantly
+of \cite{amores} normalized to \cite{sfd} to the Besan\c{c}on \cite{besancon} model with their dust model.  Figure \ref{fig:scounts_0} shows 
+the cumulative number counts as a function of magnitude for the Besan\c{c}on (dashed) and Galfast (solid) models 
+for six values of galactic longitude toward the galactic bulge.  We are interested in the
+fractional cumulative contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of Besan\c{c}on counts to Galfast counts for the six test fields shown in Figure \ref{fig:sratio_0}.
+The dashed lines are the $\pm30\%$ limits for the low latitude sizing model constraints and the dash-dot lines are the $\pm18\%$ limits for the high latitude limits.
+Since the number counts are dominated by the faint end, it's most important where the lines end up at faint magnitudes for sizing considerations (coadded depth for i-band is 26.8).  For science consideratons, the single epoch depth is also an interesting location to test the ratios.  Nominal single epoch depth for i-band is 24.0.  
+
+In the case directed toward the galactic bulge, all fields meet the requirements at coadded depth except
+for $b=-10$.  At the nominal single epoch depth, the $b==-10$ case fails and the $b=-30$ case misses the $\pm18\%$
+requirement, but makes the $\pm30\%$ requirement.
+
+For the high latitude fields away from the galactic bulge, the deviation from the Besan\c{c}on model is within 
+the stated requirement.  The $b=-10$ case, the number counts from Galfast significantly under predict relative to 
+the Besan\c{c}on model.  The $b=-30$ case shows similar, though not as drastic, under prediction and misses the 
+requirement for all but the faintest magnitudes and even then only meats the $\pm30\%$ requirement.
+
+%We repeated this analysis using the GALFAST dust model and the results do not change significantly
 \begin{figure}
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_stars.png}
-\caption{Cumulative counts of stars from the Besancon (dashed) and Galfast (solid) models for 5 representative fields away from the Galactic bulge (l=180$^o$) \label{fig:scounts_180}}
+\includegraphics[width=5in]{validation_figures/cumulative_stars_0_besancon_dust.png}
+\caption{Cumulative counts of stars from the Besan\c{c}on (dashed) and Galfast (solid) models for 5 representative fields toward the Galactic bulge (l=0$^o$) \label{fig:scounts_0}}
 \end{figure}
 \begin{figure}
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars.png}
-\caption{Cumulative ratio of counts of stars from the Besancon and Galfast models for 5 representative fields away from the Galactic bulge (l=180$^o$) \label{fig:sratio_180}}
+\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_0_besancon_dust.png}
+\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields toward the Galactic bulge (l=0$^o$) \label{fig:sratio_0}}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_180_besancon_dust.png}
+\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields away from the Galactic bulge (l=180$^o$) \label{fig:sratio_180}}
 \end{figure}
 
 \subsubsection{Galaxies \label{sec:galcounts}}
@@ -498,12 +510,16 @@ underpredicts at the faintest magnitudes, but meets the requirement (Figure \ref
 \end{figure}
 
 \subsubsection{Ramifications of missing requirements}
-We miss the requirement of stellar density at low galactic latitudes when the reference implementation is taken as truth.  There is evidence that the GALFAST
-model matches the SDSS counts at low latitudes, but the systematic incompleteness of SDSS at low latitudes has never been quantified.
-It is likely that the real truth is somewhere between the Besancon numbers and the GALFAST numbers.
+Missing the requirement for stellar density at low galactic latitudes has impacts on both the sizing model and
+on algorithm development that depends on crowded fields.  
 
-Under prediction by $50\%$ will result in under prediction of the overall data I/O needs, but taking the Besancon numbers could provide a conservative value
-for sizing purposes. We are continuing efforts to gain more accurate observed counts (from PANSTARRS for example) to improve this requirement. 
+The validity of the Besan\c{c}on as ground truth in the plane of the galaxy is not obvious.  In fact, SDSS and galfast star counts agree surprisingly well at low galactic latitudes (private communication with M. Juri\'{c}). 
+However, the completeness of SDSS deep in the plane has also not been quantified.  Certainly in the densest regions
+of the plane there is significant loss of stars due to blending.  Further, since the Besan\c{c}on models are drawn
+from distributions with binary corrections applied and the Galfast model does not produce unresolved binary systems
+as multiple objects in the catalogs, the Galfast models will underpredict relative to the Besan\c{c}on by 
+approximately the unresolved binary fraction.  These questions may be partially answered by obtaining observations
+from other surveys (e.g. PANSTARRS).
 
 \subsection{Requirement 3: Size, ellipticity and redshift distributions of galaxies shall be representative of those observed by extant
 telescopes and, for a fiducial image quality of 0.7 arcsec, deviations from the observed distributions shall
@@ -524,7 +540,6 @@ of the combined two component galaxy model must match measured distributions clo
 values of $n_{eff}$ from measured distributions.  We measure the distribution from the base catalogs and show that it is well
 within the envelope necessary to reproduce realistic values of $n_{eff}$.
 
-{\bf For COSMOS I measure $\sigma=0.27$ and for $\sigma=0.26$}
 
 \subsubsection{Measuring $n_{eff}$}
 We use the framework described in \cite{chang} to calculate $n_{eff}$ for the distributions in the 
@@ -552,12 +567,25 @@ radii of each component (see Appendix B in \cite{chang} for a derivation of this
 Using this framework, we can test the sensitivity of the measured $n_{eff}$ on the ellipticity and size distributions.  For all calculations that follow we 
 use the k=1 criterion meaning that galaxies with $\sigma_m < \sigma_{SN}$ are culled from the sample.
 
-We measure the same value of shape noise as reported by \cite{change}, $\sigma_{SN} = 0.26$.  The shape appears to be slightly different than
-that of the COSMOS sample, but we have not investigated the effect of distribution shape on the measured value of $n_{eff}$.  Slight variations in
+We measure the same value of shape noise as reported by \cite{chang}, $\sigma_{SN} = 0.26$.  The shape appears to be slightly different than
+that of the COSMOS sample, but we have not investigated the effect of distribution shape on the measured value of $n_{eff}$ (see Figure \ref{fig:ellip1} 
+and Figure \ref{fig:ellip2}).  
+Slight variations in
 ellipticity distribution shape will not impact the measured value of $n_{eff}$ enough for the catalog to miss the requirement.
 
 For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18to24}.  As shown in \ref{fig:neffvm}
 galaxies with $i > 25$ do not contribute significantly to $n_{eff}$. 
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/e1_hist.png}
+\caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
+the cut made in \cite{chang}.\label{fig:ellip1}}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/e2_hist.png}
+\caption{Same as Figure \ref{fig:ellip1} but for e2.\label{fig:ellip2}}
+\end{figure}
 
 \subsubsection{Galaxy radius measurements}
 There are many definitions of galaxy size: half light radius, first moment radius, second moment radius, Petrosian radius, Kron radius, etc.
@@ -602,12 +630,13 @@ choose a lognormal distribution with varying shape parameters to probe the size 
 
 Figure \ref{fig:size_sens} shows the sensitivity to the size distribution.  The x axis is related to the width of the 
 distribution and the y axis is related to the location of the peak of the distribution. Over-plotted are points corresponding
-to the best fit log normal distributions to the COSMOS data set, the base catalog data set, and the base catalog data set convolved 
-with a 0.1 arcsec psf.
+to the best fit log normal distributions to the COSMOS data set and the base catalog data set.  The figure has been
+normalized to the COSMOS distribution as truth.  This shows that the difference between the COSMOS distribution and
+the base catalog distribution makes a difference less than 2.  This is well within the $\pm6$ stated by the requirements.
 \begin{figure}
 \centering
 \includegraphics[width=5in]{validation_figures/size_sensitivity.png}
-\caption{{\bf XXX This figure needs to be remade, it was done with only objects 20 - 24.5.}\label{fig:size_sens}}
+\caption{Sensitivity to the shape of the half light radius distribution.  The surface is normalized assuming the COSMOS distribution as truth.\label{fig:size_sens}}
 \end{figure}
 
 %\begin{figure}
@@ -687,7 +716,13 @@ histogram are given in the legend in the upper right.\label{fig:principalcolorsh
 \end{figure}
 \subsection{Requirement 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
 shall have an accuracy better than 1.6 mas}
-{\bf XXX Need help from AJC and Yusra on this one.}
+All operations on positions are undertaken using double precision accuracy. Angular operations are converted to cartesian coordinates to provide accuracy at the celestial poles and to minimize the complications of the coordinate wraparound at the meridian. Astrometric accuracy of the CatSim simulation framework is determined from the performance of the Starlink positional astronomy library (SLALIB; \cite{wallace}). This software library enables astrometric transformations and operations with
+accuracies on the order of a milliarcsecond or better.  The principal SLALIB routines used by the CatSim framework are those for precession, nutation, stellar aberration, rotation of the Earth, diurnal aberration, and refraction.  As described in \cite{wallace} the definition of ICRS coordinate system used in SLALIB and its transform to an FK5 (Fifth Fundamental Catalog - The Basic Fundamental Stars) system has an rms accuracy that is sub-milliarcsecond. Precession and nutation are based on the
+model of \cite{SF2001} and have an rms uncertainty of $<$1 milliarcsecond (with the uncertainty growing at approximately 0.3 milliarcseconds per 1000 years). Aberration and light deflection corrections are undertaken in an iterative manner with uncertainties of $<$1 milliarcsecond and Earth position and velocity corrections are based on the methods of Stumpff \citep{stumpff} with a maximum error of 0.3 milliarcseconds. All of these components, added in quadrature, meet the requirements described
+in the simulation requirements document \cite{connolly}.
+
+The largest of the uncertainties in any of the astrometric transforms is that due to the color dependence of refraction. For a nominal set of atmospheric conditions (i.e.\ temperature, pressure, humidity, and lapse rate) the rms uncertainty from 0.3 to 1 $\mu$m is 2.5 milliarcseconds. While refraction can be applied for science catalogs, for the catalogs generated as input to the LSST photon simulator refraction is not applied to the positions (i.e.\ it is generated internally to the photon
+simulator).
 \subsection{Requirement 6: The system shall be capable of incorporating new astrophysical catalogs without requiring
 a redesign of the class-schema framework}
 The ability to create new catalogs is available within the framework by the creation of user-designed subclasses and class mixins. A new type of catalog can be generated as a new class using the InstanceCatalog base class and other user-designed catalog classes (also using the InstanceCatalog base class) and class mixins. The columns desired in the new catalog are defined as class attributes. The data for these columns is gathered from the database directly or using methods defined in the class
