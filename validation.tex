@@ -142,7 +142,8 @@ LSST pointing, sources can be queried as a function of position and
 time with the returned data accounting for any change in brightness
 due to variability. For large scale runs, the base catalog is queried
 using sequences of observations derived from the Operations Simulator
-\cite{cook09}. The Operation Simulator simulates LSST pointings that
+\cite{cook09} (see also: {\tt http://www.lsst.org/lsst/opsim}). 
+The Operation Simulator simulates LSST pointings that
 meet the cadence and depth requirements of the LSST science cases
 while accounting for historical weather patterns for Cerro Pachon and
 the visibility of the LSST footprint on the sky. Each simulated
@@ -193,9 +194,9 @@ ingestion into the LSST data management system.
 \subsection{Galaxies and Cosmology \label{sec:gal}}
 
 The galaxy model is based on dark matter haloes from the Millennium
-simulation (\cite{millennium}) with an assumed standard $\Lambda$-CDM
+simulation (\cite{springel05}) with an assumed standard $\Lambda$-CDM
 cosmology and a semi-analytic baryon model grafted upon the Millennium
-results as described in \cite{springel} and \cite{delucia}. This
+results as described in \cite{springel05} and \cite{delucia}. This
 semi-analytic model features radiative cooling, star formation, and
 the dynamics of black holes, supernovae, and AGNs. It also includes
 novel features such as explicitly following dark matter haloes even
@@ -235,19 +236,19 @@ and high redshifts. To correct for these effects, sources are
 reflect the average observed properties (see
 \ref{sec:galaxycounts}). 
 
-AGNs are derived using the \cite{bongiorno} luminosity function. The
+AGNs are derived using the \cite{bongiorno12} luminosity function. The
 B-band absolute magnitudes are converted to bolometric luminosities
-using Eqn. 2 in \cite{hopkins}. Empirical relations derived from the
+using Eqn. 2 in \cite{hopkins07}. Empirical relations derived from the
 SDSS enable computation of the colors and stellar mass of the AGNs
 host galaxy from its luminosity. These parameters are used together
 with the redshift values from the AGN catalog to match each AGN to a
 galaxy in the galaxy catalog that best corresponds to the provided
 values. In general, the AGNs match to galaxies having higher stellar
 masses, approximately $10^{9}$ to $10^{11}$ $M_{\odot}$ which is
-comparable to recent analysis of host galaxies done by \cite{xue}. The
+comparable to recent analysis of host galaxies done by \cite{xue11}. The
 AGN SED is the \cite{vandenberk} mean AGN spectrum. 
 
-\subsection{Galactic Structure \label{sec:star}}
+\subsection{Galactic Structure \label{sec:stars}}
 
 Stars are represented as point sources.  SEDs and kinematics are
 assigned to stars using SDSS colors produced by the Galfast
@@ -257,7 +258,7 @@ to a thick and thin disk along with a halo. Using this input and an
 input luminosity function Galfast samples stars from these
 distributions in a 4-dimensional probability density function
 $\rho$(x,y,z,M). After this stage, using Fe/H and kinematics models
-from \cite{ivezic} and \cite{bond} that are also derived from SDSS
+from \cite{ivezic08} and \cite{bond09} that are also derived from SDSS
 data, the stars are assigned further statistics along with photometry
 in the desired bands. Finally, observational errors are added to
 account for the real-life properties of the telescope and the catalog
@@ -267,8 +268,8 @@ stars and giants, Bergeron et al. \cite{bergeron95} for white dwarfs,
 and a combination of spectral models and SDSS spectra for M, L, and T
 dwarfs (e.g.,
 \cite{cushing05,bochanski07,burrows06,pettersen89,kowalski10}). The
-dynamical models for the galaxy are taken from Bond et
-al. \cite{bond09} and for each star a parallax and proper motion is
+dynamical models for the galaxy are taken from \cite{bond09} 
+and for each star a parallax and proper motion is
 derived. For Galactic reddening, a value of E(B-V) is assigned to each
 star using the three-dimensional Galactic model of Amores \& Lepine
 \cite{amores05}. For consistency with extragalactic observations the
@@ -350,6 +351,96 @@ type is a subclass of the base InstanceCatalog class, so extending to other cata
 types is as easy as overriding the default formatter.  This also allows for custom headers
 (like those needed for input to phosim) and custom output (e.g. binary, fits, or pickle).
 
+\section{Validation of the Requiremets on the Simulation Framework}
+The simulation framework is the full system used to create simulated images and catalogs,
+and and is made up of the databases, data therin, tools and
+code.  The simulation framework should not be confused with the query framework.  The
+latter is only used for access and formatting of base catalog data.
+
+The simulation framework must provide all the necessary pieces to turn the universal model
+into a finished simulated image or catalog.  The following sections describe
+and validate the requirements that define the properties of the simulation framework.
+
+\subsection{Requirement 1: The simulation framework shall be open source and the input data, configurations,
+and software shall be accessible by the LSST project and science collaborations}
+\begin{itemize}
+\item {\bf Open source} -- All framework code is released under the GPLv3 license.
+\item {\bf Accessible software and configuration} -- All framework code and configuration are 
+stored in git repositories on the official LSST git server.
+\begin{itemize}
+\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/catalogs/generation.git/} -- Code to query
+base catalogs.
+\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/catalogs/measures.git/} -- Code to format
+and manipulate catalogs produced by the generation packages.  This includes photometric, 
+astrometric, and variability calculations.
+\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/throughputs.git/} -- Repository
+of system throughputs for the LSST reference design.
+\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/phosim.git/} -- All code for generating
+raytraced images including atmosphere, telescope, camera, and electronics models.
+\end{itemize}
+\item {\bf Accessible input data} -- All data are available via an MS SQL Database server
+hosted and maintained by the University of Washington.
+\end{itemize}
+
+\subsection{Requirement 2: The simulation framework will be docuemented to a level that it can be
+executed by external users}
+In order to be useful to the community as a whole for trade studies and evaluation of science 
+capabilities, the simulation framework must be documented and simple to start using.  This must
+be true of the catalogs as well as the image simulation code. 
+
+Documentation is available as web pages as well as docstrings within the code.  Find documentation
+at the following locations:
+\begin{itemize}
+\item phosim -- {\tt https://dev.lsstcorp.org/trac/wiki/IS\_phosim\_usability}
+\item catalog generation and measures -- {\tt Somewhere on trac, I don't know where yet}
+\item base catalog schema and description -- {\tt Somewhere on trac, I don't kno where yet}
+\end{itemize}
+
+We have provided installation and example usage instructions for both the catalog and image simulation
+aspects of the framework at the links above.  As further evidence that the framework can be used
+by outside parties, we point out that it has been installed and used at several locations outside 
+of Purdue and UW: SLAC, NERSC, Amazon EC2.
+
+\subsection{Requirement 3: The interfaces between the components of the simulation framework shall be defined 
+and documented}
+The interfaces are:
+\begin{itemize}
+\item OpSim to CatSim -- This is documented and maintained by the OpSim team.
+\item CatSim to PhoSim -- This is documented and maintained by the PhoSim team and can be found in the document
+{\bf XXX where is this}
+\end{itemize}
+
+\subsection{Requirement 4: The provenance within the data products shall be sufficient to rerun a simulation in a 
+deteministic manner}
+It is very important that identical runs of the simulation framework return identical results.  Without this determinism 
+it would be very difficult to use the framework for trade and sensitivity type studies.
+\begin{itemize}
+\item OpSim -- Each run of the operations simulator gets a unique identifier.  Given an OpSim identifier, one can by 
+assured that the pointing information used by the framework is the same for every run.
+\item CatSim -- Since the base catalog data is stored on disk and immutable, the base information
+going into any given run is the same.  The place where non-deterinism may enter is through the variability calculations.
+Stochastic variability that uses a random number generator is seeded by the same number for all identical runs to
+maintain determinism.
+\item PhoSim -- Input to the photon simulator includes a seed for the random number generator.  Since parallelism for
+the photon simulator is on the chip level, the order of draws from the random number generator for each chip is the same.
+This requirement will need to be met for GPU or MPI implementations of chip level simulation.
+\end{itemize}
+
+\subsection{Requirement 5: The simulation framework shall be capable of running on individual workstations 
+and high performance compute clusters}
+The need for simulated data ranges from a few sensors for in depth, high fidelity investigation of specific
+aspects of the system to 1000s of pointings for throughput, I/O, and storage studies.  This means that
+the framework must be scalable from single core to 1000 core systems.  
+
+PhoSim runs easily on single nodes as shown by the examples included in the PhoSim package.  PhoSim has also
+been successfully run on a variety of large scale systems: condor NCSA tens of nodes, NERSC hundreds of nodes, condor at Purdue thousands
+of nodes, PBS as UW hundreds of nodes, open science grid thousands of nodes, Google infrastructure thousands of nodes.
+
+CatSim runs naturally as a single core process since the problem is parallelized on a pointing by pointing basis.
+To parallelize CatSim to larger systems many processes are run in a pleasingly parallel mode with each process running
+a single pointing.  This approach marries nicely with schedulers like PBS and condor.  The bottle neck for 
+the CatSim is the database server.  The current hardware has shown to be suitable up to 70 concurrent processes.  This 
+can be improved with multiple servers or upgraded hardware.
 
 \section{Validation of the Requirements on the Catalog Simulations}
 The simulations catalogs in combination with tools for applying astrometric effects and a 
@@ -453,7 +544,7 @@ We take six representative fields at varying galactic latitude at two longitudin
 We compare number 
 counts of main sequence stars to the coadded limiting magnitude in i-band 
  from the galfast model using the composite dust model
-of \cite{amores} normalized to \cite{sfd} to the Besan\c{c}on \cite{besancon} model with their dust model.  Figure \ref{fig:scounts_0} shows 
+of \cite{amores05} normalized to \cite{schlegel98} to the Besan\c{c}on \cite{besancon} model with their dust model.  Figure \ref{fig:scounts_0} shows 
 the cumulative number counts as a function of magnitude for the Besan\c{c}on (dashed) and Galfast (solid) models 
 for six values of galactic longitude toward the galactic bulge.  We are interested in the
 fractional cumulative contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of Besan\c{c}on counts to Galfast counts for the six test fields shown in Figure \ref{fig:sratio_0}.
@@ -486,7 +577,7 @@ requirement for all but the faintest magnitudes and even then only meats the $\p
 \caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields away from the Galactic bulge (l=180$^o$) \label{fig:sratio_180}}
 \end{figure}
 
-\subsubsection{Galaxies \label{sec:galcounts}}
+\subsubsection{Galaxies \label{sec:galaxycounts}}
 We compare the galaxy counts to those provided by the Durham group.  We have taken their compilations from:
 {\tt http://star-www.dur.ac.uk/~nm/pubhtml/counts/idata.txt} accessed on 06/01/2013.  We use only data points with error bars in our analysis.  Using these counts
 we noticed that the numbers of galaxies were under predicting at faint magnitudes.  We used a cloning algorithm to push up the number counts at faint magnitudes
@@ -520,6 +611,7 @@ from distributions with binary corrections applied and the Galfast model does no
 as multiple objects in the catalogs, the Galfast models will underpredict relative to the Besan\c{c}on by 
 approximately the unresolved binary fraction.  These questions may be partially answered by obtaining observations
 from other surveys (e.g. PANSTARRS).
+\clearpage
 
 \subsection{Requirement 3: Size, ellipticity and redshift distributions of galaxies shall be representative of those observed by extant
 telescopes and, for a fiducial image quality of 0.7 arcsec, deviations from the observed distributions shall
@@ -573,7 +665,7 @@ and Figure \ref{fig:ellip2}).
 Slight variations in
 ellipticity distribution shape will not impact the measured value of $n_{eff}$ enough for the catalog to miss the requirement.
 
-For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18to24}.  As shown in \ref{fig:neffvm}
+For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18_24}.  As shown in \ref{fig:neffvm}
 galaxies with $i > 25$ do not contribute significantly to $n_{eff}$. 
 \begin{figure}
 \centering
@@ -585,6 +677,12 @@ the cut made in \cite{chang}.\label{fig:ellip1}}
 \centering
 \includegraphics[width=5in]{validation_figures/e2_hist.png}
 \caption{Same as Figure \ref{fig:ellip1} but for e2.\label{fig:ellip2}}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=5in]{validation_figures/neff_m_ir.png}
+\caption{This shows $n_{eff}$ as a function of i-band limiting magnitude.  Even though the the density of galaxies is going up steeply, the 
+signal to noise is falling off quickly enough that galaxies fainter the $i=25$ don't contribute much to $n_{eff}$.\label{fig:neffvm}}
 \end{figure}
 
 \subsubsection{Galaxy radius measurements}
@@ -647,7 +745,7 @@ the base catalog distribution makes a difference less than 2.  This is well with
 \begin{figure}
 \centering
 \includegraphics[width=5in]{validation_figures/Nofz_18_24.png}
-\caption{N(z) for 18 to 24 with distribution from \cite{coil}\label{fig:nofz18_24}}
+\caption{N(z) for 18 to 24 with distribution from \cite{coil04}\label{fig:nofz18_24}}
 \end{figure}
 %\begin{figure}
 %\centering
@@ -664,6 +762,7 @@ the base catalog distribution makes a difference less than 2.  This is well with
 %\includegraphics[width=5in]{validation_figures/Nofz_CumulativeFraction_22_28.png}
 %\caption{N(z) for 22 to 28 with distribution from \cite{coil}\label{fig:nofz22_28_ratio}}
 %\end{figure}
+\clearpage
 
 \subsection{Requirement 4: For the photometric calibration simulations
 the distribution of stellar colors shall encompass the colors of white dwarfs through red giant branch stars.
@@ -677,7 +776,8 @@ colors span the ranges given in the requirements document is met.  Dashed lines 
 color distribution is plotted in the histogram.  The main sequence and red giant branch (RGB) contributions are plotted separately from
 the white dwarf population.  Together the two distributions cover the required range.  The y-axis is log scale.
 
-To verify the veracity of the main sequence stellar locus, we use the principal colors of the stellar locus defined by \cite{ivezic04}.
+To verify the veracity of the main sequence stellar locus, we use the principal colors of the stellar locus defined by \cite{helmi02} and 
+fit for in the SDSS photometric \cite{ivezic04}.
 We use stars selected from the same fields as used in the number counts analysis for all fields south of a galactic latitude of -30.
 In order to avoid complications associated with the difference between the LSST and SDSS photometric systems, we calculate the un-extincted 
 magnitudes in the SDSS bandpasses using the best fit spectrum for each star.  We then calculate
@@ -714,12 +814,13 @@ Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviatio
 \caption{Hisograms of the principal colors of stars in the base catalog to the stretch depth of r < 24.8. The mean and standard deviation for each 
 histogram are given in the legend in the upper right.\label{fig:principalcolorshist}}
 \end{figure}
+\clearpage
 \subsection{Requirement 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
 shall have an accuracy better than 1.6 mas}
 All operations on positions are undertaken using double precision accuracy. Angular operations are converted to cartesian coordinates to provide accuracy at the celestial poles and to minimize the complications of the coordinate wraparound at the meridian. Astrometric accuracy of the CatSim simulation framework is determined from the performance of the Starlink positional astronomy library (SLALIB; \cite{wallace}). This software library enables astrometric transformations and operations with
 accuracies on the order of a milliarcsecond or better.  The principal SLALIB routines used by the CatSim framework are those for precession, nutation, stellar aberration, rotation of the Earth, diurnal aberration, and refraction.  As described in \cite{wallace} the definition of ICRS coordinate system used in SLALIB and its transform to an FK5 (Fifth Fundamental Catalog - The Basic Fundamental Stars) system has an rms accuracy that is sub-milliarcsecond. Precession and nutation are based on the
 model of \cite{SF2001} and have an rms uncertainty of $<$1 milliarcsecond (with the uncertainty growing at approximately 0.3 milliarcseconds per 1000 years). Aberration and light deflection corrections are undertaken in an iterative manner with uncertainties of $<$1 milliarcsecond and Earth position and velocity corrections are based on the methods of Stumpff \citep{stumpff} with a maximum error of 0.3 milliarcseconds. All of these components, added in quadrature, meet the requirements described
-in the simulation requirements document \cite{connolly}.
+in the simulation requirements document \cite{requirements}.
 
 The largest of the uncertainties in any of the astrometric transforms is that due to the color dependence of refraction. For a nominal set of atmospheric conditions (i.e.\ temperature, pressure, humidity, and lapse rate) the rms uncertainty from 0.3 to 1 $\mu$m is 2.5 milliarcseconds. While refraction can be applied for science catalogs, for the catalogs generated as input to the LSST photon simulator refraction is not applied to the positions (i.e.\ it is generated internally to the photon
 simulator).
