@@ -360,7 +360,7 @@ types simply requires overriding the default formatter.  This also allows for cu
 The requirements for the catalog simulations (referred to as catsim) and described in sections
 4.1 through 4.3 in the LSST simulations requirements document \citep{requirements}
 
-\subsection{Requirement 1: The simulation framework shall be open source and the input data, configurations,
+\subsection{Framework: Requirement 1: The simulation framework shall be open source and the input data, configurations,
 and software shall be accessible by the LSST project and science collaborations}
 \begin{itemize}
 \item {\bf Open source} -- All framework code is released under the GPLv3 license.
@@ -379,8 +379,9 @@ of system throughputs for the LSST reference design.
 hosted and maintained by the University of Washington.
 \end{itemize}
 
-\subsection{Requirement 2: The simulation framework will be docuemented to a level that it can be
-executed by external users}
+\subsection{Framework Requirement 2: The simulation framework will be documented to a level
+  that it can be installed and used by users external to the
+  simulation team}
 In order to be useful to the community as a whole for trade studies and the evaluation of science 
 capabilities, the simulation framework must be documented together with example applications.  
 
@@ -397,7 +398,7 @@ aspects of the framework at the links above.
 It has been installed and used at several locations 
 including: SLAC, UC Irvine, Amazon EC2.
 
-\subsection{Requirement 3: The interfaces between the components of the simulation framework shall be defined 
+\subsection{Framework Requirement 3: The interfaces between the components of the simulation framework shall be defined 
 and documented}
 The interfaces are:
 \begin{itemize}
@@ -407,7 +408,7 @@ The interfaces are:
 {\bf XXX where is this}
 \end{itemize}
 
-\subsection{Requirement 4: The provenance within the data products shall be sufficient to rerun a simulation in a 
+\subsection{Framework Requirement 4: The provenance within the data products shall be sufficient to rerun a simulation in a 
 deteministic manner}
 \begin{itemize}
 \item OpSim -- Each run of the operations simulator is given unique identifier.  
@@ -426,7 +427,7 @@ Stochastic variability (e.g. damped random walk of AGN) that uses a random numbe
 the photon simulator is on the chip level, the order of draws from the random number generator for each chip is the same.
 \end{itemize}
 
-\subsection{Requirement 5: The simulation framework shall be capable of running on individual workstations 
+\subsection{Framework Requirement 5: The simulation framework shall be capable of running on individual workstations 
 and high performance compute clusters}
 CatSim runs naturally as a single core process since the problem is parallelized on a pointing by pointing basis.
 To parallelize CatSim to larger systems many processes are run in a pleasingly parallel mode with each process running
@@ -454,8 +455,9 @@ All of the examples above require a set of base catalogs that meet the project n
 properties of sources are required (e.g.by the LSST science community), support for extensions fo the query 
 framework is required.  
 
-\subsection{Requirement 1: The LSST catalogs simulations shall contain representations of point,
-extended, moving, and variable sources}
+\subsection{Catalogs: Requirement 1: The LSST catalogs simulations
+  shall contain representations of stars, galaxies, quasars, solar
+  system objects, and variable sources with properties consistent with the LSST schema}
 
 \subsubsection{Point, Extended and Moving Sources}
 We have constructed a database to hold information about the sources required by the Universal model.
@@ -501,8 +503,12 @@ The variable sources are implemented as a python API used by the InstanceCatalog
 The API calls for a dictionary of parameters to be passed to the appropriate method for application at generation time.  The name of the variability method and
 the parameters describing a particular object's variability are stored in the database with the rest of the object properties.
 
-\subsection{Requirement 2: At high Galactic latitudes the average source densities of stars and galaxies
-shall be within 18\% of the observed counts (to the 5$\sigma$ point source coadded depth of LSST)}
+\subsection{Catalogs: Requirement 2: At high Galactic latitudes the
+  average number densities of sources shall be within 20\%
+  and 10\% 
+  of the observed counts for stars and galaxies and galaxies
+  respectively (to the $5\sigma$ point source coadded depth
+  of LSST)}
 The motivation for this requirement is two fold.  There is a functional requirement that the distribution of sources is representative
 to test database scaling and I/O sizing models.  
 
@@ -588,10 +594,14 @@ as multiple objects in the catalogs, the Galfast models will underpredict relati
 approximately the unresolved binary fraction.  These questions will be resolved through an ongoing comparison to observations
 from other surveys (e.g. Pan-STARRS).
 
-\subsection{Requirement 3: Size, ellipticity and redshift distributions of galaxies shall be representative of those observed by extant
-telescopes and, for a fiducial image quality of 0.7 arcsec, deviations from the observed distributions shall
-contribute $< 20\%$ of the observed effective density of galaxies, $n_{eff}$, used in the weak lensing samples (with a fiducial value of
-$n_{eff} = 34$ galaxies per arcmin$^2$}
+\subsection{Catalogs:  Requirement 3: Size, ellipticity, and redshift
+  distributions of galaxies shall be representative of those observed
+  by extant space and ground-based telescopes and, for a fiducial
+  image quality of 0.72 arcsec, deviations from the observed
+  distributions shall contribute $<20$\% of the observed effective
+  density of galaxies, n$_{eff}$, used in the weak lensing samples
+  (assuming a fiducial value of n$_{eff} = 28$ galaxies per
+  arcmin$^2$)}
 \subsubsection{Motivation}
 The measurement of weak lensing is dependent 
 on $n_{eff}$ which is the effective density of galaxies on the sky that can be used to measure weak lensing.  
@@ -756,7 +766,7 @@ the base catalog distribution makes a difference less than 2.  This is well with
 \end{figure}
 
 
-\subsection{Requirement 4: For the photometric calibration simulations
+\subsection{Catalogs: Requirement 4: For the photometric calibration simulations
 the distribution of stellar colors shall encompass the colors of white dwarfs through red giant branch stars.
 The median color distributions of stars must trace the observed color locus for these stars to within 0.02 magnitudes
 of the principal color (s,w,x,y) to the designed 5$\sigma$ single epoch limiting magnitude in the r-band.
@@ -806,8 +816,8 @@ Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviatio
 histogram are given in the legend in the upper right.\label{fig:principalcolorshist}}
 \end{figure}
 
-\subsection{Requirement 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
-shall have an accuracy better than 1.6 mas}
+\subsection{Require Catalogs: ment 5: All models for the astrometric transforms applied tothe catalogs (including interpolation functions) 
+shall have an rms uncertainty better than 1.6 mas}
 All operations on positions are undertaken using double precision accuracy. Angular operations are converted to cartesian coordinates to provide accuracy at the celestial poles and to minimize the complications of the coordinate wraparound at the meridian. Astrometric accuracy of the CatSim simulation framework is determined from the performance of the Starlink positional astronomy library (SLALIB; \citet{wallace}). This software library enables astrometric transformations and operations with
 accuracies on the order of a milliarcsecond or better.  The principal SLALIB routines used by the CatSim framework are those for precession, nutation, stellar aberration, rotation of the Earth, diurnal aberration, and refraction.  As described in \citet{wallace} the definition of ICRS coordinate system used in SLALIB and its transform to an FK5 (Fifth Fundamental Catalog - The Basic Fundamental Stars) system has an rms accuracy that is sub-milliarcsecond. Precession and nutation are based on the
 model of \citet{SF2001} and have an rms uncertainty of $<$1 milliarcsecond (with the uncertainty growing at approximately 0.3 milliarcseconds per 1000 years). Aberration and light deflection corrections are undertaken in an iterative manner with uncertainties of $<$1 milliarcsecond and Earth position and velocity corrections are based on the methods of \citep{stumpff} with a maximum error of 0.3 milliarcseconds. All of these components, added in quadrature, meet the requirements described
@@ -815,7 +825,7 @@ in the simulation requirements document \citet{requirements}.
 
 The largest of the uncertainties in any of the astrometric transforms is that due to the color dependence of refraction. For a nominal set of atmospheric conditions (i.e.\ temperature, pressure, humidity, and lapse rate) the rms uncertainty from 0.3 to 1 $\mu$m is 2.5 milliarcseconds. While refraction can be applied for science catalogs, for the catalogs generated as input to the LSST photon simulator refraction is not applied to the positions (i.e.\ it is generated internally to the photon
 simulator).
-\subsection{Requirement 6: The system shall be capable of incorporating new astrophysical catalogs without requiring
+\subsection{Catalogs: Requirement 6: The system shall be capable of incorporating new astrophysical catalogs without requiring
 a redesign of the class-schema framework}
 The ability to create new catalogs is available within the framework by the creation of user-designed subclasses and class mixins. A new type of catalog can be generated as a new class using the InstanceCatalog base class and other user-designed catalog classes (also using the InstanceCatalog base class) and class mixins. The columns desired in the new catalog are defined as class attributes. The data for these columns is gathered from the database directly or using methods defined in the class
 for the catalog itself, in class mixins designed by the user, or in the base classes. These data gathering methods can take the form of a "get\_'column\_name'" method or in the form of compound columns with their own "get\_" methods. The required database column is then referred to in the "column\_by\_name()" method which returns the column values from the database. For example, the CustomCatalog below uses various aspects of this framework to write a new catalog to file:
