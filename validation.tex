@@ -14,7 +14,7 @@
 \input epsf
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
-\usepackage{caption}
+\usepackage[margin=0in]{caption}
 \usepackage{subfigure}
 \usepackage{epsfig}
 \usepackage{color}
@@ -175,7 +175,7 @@ simulation framework, the image simulator \citep{phosim}.
 % Use the relevant command for your figure-insertion program
 % to insert the figure file.
 % For example, with the graphicx style use
-\centerline{\includegraphics[width=6in]{validation_figures/flow.png}}
+\centerline{\includegraphics[width=3in]{validation_figures/flow.png}}
 %
 % If no graphics program available, insert a blank space i.e. use
 %\picplace{5cm}{2cm} % Give the correct figure height and width in cm
@@ -211,6 +211,7 @@ satellite galaxies for an extended period of time as well as 'radio
 mode' feedback of AGNs. The model was adjusted to mimic the
 luminosity, color, and morphology distributions of low redshift
 galaxies \citep{delucia}. LSST cosmological catalogs were generated
+from the \citet{delucia} data
 by constructing a lightcone, covering redshifts 0$<$z$<$6, from 58
 500h$^{-1}$Mpc simulation snapshots. This lightcone covers a 4.5x4.5
 degree footprint on the sky and samples halo masses over the range
@@ -266,7 +267,7 @@ $\rho$(x,y,z,M). After this stage, using Fe/H and kinematics models
 from \citet{ivezic08} and \citet{bond09} (also derived from SDSS data), 
 the each star is assigned a metallicity, proper motion, and parallax.
 Spectral energy distributions are fit to the predicted
-colors using the models of \citet{kurucz93} for main sequence
+colors using the models of \citet{kuruczCD} for main sequence
 stars and giants, \citet{bergeron95} for white dwarfs,
 and a combination of spectral models and SDSS spectra for M, L, and T
 dwarfs 
@@ -427,6 +428,18 @@ Stochastic variability (e.g. damped random walk of AGN) that uses a random numbe
 the photon simulator is on the chip level, the order of draws from the random number generator for each chip is the same.
 \end{itemize}
 
+Special consideration must be paid to keeping ids in the output catalogs unique.  Since each object databse is independent,
+there will be non-unique ids in the database when comparing table to table.  Another consideration is that the galaxy catalog
+is reused multiple times over the sky, so unless the galaxy id is modified there will be duplicates.  We use a packing scheme to
+make sure the original database id is recoverable from the catalog id.  To keep each object id unique, each object type is given
+an identifier that is unique across all tables.  In practice, this is just an integer that is incremented when a new table is added.
+The unique id is constructed by bit shifting the database id (or galtileid in the case of tiled galaxies) 10 places to the left.  
+This assumes that we will not have 1024 object types.  The object type identifier is then added to the bit shifted id to create
+a new, unique id.  
+
+The galtileid is produced by the stored procedure that creates the tiled galaxies.  A similar scheme is used where 
+{\bf XXX how is this actually done?}.
+
 \subsection{Framework Requirement 5: The simulation framework shall be capable of running on individual workstations 
 and high performance compute clusters}
 CatSim runs naturally as a single core process since the problem is parallelized on a pointing by pointing basis.
@@ -472,14 +485,16 @@ Galaxies are stored in a single table $4.5^o \times 4.5^o$ on a side with XXX ga
 provide the spatial coverage needed to simulate the survey (see Figure \ref{fig:galcoverage}).  
 Tiling of the galaxies is handled in the database using stored procedures (namely {\tt GalaxySearchSpecColsConstraint2013}).
 
-The solar system model is the most complicated.  Since propagating orbits requires a numerical integration, it is very slow to do on 
-11 million objects for every pointing.  In order to keep query times reasonable, at the very least, one needs a way to 
-identify the objects that could possibly be in the frame.  Better yet would be a way to identify exactly (to the precision
-required by LSST) where the objects that land in the aperture are located at a given time.  We have gone the second route.
-The solution has two parts.  The first part is to preprocess the orbits by caching the orbit location every XXX seconds. 
+Because the most general way to store solar system objects is to store the orbital elements.  
+Since propagating orbits requires a numerical integration, it is very slow with so many objects (11 million total).  
+In order to keep query times reasonable the objects should be indexed so that  
+it is fast to find objects that could possibly be within a particular aperture at a given time.  Ideally the index would identify 
+exactly (to the precision required by LSST) the location of objects that land in the aperture are located at a given time.  
+
+We have chosen to index the orbits of all objects at a resloution such that cubic interpolation can predict the location of the
+object to within the required accuracy for LSST. To save space on disk, the time between cached positions is variable depending on 
+the population. {\bf XXX add the caching frequency from Yusra's email}
 These cached positions are then indexed using HTM to speed spatial lookup.
-The second part is a stored procedure that uses the spatial index to produce a set of likely candidates and then applies
-an interpolation algorithm to get the exact position of each candidate.
 
 For all sources the generation of magnitudes and color, and the application of time dependent astrometric corrections (e.g. 
 precession, parallax, proper motion) are calculated by python subclasses of the InstanceCatalog object.
@@ -605,7 +620,7 @@ from other surveys (e.g. Pan-STARRS).
 \subsubsection{Motivation}
 The measurement of weak lensing is dependent 
 on $n_{eff}$ which is the effective density of galaxies on the sky that can be used to measure weak lensing.  
-The value of $n_{eff}$ depends on the inherent shape noise, the signal-to-noise distribution and the size distribution relative to the PSF.
+The value of $n_{eff}$ depends on the inherent shape noise, the signal-to-noise distribution and the size distribution of galaxies relative to the PSF.
 
 
 
@@ -622,7 +637,7 @@ The measurement noise can be approximated using Equation 13:
 \begin{equation}
 \sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}{R}\right)^c\right]
 \end{equation}
-Where $\nu$ is the signal-to-noise ratio of the measurement, $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the size of the galaxy relative to
+Where $\nu$ is the signal-to-noise ratio of the source, $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the size of the galaxy relative to
 the point spread function.  We adopt values from \citet{chang} of (a,b,c) = (1.58,5.03,0.39), and assume a fiducial
 PSF size of 0.7 arcsec. We use an estimate for the limiting magnitude of the co-added images
 of 26.7.  This takes into account the fact that the measurements are on extended sources as well as the fact that the SRD value 
