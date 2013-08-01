@@ -37,6 +37,8 @@
 
 \begin{document} 
 
+\captionsetup{width=0.8\textwidth}
+
 \title{The LSST Universe model and its validation}
 
 %\pagerange{\pageref{firstpage}--\pageref{lastpage}}
@@ -48,7 +50,7 @@
 \maketitle 
 
 
-\abstract{The Large Synoptic Survey Telescope (LSST) will be a
+\abstract{The Large Synoptic Survey Telescope (LSST) will produce
  wide-field telescope and multi-epoch imaging survey.  The LSST has
  an 8.4m aperture (6.7m effective) and a 9.6 deg$^{2}$ field of view.
  The large etendue of the LSST enables the project to image the
@@ -374,7 +376,7 @@ will resolve this issue through future work.
 
 {\it  The simulation framework shall be open source and the input data, configurations,
 and software shall be accessible by the LSST project and science
-collaborations}
+collaborations}\\
 
 Catsim is released as open source software using the GPLv3 license
 \citep{XXX}. The terms of this license are such that the software is
@@ -408,7 +410,7 @@ standard SQL queries.
 
 {\it The simulation framework will be documented to a level
   that it can be installed and used by users external to the
-  simulation team}
+  simulation team}\\
 
 Documentation is available as web pages as well as self documenting
 docstrings within the code.  This documentation includes installation
@@ -424,7 +426,7 @@ is available at the following locations:
 \subsection{Framework Requirement 3}
 
 {\it  The interfaces between the components of the simulation framework shall be defined 
-and documented}
+and documented}\\
 
 The interfaces between the operations simulator (opsim) and catsim and
 between catsim and the photon simulator (phosim) are documented by the
@@ -437,7 +439,7 @@ opsim and phosim teams respectively.  These interfaces are described in:
 \subsection{Framework Requirement 4} 
 
 {\it The provenance within the data products shall be sufficient to rerun a simulation in a 
-deterministic manner}
+deterministic manner}\\
 
 Provenance is maintain both internally to each component of a
 simulator (e.g.\ for catsim) as well as between each of the components
@@ -493,7 +495,7 @@ random number generator for each chip is the same.
 \subsection{Framework Requirement 5}
 
 {\it The simulation framework shall be capable of running on individual workstations 
-and high performance compute clusters}
+and high performance compute clusters}\\
 
 
 CatSim runs naturally as a single core process since the problem is
@@ -538,7 +540,7 @@ extensions of the query framework is required.
 
 {\it The LSST catalogs simulations shall contain representations of
   stars, galaxies, quasars, solar system objects, and variable sources
-  with properties consistent with the LSST schema}
+  with properties consistent with the LSST schema}\\
 
 \subsubsection{Point, Extended and Moving Sources}
 
@@ -624,7 +626,7 @@ observation.
 {\it At high Galactic latitudes the average number densities of
   sources shall be within 20\% and 10\% of the observed counts for
   stars and galaxies and galaxies respectively (to the $5\sigma$ point
-  source coadded depth of LSST)} 
+  source coadded depth of LSST)} \\
 
 %Stellar number densities at Galactic latitudes closer than to the
 %plane than $|b| < 30^o$ are difficult to model due to the rising
@@ -763,7 +765,7 @@ surveys (e.g. Pan-STARRS).
   deviations from the observed distributions shall contribute $<20$\%
   of the observed effective density of galaxies, n$_{eff}$, used in
   the weak lensing samples (assuming a fiducial value of n$_{eff} =
-  28$ galaxies per arcmin$^2$)}
+  28$ galaxies per arcmin$^2$)}\\
 
 
 The ability to use gravitational weak lensing to constrain
@@ -879,7 +881,7 @@ The base catalog distribution with the width scaled such that the requirement is
 For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18_24}.  As shown in \ref{fig:neffvm}
 galaxies with $i > 25$ do not contribute significantly to $n_{eff}$. 
 
-\begin{figure}{th}
+\begin{figure}[th]
 \centering
 \includegraphics[width=5in]{validation_figures/Nofz_18_24.png}
 \caption{The blue histogram in each panel is the measured N(z) for 1 magnitude bins from $18<i<24$.  Over-plotted is the empirical distribution from \citet{coil04} normalized to the area of the measured distribution.  The dashed and dotted red lines show what happens if the governing parameter for the \citet{coil04} distribution, $z_o$, is over
@@ -902,7 +904,7 @@ or under predicted by $3\sigma$ respectively.\label{fig:nofz18_24}}
 %\end{figure}
 \begin{figure}[H]
 \centering
-\includegraphics[width=5in]{validation_figures/neff_m_ir.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/neff_m_ir.png}
 \caption{This shows $n_{eff}$ as a function of i-band limiting magnitude.  Even though the the density of galaxies is going up steeply, the 
 size of the galaxies relative to the PSF is falling off quickly enough that galaxies fainter the $i=25$ don't contribute much to $n_{eff}$.\label{fig:neffvm}}
 \end{figure}
@@ -948,12 +950,13 @@ radius distribution in the presence of noise, we compare the half
 light radius from the Universe model to observed data sets.
 
 \begin{figure}[ht]
-\begin{subfigure}[b]{0.3\textwidth}
+\centering
+\begin{subfigure}[b]{0.4\textwidth}
   \centering
-  \includegraphics[width=\textwidth]{validation_figures/half_light_hist.png}
+ \includegraphics[width=\textwidth]{validation_figures/half_light_hist.png}
   \label{fig:hl_hist}
 \end{subfigure}
-\begin{subfigure}[b]{0.3\textwidth}
+\begin{subfigure}[b]{0.4\textwidth}
   \centering
   \includegraphics[width=\textwidth]{validation_figures/Second_moment_hist.png}
   \label{fig:mom_hist}
@@ -1031,7 +1034,7 @@ the measured $n_{eff}$ using the half light radius distribution from the base ca
   color distributions of stars must trace the observed color locus for
   these stars to within the 0.02 magnitudes (averaged over intervals
   of 0.3 magnitudes in color). These requirements are defined for
-  Galactic latitudes $|b|>30$.}
+  Galactic latitudes $|b|>30$.}\\
 
 
 In order to evaluate the sensitivity of the photometric calibration to
@@ -1104,7 +1107,7 @@ Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviatio
 \subsection{Catalogs Requirement 5}
 
 {\it All models for the astrometric transforms applied to the catalogs (including interpolation functions) 
-shall have an accuracy better than 1.6 mas}
+shall have an accuracy better than 1.6 mas}\\
 
 All operations on positions are undertaken using double precision
 accuracy. Angular operations are converted to Cartesian coordinates to
@@ -1147,7 +1150,7 @@ internally to the photon simulator).
 \subsection{Catalogs: Requirement 6}
 
 {\it The system shall be capable of incorporating new astrophysical catalogs without requiring
-a redesign of the class-schema framework}
+a redesign of the class-schema framework}\\
 
 The ability to create new catalogs is available within the framework
 through the use of user-designed subclasses and class mixins {\bf XXX
