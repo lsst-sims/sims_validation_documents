@@ -1,4 +1,4 @@
-%\documentclass[prd, nofootinbib, floatfix, 12pt]{revtex4}
+M%\documentclass[prd, nofootinbib, floatfix, 12pt]{revtex4}
 %\documentclass[useAMS,usenatbib,11pt,preprint]{aastex}
 %\documentclass[12pt,preprint]{aastex}
 \documentclass[]{article}
@@ -41,6 +41,9 @@
 
 \title{The LSST Universe model and its validation}
 
+\author{ Simon Krughoff, Andrew Connolly, Lynne Jones, Yusra AlSayyad,
+  for the LSST Collaboration}
+
 %\pagerange{\pageref{firstpage}--\pageref{lastpage}}
 
 \label{firstpage}
@@ -50,56 +53,54 @@
 \maketitle 
 
 
-\abstract{The Large Synoptic Survey Telescope (LSST) will produce
- wide-field telescope and multi-epoch imaging survey.  The LSST has
- an 8.4m aperture (6.7m effective) and a 9.6 deg$^{2}$ field of view.
- The large etendue of the LSST enables the project to image the
- visible sky every 3 days. To evaluate the performance of the
- delivered LSST, to design the algorithms used in processing the LSST
- data, and to enable the development of the science analysis
- techniques the LSST has turned to high fidelity simulations.  These
- simulations include a realistic model of the universe (base
- catalogs), a framework for querying and formatting the model at
- specific instances in time (catalogs framework), and a fast raytrace
- code for simulating the raw images (PhoSim).  In this document we
- describe the base catalogs and catalogs framework and validate them
- for use by the LSST.  The requirements against which we will
- validate are described in the document ``Requirements for the LSST
- Simulation Framework''. }
+\abstract{The Large Synoptic Survey Telescope (LSST) will produce a
+  wide-field and multi-epoch imaging survey of 18,000 deg$^2$ of the
+  southern sky.  The LSST has an 8.4m aperture (with an effective size
+  of 6.7m) and a 9.6 deg$^{2}$ field of view.  The large etendue of
+  the LSST enables the project to image the visible sky every 3
+  nights. To evaluate the performance of the LSST, to design the
+  algorithms used in processing the LSST data, and to enable the
+  development of science analysis techniques in preparation for
+  operations, the LSST has undertaken a program for high fidelity
+  simulations.  These simulations include a realistic model of the
+  universe (known as the base catalog or universe model), a framework
+  for querying the model at specific points on the sky and instances
+  in time (known as the catalog framework), and a fast ray-trace code for
+  simulating raw images (PhoSim).  In this document we describe the
+  base catalogs and catalogs framework (known together as CatSim) and
+  validate them for use by the LSST project.  The requirements against
+  which we will validate are described in the document ``Requirements
+  for the LSST Simulation Framework''. }
  
 \section{Introduction \label{sec:intro}}
 
-A new generation of astronomical survey telescopes, the Dark Energy
-Survey (DES), the Panoramic Survey Telescope \& Rapid Response System
-(Pan-STARRS), EUCLID, the Visible and Infrared Survey Telescope for
-Astronomy (VISTA), and the Large Synoptic Survey Telescope (LSST) are
-now, or soon will be, surveying the universe in unprecedented
-detail. Repeated observations of the same part of the sky, with
-hundreds to thousands of observations over a period of ten years, will
-enable a detailed study of the temporal universe (ranging from
-transient sources such as supernovae and optical bursters, to periodic
-variables such as Cepheids and RR-Lyrae stars, to moving sources such
-as asteroids and high proper motion stars). Combined, these
-observations will provide some of the deepest, large-scale surveys of
-the universe ever undertaken and provide the ability to measure the
-nature of dark energy with figures of merit 10-100 times better than
-current surveys \citep[DETF][]{albrecht06}.
+A new generation of astronomical survey telescopes such as the Large
+Synoptic Survey Telescope (LSST) will soon be surveying the universe
+in unprecedented detail. Repeated observations of the same part of the
+sky, with hundreds to thousands of observations over a period of ten
+years, will enable detailed studies of the temporal universe (ranging
+from transient sources such as supernovae and optical bursters, to
+periodic variables such as Cepheids and RR-Lyrae stars, to moving
+sources such as asteroids and high proper motion stars). Combination
+of these observations will provide some of the deepest, large-scale
+surveys of the universe ever undertaken and provide the ability to
+measure the nature of dark energy with figures of merit 10-100 times
+smaller than current surveys \citep[DETF][]{albrecht06}.
 
-The stringent requirements on the statistical power of these
-telescopes means that we will soon no longer be limited by shot noise
-(i.e.\ the number of sources within a sample) but by how well we can
-understand systematic uncertainties within our data streams. These
-systematic effects can arise from the design of the telescope
-(e.g.\ ghosting of images or scatter light), from the response of the
-atmosphere (e.g.\ the stability of the point-spread-function or the
-variability in the transmissivity of the sky), from the strategy used
-to survey the sky (e.g.\ inhomogeneous sampling of astronomical light
-curves), or from limitations in our analysis algorithms (e.g.\ due to
-the finite processing power available approximations may need to be
-made when characterizing the properties of detected
-sources). Understanding which of these issues will impact the science
-from a given telescope is critical if we hope to maximize their
-scientific returns.
+The stringent requirements on the statistical power of the LSST means
+that we will soon no longer be limited by shot noise (i.e.\ the number
+of sources within a sample) but by how well we can understand
+systematic uncertainties within our data streams. These systematic
+effects can arise from the design of the telescope (e.g.\ ghosting of
+images or scatter light), from the response of the atmosphere (e.g.\
+the stability of the point-spread-function or the variability in the
+transmissivity of the sky), from the strategy used to survey the sky
+(e.g.\ inhomogeneous sampling of astronomical light curves), or from
+limitations in our analysis algorithms (e.g.\ due to the finite
+processing power available approximations may need to be made when
+characterizing the properties of detected sources). Understanding
+which of these issues will impact the science from a given telescope
+is critical if we hope to maximize their scientific returns.
 
 Simulations of the data flow from survey telescopes can provide a
 critical role in understanding the capabilities of an astronomical
@@ -107,15 +108,15 @@ system and in optimizing its scientific returns. By providing data
 with the expected characteristics of a survey well in advance of first
 light, algorithms and statistical techniques can be optimized and
 scaled to the expected data volumes or new statistical approaches can
-be developed to improve the data analysis. 
-In the following sections we describe the data used to define the universe
-we expect the LSST to observe and validate the properties of the model
-universe against the requirements of the project \citep{requirements}.
+be developed to improve the data analysis.  In the following sections
+we consider and describe how we model the astrophysical properties of
+the universe that we expect the LSST to observe and validate the
+properties of this model universe against the requirements of the
+project \citep{requirements}.
 
 \section{Source Catalogs and the Catalog Framework}
 
 \subsection{Framework}
-
 
 The design of a framework to simulate the data expected from the LSST
 requires flexibility and scalability \citep{connolly10}.
@@ -130,38 +131,39 @@ simulation, the distribution of stars from a Galactic Structure model,
 and a model for the asteroid populations within our Solar System), a
 system for querying the underlying model of the universe using
 simulations of sequences of LSST observations, and a framework for the
-generation of images via the ray-tracing of individual photons.
+generation of images via the ray-tracing of photons from individual
+sources.
 
-
-Figure~\ref{fig:flow} shows an example of the flow of information
-through the LSST simulation framework. 
+Figure~\ref{fig:flow} shows the flow of information through the LSST
+simulation framework.
 %Simulations of sequences of
 %LSST observations enable catalogs of LSST sources to be
 %generated. These catalogs can be analyzed for different science
 %programs or passed to a photon based image generator that create input
 %images for the data management analysis pipelines.  
-The design enables the generation of a wide range of data products:
+This design enables the generation of a wide range of data products:
 from all-sky catalogs used in modeling the LSST calibration pipeline,
 to time domain data used to characterize variability as a function of
 signal-to-noise and temporal sampling, to sequences of images of
 gravitational lenses from which to measure cosmological time delays.
-In this document we focus on the first of the components of the
-framework; the LSST universe model or base catalog and the mechanism
-for querying this model. We refer to this system as {\it catsim}
-throughout this document.  The base catalog is stored as a SQL
-database (using a Microsoft SQLServer). Data are accessible through a
-Python interface that uses SQLalchemy ({\tt
-  http://www.sqlalchemy.org}) to provide a database agnostic view of
-the sources. For any LSST pointing, sources can be queried as a
-function of position and time with the returned data accounting for
-any change in brightness due to variability. For large scale runs, the
-base catalog is queried using sequences of observations derived from
-the Operations Simulator \citep{cook09} (see also: {\tt
-  http://www.lsst.org/lsst/opsim}).  The Operation Simulator simulates
-LSST pointings that meet the cadence and depth requirements of the
-LSST science cases while accounting for historical weather patterns
-for Cerro Pachon and the visibility of the LSST footprint on the
-sky. Each simulated pointing provides a position and time of the
+In this document we focus on the first component of the framework; the
+LSST universe model or base catalog and how we can query this
+model. This system is referred to as {\it CatSim} throughout this
+document.
+
+The base catalog is stored as a SQL database (using a Microsoft
+SQLServer). Data are accessed through a Python interface that uses
+SQLalchemy ({\tt http://www.sqlalchemy.org}) to provide a database
+agnostic view of the sources. For LSST pointing, sources can be
+queried as a function of position and time with the returned data
+accounting for any change in brightness due to variability. For large
+scale runs, the base catalog is queried using sequences of
+observations derived from the Operations Simulator \citep{cook09} (see
+also: {\tt http://www.lsst.org/lsst/opsim}).  The Operation Simulator
+simulates LSST pointings that meet the cadence and depth requirements
+of the LSST science cases while accounting for historical weather
+patterns for Cerro Pachon and the visibility of the LSST footprint on
+the sky. Each simulated pointing provides a position and time of the
 observation together with the appropriate sky conditions (e.g. seeing,
 moon phase and angle, and sky brightness). Positions of sources are
 propagated to the time of observation (including the proper motion
@@ -173,6 +175,29 @@ catalogs (instance catalogs) can be formatted for use in a science
 application (e.g. measuring the proper motions of high velocity stars)
 or fed to the final component of the simulation framework, the image
 simulator \citep{phosim}.
+
+The query framework is written in Python and takes an object-centric
+view of the data.  For each object type (galaxy, main sequence star,
+strong lens, etc.), a class is defined that knows how to query for,
+format, and transform objects of that type.  Many objects are similar
+in terms of their properties and how they need to be queried.  A small
+number of base classes can, therefore, be defined that will encompass
+the requirements of the majority of the object classes.  Additional
+object types are then represented simply as subclasses of the base
+class. Extensibility of catalog types is handled by a class called the
+InstanceCatalog, which defines how the output from the object classes
+is formatted and written out into a catalogs.  Again, each catalog
+type is a subclass of the base InstanceCatalog class, so extending to
+other catalog types simply requires overriding the default formatter.
+This also allows for custom headers (like those needed for input to
+PhoSim) and custom output (e.g. binary, fits, or Python pickle files).
+
+Overall this approach provides a simple and extensible framework for
+expressing different astrophysical sources and incorporating new
+catalogs within an existing framework (i.e.\ different components of
+the universe model are logically distinct and so can be separated into
+independent tables in a database or in different databases all
+together).
 
 \begin{figure}[h]
 \centerline{\includegraphics[width=0.5\textwidth]{validation_figures/flow.png}}
@@ -195,60 +220,61 @@ simulator \citep{phosim}.
 
 \subsection{Galaxies and Cosmology \label{sec:gal}}
 
-The galaxy model is based on dark matter haloes from the Millennium
-simulation \citep{springel05} with an assumed standard $\Lambda$-CDM
-cosmology and a semi-analytic baryon model grafted upon the Millennium
-results as described in \citet{springel05} and \citet{delucia}. This
-semi-analytic model features radiative cooling, star formation, and
-the dynamics of black holes, supernovae, and AGNs. It includes
-features such as explicitly following dark matter haloes even
-after accretion onto larger systems in order to follow the dynamics of
+The galaxy simulation is based on dark matter haloes from the
+Millennium simulation \citep{springel05} (with an assumed standard
+$\Lambda$-CDM cosmology) and a semi-analytic baryon model grafted upon
+the Millennium results as described in \citet{springel05} and
+\citet{delucia}. This semi-analytic model features radiative cooling,
+star formation, and the dynamics of black holes, supernovae, and
+AGNs. It includes explicitly following dark matter haloes, even after
+accretion onto larger systems, in order to follow the dynamics of
 satellite galaxies for an extended period of time as well as 'radio
 mode' feedback of AGNs. The model was adjusted to mimic the
 luminosity, color, and morphology distributions of low redshift
 galaxies \citep{delucia}. LSST cosmological catalogs were generated
-from the \citet{delucia} data
-by constructing a lightcone, covering redshifts 0$<$z$<$6, from 58
-500h$^{-1}$Mpc simulation snapshots. This lightcone covers a 4.5x4.5
-degree footprint on the sky and samples halo masses over the range
-$2.5\times10^9$ to $10^{12}$ $M_\odot$. 
+from the \citet{delucia} data by constructing a lightcone, covering
+redshifts 0$<$z$<$6, from 58 500h$^{-1}$Mpc simulation snapshots. This
+lightcone covers a 4.5x4.5 degree footprint on the sky and samples
+halo masses over the range $2.5\times10^9$ to $10^{12}$ $M_\odot$.
 
 Dynamically tiling this footprint across the sky enables the
 simulation of the full LSST footprint while keeping the underlying
 data volume small (but at the expense of introducing periodicity in
 the large scale structure).  For all sources, a spectral energy
-distribution, is fit to the galaxy colors using Bruzual and Charlot
-spectral synthesis models \citep{bruzual}. The
-\citet{delucia} catalog includes BVRIK magnitudes and dust values for
-the disk and bulge components of each galaxy as well as radii,
-redshift, coordinates, stellar age, masses and metallicities. These
-are also used in constraining the assignment of SEDs to each disk and bulge.
-These fits are undertaken independently for the bulge and disk components and
-include inclination dependent reddening. Morphologies are modeled using two
-Sersi{\'c} profiles and a single point source (for the AGN) with
-bulge-to-disk ratios and disk scale lengths from \citet{delucia}.
- Half-light radii for bulges are estimated using the empirical
-absolute-magnitude vs half-light radius relation given by 
-\citet{gonzalez09}.  Comparisons between the redshift and
+distribution (SED), is fit to the galaxy colors using Bruzual and
+Charlot spectral synthesis models \citep{bruzual}. The \citet{delucia}
+catalog includes BVRIK magnitudes and dust values for the disk and
+bulge components of each galaxy as well as radii, redshift,
+coordinates, stellar age, masses and metallicities. These parameters
+are used in constraining the assignment of SEDs to each disk and bulge
+component.  Fits are undertaken independently for the bulge and disk
+and include inclination dependent reddening. Morphologies are modeled
+using two Sersi{\'c} profiles and a single point source (for the AGN)
+with bulge-to-disk ratios and disk scale lengths from \citet{delucia}.
+Half-light radii for bulges are estimated using the empirical
+absolute-magnitude vs half-light radius relation given by
+\citet{gonzalez09}.  AGNs are derived using the \citet{bongiorno12}
+luminosity function. The B-band absolute magnitudes are converted to
+bolometric luminosities using Eqn. 2 in \citet{hopkins07}. Empirical
+relations derived from the SDSS enable computation of the colors and
+stellar mass of the AGNs host galaxy from its luminosity. These
+parameters are used, together with the redshift values from the AGN
+catalog, to match each AGN to a galaxy in the galaxy catalog. In
+general, the AGNs match to galaxies having higher stellar masses,
+approximately $10^{9}$ to $10^{11}$ $M_{\odot}$ which is comparable to
+recent analysis of host galaxies done by \citet{xue11}. The AGN SED is
+taken from the mean AGN spectrum of \citet{vandenberk}.
+
+Comparisons between the redshift and
 number-magnitude distributions of the simulated catalogs with those
 derived from deep imaging and spectroscopic surveys showed that the De
 Lucia models under-predict the density of sources at faint magnitudes
 and high redshifts. To correct for these effects, sources are
 ``cloned'' in magnitude and redshift space until their densities
 reflect the average observed properties (see \S
-\ref{sec:galaxycounts}). 
+\ref{sec:galaxycounts}).
 
-AGNs are derived using the \citet{bongiorno12} luminosity
-function. The B-band absolute magnitudes are converted to bolometric
-luminosities using Eqn. 2 in \citet{hopkins07}. Empirical relations
-derived from the SDSS enable computation of the colors and stellar
-mass of the AGNs host galaxy from its luminosity. These parameters are
-used, together with the redshift values from the AGN catalog, to match
-each AGN to a galaxy in the galaxy catalog. In general, the AGNs match
-to galaxies having higher stellar masses, approximately $10^{9}$ to
-$10^{11}$ $M_{\odot}$ which is comparable to recent analysis of host
-galaxies done by \citet{xue11}. The AGN SED is taken from the mean AGN
-spectrum of \citet{vandenberk}.
+
 
 \subsection{Galactic Structure \label{sec:stars}}
 
@@ -335,35 +361,14 @@ band apparent magnitude which is then used with the object's assigned
 C or S type SED to derive the corresponding LSST band observations.
 
 \subsection{Query Framework}
-The query framework is written in python and takes an object centric view of the 
-data.  For each object type (galaxy, main sequence star, strong lens, etc.) a class
-is defined that knows how to query for, format, and transform objects of that type.  
-This approach provides an extensible framework as different components of the Universal model
-are logically distinct and so can be separated into different tables in a database
-or in different databases all together.
 
-Many objects are similar in terms of their properties and how they
-need to be queried.  This enables a small number of base classes to be
-defined that will encompass the requirements of the majority of the
-object classes.  Other object classes can then be represented as
-simplified subclasses of the base class.  
-%Because of this a new object
-%class is as simple as overriding the database connection 
-%string {\bf  XXX what does this mean}
-Extensibility of catalog types is handled by the InstanceCatalog class
-which defines how the output from the object classes is formatted into
-catalogs.  Again, each catalog  type is a subclass of the base
-InstanceCatalog class, so extending to other catalog types simply
-requires overriding the default formatter.  This also allows for
-custom headers (like those needed for input to phosim) and custom
-output (e.g. binary, fits, or Python pickle files).
 
 
 
 \section{Validation of the Simulation Framework Requirements}
 
 In the following section we validate the current implementation of the
-catalog simulation (catsim) with respect to the LSST simulations
+catalog simulation (CatSim) with respect to the LSST simulations
 requirements (see \S 4.1 through \S 4.3 in
 \citealt{requirements}). Following the structure in the requirements
 document we consider the requirements on the properties of the
@@ -378,12 +383,12 @@ will resolve this issue through future work.
 and software shall be accessible by the LSST project and science
 collaborations}\\
 
-Catsim is released as open source software using the GPLv3 license
+CatSim is released as open source software using the GPLv3 license
 \citep{XXX}. The terms of this license are such that the software is
 made available for copying, modification, and redistribution
 (including derivative works). Adopting GPLv3 ensures that works
 derived from the LSST software will also be released under the same
-open-source licence. Code developed as part of catsim (including
+open-source licence. Code developed as part of CatSim (including
 configuration files and example scripts) are stored in the LSST 
 git repositories,
 
@@ -403,7 +408,7 @@ These repositories are available for anonymous (read-only) checkout or
 The source catalogs for the LSST Universe model are stored in a
 Microsoft SQLServer database (SQLServer 2003) that is housed and
 maintained at the University of Washington. All data stored within
-this database are accessible using the catsim framework and through
+this database are accessible using the CatSim framework and through
 standard SQL queries.
 
 \subsection{Framework Requirement 2}
@@ -415,7 +420,7 @@ standard SQL queries.
 Documentation is available as web pages as well as self documenting
 docstrings within the code.  This documentation includes installation
 instructions, example applications, a description of the database
-schema, and the interfaces and APIs used in catsim. This documentation
+schema, and the interfaces and APIs used in CatSim. This documentation
 is available at the following locations:
 \begin{itemize}
 \item catalog generation and measures -- {\tt http://www.astro.washington.edu/users/krughoff/documentation/}
@@ -428,9 +433,9 @@ is available at the following locations:
 {\it  The interfaces between the components of the simulation framework shall be defined 
 and documented}\\
 
-The interfaces between the operations simulator (opsim) and catsim and
-between catsim and the photon simulator (phosim) are documented by the
-opsim and phosim teams respectively.  These interfaces are described in:
+The interfaces between the operations simulator (OpSim) and CatSim and
+between CatSim and the photon simulator (PhoSim) are documented by the
+OpSim and PhoSim teams respectively.  These interfaces are described in:
 \begin{itemize}
 \item OpSim to CatSim -- ({\tt https://lsstcorp.org/sites/default/files/SSTARUserGuide.pdf}; accessed 07/29/2013)
 \item CatSim to PhoSim --{\bf XXX where is this}
@@ -442,15 +447,15 @@ opsim and phosim teams respectively.  These interfaces are described in:
 deterministic manner}\\
 
 Provenance is maintain both internally to each component of a
-simulator (e.g.\ for catsim) as well as between each of the components
+simulator (e.g.\ for CatSim) as well as between each of the components
 of the simulator framework through a series of mechanisms. For the
 Operations Simulator each run of the simulator is given unique
 identifier.  The OpSim identifier provides a unique table naming
-convention in the OpSim database that is used by the catsim query
+convention in the OpSim database that is used by the CatSim query
 framework to select the observing conditions given a pointing and an
 OpSim run. 
 
-For catsim, the base catalog data is stored on disk and is
+For CatSim, the base catalog data is stored on disk and is
 immutable. The base information going into any given run is therefore
 the same.  Since the galaxies are tiled across the sky, the identifier
 returned by the query framework is a combination of the tile number
@@ -486,7 +491,7 @@ not be more than 1024 object types.
 
 The input catalogs for the photon simulator includes a seed derived
 from the visit id for a particular observation (i.e.\ obshistid from
-the opsim database). This seed is used to initialize the photon
+the OpSim database). This seed is used to initialize the photon
 simulator and for the photon generation. Since parallelism for the
 photon simulator is on the chip level, the order of draws from the
 random number generator for each chip is the same.
@@ -522,7 +527,7 @@ wide range of analysis activities. For example,
 \item the realized positions of solar system objects can be used to
   test moving object detection algorithms.
 \item source catalogs can be used to test database and algorithm scaling.
-\item inputs generated for phosim using the OpSim observing cadences
+\item inputs generated for PhoSim using the OpSim observing cadences
   enable large scale image simulations for sensitivity analyses and
   algorithm development.
 \item realistic base catalogs enable the injection of specialized objects for specific science
@@ -696,7 +701,7 @@ even then only meats the $\pm30\%$ requirement.
 \subsubsection{Galaxies \label{sec:galaxycounts}}
 
 Figure \ref{fig:gcounts} shows a comparison of the galaxy counts in
-catsim to observations provided by Metcalfe et al. (see {\tt
+CatSim to observations provided by Metcalfe et al. (see {\tt
   http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}).  This
 comparison is undertaken in the $i$ band to minimize the effects of
 dust extinction which are somewhat uncertain in the Durham
@@ -1141,7 +1146,7 @@ humidity, and lapse rate) the rms astrometric uncertainty is 2.5 mas
 over the wavelength range from 0.3 to 1 $\mu$m . This represents a
 systematic error on wavelength dependent positions (i.e.\ it is
 effectively an error on the parameterization of the model), which is
-fit for in deriving an astrometric solution. For the case of catsim,
+fit for in deriving an astrometric solution. For the case of CatSim,
 while differential chromatic refraction can be applied to catalogs
 that are output for science evaluation, the data input to the photon
 simulator does not include this effect (i.e.\ it is generated
@@ -1180,7 +1185,7 @@ and the operations they wish to apply to these attributes (by creating
 the Python Mixin ({\it AstrometryMixin}). A new catalog type is then
 created by combining these classes ({\it CustomCatalog}) that
 expresses how to output the data. All of the functions and methods
-present within the catsim framework (including photometric, and
+present within the CatSim framework (including photometric, and
 astrometric operations) are available to the new class through this
 subclassing process (i.e.\ the user simply defines the new operations
 that they need).
