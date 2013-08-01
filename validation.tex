@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{amsbsy}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \topmargin0.0cm
 \textheight8.5in
@@ -15,7 +17,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage[margin=0in]{caption}
-\usepackage{subfigure}
+%\usepackage{subfigure}
 \usepackage{epsfig}
 \usepackage{color}
 %\usepackage{ulem}
@@ -630,28 +632,36 @@ observation.
   stars and galaxies and galaxies respectively (to the $5\sigma$ point
   source coadded depth of LSST)} 
 
-The motivation for this requirement is two fold.  There is a
-functional requirement that the distribution of sources is
-representative to test database scaling and I/O sizing models.
-
-Stellar number densities at galactic latitudes closer than to the plane than $|b| < 30^o$ are difficult to model due to the rising density and resulting confusion and deblending issues.
-For these reasons, the criterion for stellar number counts at low latitudes are relaxed to $\pm 30\%$. 
-For stars where $|b| > 30^o$, the Galfast model has been vetted against the SDSS data.  For stars with $|b| < 30^o$, we quantify the uncertainty in the model by comparing two reference models for Galactic structure.
-We compare the realization of the Galfast model to a realization of the \citet{besancon} model.
+%Stellar number densities at Galactic latitudes closer than to the
+%plane than $|b| < 30^o$ are difficult to model due to the rising
+%density and resulting confusion and deblending issues.  For these
+%reasons, the criterion for stellar number counts at low latitudes are
+%relaxed to $\pm 30\%$.  For stars where $|b| > 30^o$, the Galfast
+%model has been vetted against the SDSS data.  For stars with $|b| <
+%30^o$, we quantify the uncertainty in the model by comparing two
+%reference models for Galactic structure.  We compare the realization
+%of the Galfast model to a realization of the \citet{besancon} model.
 
 \subsubsection{Stars}
-We take six representative fields at varying galactic latitude at two longitudinal values (one toward the bulge, $b=0$, and one away, $b=180$).  
-We compare number 
-counts of main sequence stars to the co-added limiting magnitude in i-band 
- from the Galfast model using the composite dust model
-of \citet{amores05} normalized to \citet{schlegel98} to the \citet{besancon} model with their dust model.  Figure \ref{fig:scounts_0} shows 
-the cumulative number counts as a function of magnitude for the Besan\c{c}on (dashed) and Galfast (solid) models 
-for six values of galactic longitude toward the galactic bulge.  We are interested in the
-fractional cumulative contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of Besan\c{c}on counts to Galfast counts for the six test fields shown in Figure \ref{fig:sratio_0}.
-The dashed lines are the $\pm30\%$ limits for the low latitude sizing model constraints and the dash-dot lines are the $\pm18\%$ limits for the high latitude limits.
-Since the number counts are dominated by the faint end, it's most important where the lines end up at faint magnitudes for sizing considerations 
-(the co-added depth for the i-band is 26.8).  
-Nominal single epoch depth for i-band is 24.0.  
+We take six representative fields at varying Galactic latitudes and at
+two longitudinal values (one toward the bulge, $b=0$, and one directly
+away, $b=180$).  We compare number counts of main sequence stars to
+the co-added limiting magnitude in the i-band from the Galfast model
+\citep{XXX} using the composite dust model of \citet{amores05}
+normalized to \citet{schlegel98} to the \citet{besancon} model with
+their dust model.  Figure \ref{fig:scounts_0} shows the cumulative
+number counts as a function of magnitude for the Besan\c{c}on (dashed)
+and Galfast (solid) models for six values of galactic longitude toward
+the galactic bulge.  We are interested in the fractional cumulative
+contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of
+Besan\c{c}on counts to Galfast counts for the six test fields shown in
+Figure \ref{fig:sratio_0}.  The dashed lines are the $\pm30\%$ limits
+for the low latitude sizing model constraints and the dash-dot lines
+are the $\pm18\%$ limits for the high latitude limits.  Since the
+number counts are dominated by the faint end, it's most important
+where the lines end up at faint magnitudes for sizing considerations
+(the co-added depth for the i-band is 26.8).  Nominal single epoch
+depth for i-band is 24.0.
 
 In the case directed toward the galactic bulge, all fields meet the requirements at the co-added depth except
 for $b=-10$.  At the nominal single epoch depth, the $b=-10$ case fails and the $b=-30$ case misses the $\pm18\%$
@@ -680,33 +690,54 @@ requirement for all but the faintest magnitudes and even then only meats the $\p
 \end{figure}
 
 \subsubsection{Galaxies \label{sec:galaxycounts}}
-We compare the galaxy counts to those provided by Metcalfe et al. (see {\tt http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}; 
-accessed 07/29/2013).  We have taken their compilations from:
-{\tt http://star-www.dur.ac.uk/~nm/pubhtml/counts/idata.txt} accessed on 06/01/2013.  
-We include those data points with error bars.  
-Using these counts
-we noticed that the numbers of galaxies were under predicting at faint magnitudes.  
 
-The result of the number counts as a function of magnitude (after the cloning correction see \S \ref{sec:gal}) are shown in Figure \ref{fig:gcounts}.  
-We have chosen the i-band data for comparison to 
-minimize the effects of dust extinction which are somewhat uncertain in the Durham compilations.  A single transform from Kron-Cousins to AB of I$_{kc}$ = i$_{AB}$ - 0.5 was applied to
-all compilation data.  For comparison with requirements on the sizing model stated in the requirements document, we also plot the cumulative ratio of the best fit polynomial
-to the Durham data to the counts from the base catalog.  The requirement is $\pm18\%$ to the coadded i-band depth of 26.8.  We see that the base catalog
-under-predicts at the faintest magnitudes, but meets this requirement (Figure \ref{fig:gratio}).
+Figure \ref{fig:gcounts} shows a comparison of the galaxy counts in
+catsim to observations provided by Metcalfe et al. (see {\tt
+  http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}).  This
+comparison is undertaken in the $i$ band to minimize the effects of
+dust extinction which are somewhat uncertain in the Durham
+compilations.  A single transform of I$_{kc}$ = i$_{AB}$ - 0.5 is
+applied to the Metcalfe magnitudes to take them from the Kron-Cousins
+photometric system to AB photometric system. For magnitudes $i<25.5$
+the simulated number counts are consistent with the compilation of
+galaxy counts. For magnitudes fainter than $i=25.5$ the simulated
+number counts are systematically lower that the observations.
 
-\begin{figure}[H]
+In Figure \ref{fig:gratio} illustrate this further by plotting the
+ratio of the cumulative counts taken from the simulations to a
+polynomial fit to the cumulative counts derived from the Metcalfe
+data.  The error bars are estimated from the published uncertainties
+on the Metcalfe number counts. The requirement on the galaxy densities
+is that it is within $\pm10\%$ of the observed counts (to a coadded
+i-band depth of 26.8). This requirement is set from the variance in
+the observed counts due to the small size of galaxy surveys at the
+limit of the LSST data.
+% We have
+%taken their compilations from: {\tt
+%  http://star-www.dur.ac.uk/~nm/pubhtml/counts/idata.txt} accessed on
+%06/01/2013. 
+
+\begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/Ngals-i.png}
-\caption{Durham counts (symbols) compared to the counts from the base catalog \label{fig:gcounts}}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=5in]{validation_figures/CumulativeFraction_i.png}
-\caption{Durham counts divided by the counts from the base catalog.  Error bars are from adding the error bars from the data points in quadrature. \label{fig:gratio}}
+\includegraphics[width=0.45\textwidth]{validation_figures/Ngals-i.png}
+\hfil \includegraphics[width=0.45\textwidth]{validation_figures/CumulativeFraction_i.png}
+\caption{A comparison of the Metcalfe galaxy number counts (symbols)
+  to those derived from the simulated catalog \label{fig:gcounts}. The
+  left panel shows the differential counts and the right panel the
+  ratio of the cumulative counts. Error bars are from derived from
+  those published by the individual surveys. \label{fig:gratio}
+The vertical dashed line represents the
+  5$\sigma$ magnitude limit for galaxies.}
 \end{figure}
 
 \subsubsection{Ramifications of missing requirements}
-At low galactic latitudes the models for the stars are uncertain at a level greater than the requirements (i.e the discrepancy between Galfast and Besan\c{c}on is > {\bf XX}\%).  This has the potential to impact the sizing and compute models for the LSST.
+
+
+{\bf XXX Redo}
+At low galactic latitudes the models for the stars are uncertain at a
+level greater than the requirements (i.e the discrepancy between
+Galfast and Besan\c{c}on is > {\bf XX}\%).  This has the potential to
+impact the sizing and compute models for the LSST.
 
 The validity of the Besan\c{c}on as ground truth in the plane of the galaxy is not obvious.  In fact, SDSS and Galfast star counts agree surprisingly well at low galactic latitudes (private communication with M. Juri\'{c}). 
 However, the completeness of SDSS deep in the plane has also not been quantified.  Certainly in the densest regions
@@ -716,93 +747,131 @@ as multiple objects in the catalogs, the Galfast models will under-predict relat
 approximately the unresolved binary fraction.  These questions will be resolved through an ongoing comparison to observations
 from other surveys (e.g. Pan-STARRS).
 
-\subsection{Catalogs:  Requirement 3: Size, ellipticity, and redshift
-  distributions of galaxies shall be representative of those observed
-  by extant space and ground-based telescopes and, for a fiducial
-  image quality of 0.72 arcsec, deviations from the observed
-  distributions shall contribute $<20$\% of the observed effective
-  density of galaxies, n$_{eff}$, used in the weak lensing samples
-  (assuming a fiducial value of n$_{eff} = 28$ galaxies per
-  arcmin$^2$)}
-\subsubsection{Motivation}
-The measurement of weak lensing is dependent 
-on $n_{eff}$ which is the effective density of galaxies on the sky that can be used to measure weak lensing.  
-The value of $n_{eff}$ depends on the inherent shape noise, the signal-to-noise distribution and the size distribution of galaxies relative to the PSF.
+\subsection{Catalogs:  Requirement 3}
+
+{\it Size, ellipticity, and redshift distributions of galaxies shall
+  be representative of those observed by extant space and ground-based
+  telescopes and, for a fiducial image quality of 0.72 arcsec,
+  deviations from the observed distributions shall contribute $<20$\%
+  of the observed effective density of galaxies, n$_{eff}$, used in
+  the weak lensing samples (assuming a fiducial value of n$_{eff} =
+  28$ galaxies per arcmin$^2$)}
 
 
-
-\subsubsection{Measuring $n_{eff}$}
-We use the framework described in \citet{chang} to calculate $n_{eff}$ for the distributions in the 
+The ability to use gravitational weak lensing to constrain
+cosmological parameters is dependent on $n_{eff}$, the effective
+density of galaxies on the sky that can be used in weak lensing
+measurements. The size of $n_{eff}$ depends on the inherent shape
+noise of the galaxies, the size distributions of the galaxies relative
+to the size of the PSF, and the signal-to-noise of the observations.
+Following  the methodology of \citet{chang} we
+calculate $n_{eff}$ for the distributions in the 
 base galaxy catalog.  In summary, we use Equation 9 to calculate $n_{eff}$:
 \begin{equation}
 n_{eff} = \frac{1}{\Omega}\sum^N_i\frac{\sigma^2_{SN}}{\sigma^2_{SN}+\sigma^2_{m,i}}
 \end{equation}
-where $\sigma_{SN}$ is the intrinsic shape noise and $\sigma_{m,i}$ is the shape measurement noise for the i$^{th}$ galaxy.
-
-The shape noise is derived from the ellipticity distribution.  For the distribution used in \citet{chang} $\sigma_{SN} = 0.26$.
-The measurement noise can be approximated using Equation 13:
+where $\sigma_{SN}$ is the intrinsic shape noise, $\sigma_{m,i}$ is
+the shape measurement noise for the i$^{th}$ galaxy, and $N$ is the
+number of galaxies in the sample. The shape noise is derived from the
+ellipticity distribution of the galaxies, with $\sigma_{SN} = 0.26$
+\citep{chang}.  The measurement noise can be approximated using
+Equation 13 of \citet{chang}:
 \begin{equation}
 \sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}{R}\right)^c\right]
 \end{equation}
-Where $\nu$ is the signal-to-noise ratio of the source, $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the size of the galaxy relative to
-the point spread function.  We adopt values from \citet{chang} of (a,b,c) = (1.58,5.03,0.39), and assume a fiducial
-PSF size of 0.7 arcsec. We use an estimate for the limiting magnitude of the co-added images
-of 26.7.  This takes into account the fact that the measurements are on extended sources as well as the fact that the SRD value 
-of 27.5 in r is for dark sky observations at zenith.   The galaxy sample is the ``Gold Sample'' of galaxies with $i < 25.3$.
-For each galaxy, $r_{gal}$ can be calculate from the flux ratio of the bulge and disk components as well as the effective half light 
-radii of each component (see Appendix B in \citet{chang} for a derivation of this calculation).
+where $\nu$ is the signal-to-noise ratio of the source,
+$R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the area of the galaxy relative to
+the point spread function.  We adopt values from \citet{chang} of
+(a,b,c) = (1.58,5.03,0.39), and assume a fiducial PSF size of 0.7
+arcsec. We use an estimate for the limiting magnitude of the co-added
+images of 26.7.  {\bf XXX why?} This takes into account the fact that
+the measurements are on extended sources as well as the fact that the
+SRD value of 27.5 in r is for dark sky observations at zenith.  The
+galaxy sample is the ``Gold Sample'' of galaxies with $i < 25.3$.  For
+each galaxy, $r_{gal}$ can be calculate from the flux ratio of the
+bulge and disk components as well as the effective half light radii of
+each component (see Appendix B in \citet{chang} for a derivation of
+this calculation).
 
-Using this framework, we test the sensitivity of the measured $n_{eff}$ on the ellipticity and size distributions.  For all calculations that follow we 
-use the k=1 criterion of \citet{chang} meaning that galaxies with $\sigma_m < \sigma_{SN}$ are culled from the sample.
+Using this framework, we test the sensitivity of the measured
+$n_{eff}$ on our assumptions for the ellipticity, size, magnitude, and
+redshift distributions of the galaxies in the Universe model.  For all
+calculations that follow we use the k=1 criterion of \citet{chang}
+meaning that galaxies with $\sigma_m < \sigma_{SN}$ are culled from
+the sample. This assumes that no improvement has been made in the
+measurement of shear over current techniques.  The galaxy shape noise
+distribution has been measured by the COSMOS project \citep{cosmos}
+and, to first order, the dependence of $n_{eff}$ on the shape of the
+distribution can be expressed in terms of the variance of the
+ellipticity distribution. The dependence of $n_{eff}$ on apparent
+magnitude arises due to the steepness of the galaxy number counts. As
+is shown in Figure \ref{fig:neffvm}, however, due to the decrease in
+signal-to-noise of the sources there is a sharp cut-off in the value
+of $n_{eff}$ at $i=24.5$.  Given this, galaxy redshift distributions
+must agree with observations to a limiting magnitude of $i=24.5$ to
+insure an accurate mapping between physical and angular size.
+Finally, the size distribution of the combined two component galaxy
+model must reproduce the measured distributions.
 
-The shape noise distribution was well measured by the COSMOS project \citep{cosmos} and, to first order, is just the variance in the measured 
-ellipticity distribution.  The $n_{eff}$ depends strongly on the apparent magnitude because of the steepness of the galaxy number
-counts, but because of the dependence on signal to noise it has
-has a very sharp cutoff at around i=24.5 (see Figure \ref{fig:neffvm}).  Galaxy redshift distributions must
-agree with observations to this limiting magnitude to assure accurate signal to noise distributions.  Finally, the size distribution
-of the combined two component galaxy model must match measured distributions closely in order to reproduce predicted
-values of $n_{eff}$ from measured distributions.  We measure the distribution from the base catalogs and show that it is well
-within the envelope necessary to reproduce realistic values of $n_{eff}$.
-
-The ellipticity distribution is measured from the base catalog by sampling the appropriate composite Sersi{\'c} (bulge and disk together) using the
-ellipsoid parameters and flux ratio for each galaxy.  The moments are measured and ellipticities are calculated using the definitions in \citet{chang}.
+The ellipticity distribution is measured from the base catalog by
+sampling the composite Sersi{\'c} (bulge and disk together) using the
+ellipsoid parameters and the appropriate flux ratio for each galaxy.
+The moments are measured and ellipticities calculated using the
+definitions in \citet{chang}.
 \begin{equation}
 \epsilon_1 = \frac{I_{11}-I_{22}}{I_{11}+I_{22}+2\sqrt{I_{11}I_{22} - I^{2}_{12}}}\\
 \epsilon_2 = \frac{2I_{12}}{I_{11}+I_{22}+2\sqrt{I_{11}I_{22} - I^{2}_{12}}}
 \end{equation}
-We measure the same value of shape noise as reported by \citet{chang}, $\sigma_{SN} = 0.26$.  The shape appears to be slightly different than
-that of the COSMOS sample, but we have not investigated the effect of distribution shape on the measured value of $n_{eff}$ (see Figure \ref{fig:ellip1} 
-and Figure \ref{fig:ellip2}).  
-Slight variations in
-ellipticity distribution shape will not impact the measured value of $n_{eff}$ enough for the catalog to miss the requirement.  Figures \ref{fig:ellip_errbig}
-and \ref{fig:ellip_errsmall} show the measured ellipticity distribution from the base catalog scaled such that the $n_{eff}$ requirement would be missed on the high side 
-and on the low side respectively.
-\begin{figure}[H]
-\centering
-\includegraphics[width=5in]{validation_figures/e1_hist.png}
-\caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
-the cut made in \citet{chang}.\label{fig:ellip1}}
-\end{figure}
-\begin{figure}[H]
-\centering
-\includegraphics[width=5in]{validation_figures/e2_hist.png}
-\caption{Same as Figure \ref{fig:ellip1} but for e2.\label{fig:ellip2}}
-\end{figure}
+where $\epsilon_1$ and $\epsilon_2$ are the $x$ and $y$ components of
+the ellipticity and $I_{11}$, $I_{12}$, $I_{22}$ are the variance and
+covariance of the moments of the light distribution.
+
+The measured variance in the ellipticity distribution of the galaxies
+in the simulation catalog is $\sigma_{SN} = 0.26$; identical to that
+reported by \citet{chang}. The shape differs slightly from the COSMOS
+distribution with a broader tail and wider central component. (see
+Figure \ref{fig:ellip1} and Figure \ref{fig:ellip2}).  As shown in
+Figures~\ref{fig:ellip_errsmall} and \ref{fig:ellip_errbig} these
+slight variations in ellipticity distribution will not impact the
+measured value of $n_{eff}$ (Figures \ref{fig:ellip_errbig} and
+\ref{fig:ellip_errsmall} show the ellipticity distributions of samples
+of galaxies that will fail to meet the requirements on $n_{eff}$.
 
 \begin{figure}[H]
 \centering
-  \includegraphics[width=5in]{validation_figures/e1_hist_s_354.png}
-\caption{The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too large.\label{fig:ellip_errbig}}
-\end{figure}
-\begin{figure}[H]
-\centering
-  \includegraphics[width=5in]{validation_figures/e1_hist_s_17.png}
-\caption{The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too small.\label{fig:ellip_errbig}}
+\begin{subfigure}[b]{0.3\textwidth}
+               \centering
+              \includegraphics[width=\textwidth]{validation_figures/e1_hist.png}
+               \label{fig:ellip1}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}
+               \centering
+               \includegraphics[width=\textwidth]{validation_figures/e2_hist.png}
+               \label{fig:ellip2}
+      \end{subfigure}
+
+        \begin{subfigure}[b]{0.3\textwidth}
+              \centering
+              \includegraphics[width=\textwidth]{validation_figures/e1_hist_s_17.png}
+              \label{fig:ellip_errbig}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.3\textwidth}
+             \centering
+             \includegraphics[width=\textwidth]{validation_figures/e1_hist_s_354.png}
+            \label{fig:ellip_errbig}
+     \end{subfigure}
+
+\caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
+the cut made in \citet{chang}.
+Same as Figure \ref{fig:ellip1} but for e2.
+The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too large.
+The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too small.}
 \end{figure}
 
 For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18_24}.  As shown in \ref{fig:neffvm}
 galaxies with $i > 25$ do not contribute significantly to $n_{eff}$. 
-\begin{figure}[H]
+
+\begin{figure}{th}
 \centering
 \includegraphics[width=5in]{validation_figures/Nofz_18_24.png}
 \caption{The blue histogram in each panel is the measured N(z) for 1 magnitude bins from $18<i<24$.  Overplotted is the empirical distribution from \citet{coil04} normalized to the area of the measured distribution.  The dashed and dotted red lines show what happens if the governing parameter for the \citet{coil04} distribution, $z_o$, is over
@@ -830,12 +899,16 @@ or under predicted by $3\sigma$ respectively.\label{fig:nofz18_24}}
 size of the galaxies relative to the PSF is falling off quickly enough that galaxies fainter the $i=25$ don't contribute much to $n_{eff}$.\label{fig:neffvm}}
 \end{figure}
 
-{\bf XXX read to here}
 
 \subsubsection{Galaxy radius measurements}
-There are many definitions of galaxy size: half light radius, first moment radius, second moment radius, Petrosian radius, Kron radius, etc.
-Our comparison data set is that from the COSMO ACS catalog \citep{cosmos} because of the size ($~2deg^2$), depth ($~26$ in i), and
-quality (space based).  
+There are many definitions of galaxy size: half light radius, first
+moment radius, second moment radius, Petrosian radius, Kron radius,
+etc.  We utilize the COSMOS Advanced Camera for Surveys catalog
+\citep{cosmos} as the data against which to validate the size
+distribution of galaxies as it extends to depths greater than
+$i=24.5$, is of higher resolution than ground-based data (i.e.\ with
+an image quality of $<0.1$ arcsec), and covers a representative area
+of the sky (2 deg$^2$).
 
 The COSMOS catalog reports the second moments and the 
 half light radius, so either the second moment radius or half light radius could be used for comparison.  One concern is that the measurements
