@@ -640,18 +640,23 @@ observation.
 
 \subsubsection{Stars}
 We take six representative fields at varying Galactic latitudes and at
-two longitudinal values (one toward the bulge, $b=0$, and one directly
-away, $b=180$).  We compare number counts of main sequence stars to
+$l=90$.  We compare number counts of main sequence stars to
 the co-added limiting magnitude in the i-band from the Galfast model
 \citep{XXX} using the composite dust model of \citet{amores05}
 normalized to \citet{schlegel98} to the \citet{besancon} model with
-their dust model.  Figure \ref{fig:scounts_0} shows the cumulative
+their dust model.  Figure \ref{fig:scounts_90} shows the cumulative
 number counts as a function of magnitude for the Besan\c{c}on (dashed)
 and Galfast (solid) models for six values of galactic longitude toward
-the galactic bulge.  We are interested in the fractional cumulative
-contribution.  In Figure \ref{fig:sratio_0} we plot the ratio of
+the galactic bulge.  We also show SDSS counts for two latitudes 
+($b=30^{\circ}$, squares, and $b=70^{\circ}$ circles).  For high glactic
+latitudes, the SDSS counts agree much better with the Galfast counts
+than they do with the Besan\c{c}on counts.
+
+We are interested in the fractional cumulative
+contribution.  
+In Figure \ref{fig:sratio_90} we plot the ratio of
 Besan\c{c}on counts to Galfast counts for the six test fields shown in
-Figure \ref{fig:sratio_0}.  The dashed lines are the $\pm30\%$ limits
+Figure \ref{fig:sratio_90}.  The dashed lines are the $\pm30\%$ limits
 for the low latitude sizing model constraints and the dash-dot lines
 are the $\pm18\%$ limits for the high latitude limits.  Since the
 number counts are dominated by the faint end, it's most important
@@ -677,20 +682,14 @@ even then only meats the $\pm30\%$ requirement.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_stars_0_besancon_dust.png}
+\includegraphics[width=5in]{validation_figures/cumulative_stars_90_besancon_dust.png}
 \caption{Cumulative counts of stars from the Besan\c{c}on (dashed) and Galfast (solid) models for 5 representative fields toward the Galactic bulge (l=0$^o$) \label{fig:scounts_0}}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_0_besancon_dust.png}
-\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields toward the Galactic bulge (l=0$^o$) \label{fig:sratio_0}}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_180_besancon_dust.png}
-\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields away from the Galactic bulge (l=180$^o$) \label{fig:sratio_180}}
+\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_90_besancon_dust.png}
+\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields at l=0$^{\circ}$.  At $b=-30^{\circ}$ and $i=22$, the SDSS counts are lower than the Galfast counts by 13\% cumulatively.\label{fig:sratio_90}}
 \end{figure}
 
 \subsubsection{Galaxies \label{sec:galaxycounts}}
@@ -700,9 +699,9 @@ catsim to observations provided by Metcalfe et al. (see {\tt
   http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}).  This
 comparison is undertaken in the $i$ band to minimize the effects of
 dust extinction which are somewhat uncertain in the Durham
-compilations.  A single transform of I$_{kc}$ = i$_{AB}$ - 0.5 is
+compilations.  A transform of I$_{kc}$ = i$_{AB}$ - 0.6 is
 applied to the Metcalfe magnitudes to take them from the Kron-Cousins
-photometric system to AB photometric system. For magnitudes $i<25.5$
+photometric system to the SDSS AB photometric system \citep{ellis07}. For magnitudes $i<25.5$
 the simulated number counts are consistent with the compilation of
 galaxy counts. For magnitudes fainter than $i=25.5$ the simulated
 number counts are systematically lower that the observations.
@@ -840,42 +839,23 @@ The measured variance in the ellipticity distribution of the galaxies
 in the simulation catalog is $\sigma_{SN} = 0.26$; identical to that
 reported by \citet{chang}. The shape differs slightly from the COSMOS
 distribution with a broader tail and wider central component. (see
-Figure \ref{fig:ellip1} and Figure \ref{fig:ellip2}).  As shown in
-Figures~\ref{fig:ellip_errsmall} and \ref{fig:ellip_errbig} these
+Figure \ref{fig:e_hist}).  As shown in
+the bottom two panels of Figure~\ref{fig:e_hist} these
 slight variations in ellipticity distribution will not impact the
-measured value of $n_{eff}$ (Figures \ref{fig:ellip_errbig} and
-\ref{fig:ellip_errsmall} show the ellipticity distributions of samples
-of galaxies that will fail to meet the requirements on $n_{eff}$).
+measured value of $n_{eff}$.  The bottom left panel of Figure~\ref{fig:e_hist}
+shows a distribution that is too wide to meet the requirements, and the bottom
+right panel of Figure~\ref{fig:e_hist} shows a distribution that is 
+too narrow to meet the requirement.
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}[b]{0.3\textwidth}
-               \centering
-              \includegraphics[width=\textwidth]{validation_figures/e1_hist.png}
-               \label{fig:ellip1}
-        \end{subfigure}
-        \begin{subfigure}[b]{0.3\textwidth}
-               \centering
-               \includegraphics[width=\textwidth]{validation_figures/e2_hist.png}
-               \label{fig:ellip2}
-      \end{subfigure}
-
-        \begin{subfigure}[b]{0.3\textwidth}
-              \centering
-              \includegraphics[width=\textwidth]{validation_figures/e1_hist_s_17.png}
-              \label{fig:ellip_errbig}
-     \end{subfigure}
-     \begin{subfigure}[b]{0.3\textwidth}
-             \centering
-             \includegraphics[width=\textwidth]{validation_figures/e1_hist_s_354.png}
-            \label{fig:ellip_errbig}
-     \end{subfigure}
-
+\includegraphics[width=\textwidth]{validation_figures/e_hist.png}
 \caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
 the cut made in \citet{chang}.
-Same as Figure \ref{fig:ellip1} but for e2.
+Same as the top right panel but for e2.
 The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too large.
-The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too small.}
+The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too small.
+\label{e_hist}}
 \end{figure}
 
 For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18_24}.  As shown in \ref{fig:neffvm}
@@ -986,10 +966,12 @@ data half light radius distributions.  The half light radius
 distribution for the base catalog is dominated by the disk components
 since there are many more disk only objects than bulge only objects
 and the disk components have large half light radius values (relative
-to the bulge).  To simulate varying half light radius distributions we
-take the bulge distribution from the base catalog and then sample from
-a log-normal distribution with varying shape parameters.
-{\bf XXX what does this mean?}
+to the bulge). We measure $n_{eff}$ for a variety of half light radius
+distributions by taking the base catalog bulge size distribution and
+modeling the disk size distribution as a log-normal distribution.  We
+then vary the peak location and width of the disk size distribution
+to map the sensitivity of the measure value of $n_{eff}$ to the peak
+location and distribution width.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/ln_fit.png}
@@ -1023,8 +1005,6 @@ The surface is normalized to the value of $n_{eff}$ as measured using the half l
 is the location of the COSMOS data in this plane which by construction falls on the zero contour.  The black square is the prediction of
 the measured $n_{eff}$ using the half light radius distribution from the base catalog.\label{fig:size_sens}}
 \end{figure}
-{\bf XXX why is the bright part not on the delta neff = 0}
-
 
 \subsection{Catalogs: Requirement 4}
 
@@ -1045,12 +1025,13 @@ these stars reproduce the observed stellar locus. In Figure
 \ref{fig:starcolorspan} we verify that we the stellar catalog meets
 the requirement that the colors span the range
 \begin{center}
-\begin{tabular}{c}
-      $ -0.2 < u-g <        2.7 $\\
-       $  -0.4  <  g-r <       1.7 $\\
-        $ -0.3   <  r-i <    2.3 $\\
-        $  -0.25 < i-z <       1.2 $\\ 
-        $  -0.2 <  z-y   <    0.8 $
+\begin{tabular}{c|r|r}
+Color Range& Blue Density (deg$^2$) & Red Density (deg$^2$)\\
+      $ -0.2 < u-g <        2.7 $&9&8\\
+       $  -0.4  <  g-r <       1.7 $&17&200\\
+        $ -0.3   <  r-i <    2.3 $&23&42\\
+        $  -0.25 < i-z <       1.2 $&260&42\\ 
+        $  -0.2 <  z-y   <    0.8 $&967&7
 \end{tabular}
 \end{center}
 For each color ($u-g$, $g-r$, $r-i$,
@@ -1058,7 +1039,8 @@ $i-z$, and $z-y$) we plot the normalized histogram for the main
 sequence and red giant branch (RGB) stars (forward hatching) and the
 white dwarf (backward hatching).  Together the two distributions span
 the required range as shown by the dashed vertical lines in each
-panel.
+panel.  We also note the density of stars per focal plane at the blue
+side and red side of each color range.
 \begin{figure}[H]
 \centering
 \includegraphics[width=5in]{validation_figures/star_lsst_color_hist.png}
