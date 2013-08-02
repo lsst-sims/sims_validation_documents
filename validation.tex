@@ -738,27 +738,36 @@ even then only meats the $\pm30\%$ requirement.
 
 \subsubsection{Galaxies \label{sec:galaxycounts}}
 
-Figure \ref{fig:gcounts} shows a comparison of the galaxy counts in
-CatSim to observations provided by Metcalfe et al. (see {\tt
+The left panel of Figure \ref{fig:gcounts} shows a comparison of the
+cumulative galaxy counts in CatSim to a compilation of observations
+provided by Metcalfe et al. (see {\tt
   http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}).  This
 comparison is undertaken in the $i$ band to minimize the effects of
-dust extinction which are somewhat uncertain in the Durham
-compilations.  A single transform of I$_{kc}$ = i$_{AB}$ - 0.5 is
-applied to the Metcalfe magnitudes to take them from the Kron-Cousins
-photometric system to AB photometric system. For magnitudes $i<25.5$
-the simulated number counts are consistent with the compilation of
-galaxy counts. For magnitudes fainter than $i=25.5$ the simulated
-number counts are systematically lower that the observations.
+dust extinction which are somewhat uncertain in the Metcalfe
+compilations.  A single transform of I$_{kc}$ = i$_{AB}$ - 0.6 has
+been applied to the Metcalfe magnitudes to take them from the
+Kron-Cousins photometric system to the SDSS AB photometric system.
 
-In Figure \ref{fig:gratio} illustrate this further by plotting the
-ratio of the cumulative counts taken from the simulations to a
-polynomial fit to the cumulative counts derived from the Metcalfe
-data.  The error bars are estimated from the published uncertainties
-on the Metcalfe number counts. The requirement on the galaxy densities
-is that it is within $\pm10\%$ of the observed counts (to a coadded
-i-band depth of 26.8). This requirement is set from the variance in
-the observed counts due to the small size of galaxy surveys at the
-limit of the LSST data.
+The right panel of Figure \ref{fig:gratio} shows the ratio of the
+cumulative counts taken from the simulations to a polynomial fit to
+the cumulative counts derived from the Metcalfe data.  The error bars
+are estimated from the published uncertainties on the Metcalfe galaxy
+number counts. The requirement on galaxy number densities is that they
+agree within $\pm10\%$ of the observed counts (to a coadded i-band
+depth of XXX). This requirement is set due to the variance in the
+counts of galaxies at faint magnitudes (due to the small areal
+coverage of galaxy surveys at these depths).  For magnitudes
+$XXX<i<XXX$ the simulated galaxy catalog meets the LSST requirements.
+For brighter magnitudes the simulated catalogs over-predict the galaxy
+counts by upto XXX\%. This discrepancy is to be expected as the volume
+sampled by simulated galaxies (covering $4.5^o \times 4.5^o$) is small
+relative to the observations and the cosmic variance in the simulated
+data will be large. For magnitudes fainter than $i>XXX$ the galaxy
+counts fail to meet the number density requirement; deviating by XXX\%
+from the observed counts.
+
+
+
 % We have
 %taken their compilations from: {\tt
 %  http://star-www.dur.ac.uk/~nm/pubhtml/counts/idata.txt} accessed on
@@ -779,6 +788,7 @@ The vertical dashed line represents the
 
 \subsubsection{Ramifications of missing requirements}
 
+The impact at bright magnitudes is negligible - to counts 
 
 {\bf XXX Redo}
 At low galactic latitudes the models for the stars are uncertain at a
