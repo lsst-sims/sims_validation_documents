@@ -679,43 +679,45 @@ has been implemented.
 %of the Galfast model to a realization of the \citet{besancon} model.
 
 \subsubsection{Stars}
-We take six representative fields at varying Galactic latitudes and at
-$l=90$.  We compare number counts of main sequence stars to
-the co-added limiting magnitude in the i-band from the Galfast model
-\citep{juric} using the composite dust model of \citet{amores05}
-normalized to \citet{schlegel98} to the \citet{besancon} model with
-their dust model.  Figure \ref{fig:scounts_90} shows the cumulative
-number counts as a function of magnitude for the Besan\c{c}on (dashed)
-and Galfast (solid) models for six values of galactic longitude toward
-the galactic bulge.  We also show SDSS counts for two latitudes 
-($b=30^{\circ}$, squares, and $b=70^{\circ}$ circles).  For high glactic
-latitudes, the SDSS counts agree much better with the Galfast counts
-than they do with the Besan\c{c}on counts.
+We consider six representative fields at varying Galactic latitudes
+and at a Galactic longitude of $l=90$.  We compare the number counts
+of main sequence stars as a function of $i$-band limiting magnitude
+for the Galfast model \citep{juric} (using the composite dust model of
+\citet{amores05} normalized to \citet{schlegel98}) to the
+\citet{besancon} model (using their standard dust model).  Figure
+\ref{fig:scounts_90} shows the cumulative number counts as a function
+of magnitude for the Besan\c{c}on (dashed) and Galfast (solid) models
+for six values of Galactic latitude.  We also show SDSS counts for two
+latitudes ($b=30^{\circ}$, squares, and $b=70^{\circ}$ circles).  For
+high glactic latitudes ($|b| >30$), the agreement with the SDSS counts
+is best with the Galfast models (with a 13\% difference between
+Galfast and SDSS at the limit of the SDSS data). For low Galactic
+latitudes there is insufficient observational data to constrain the
+Galfast of Besan\c{c}on models.
 
-We are interested in the fractional cumulative
-contribution.  
-In Figure \ref{fig:sratio_90} we plot the ratio of
-Besan\c{c}on counts to Galfast counts for the six test fields shown in
-Figure \ref{fig:sratio_90}.  The dashed lines are the $\pm30\%$ limits
-for the low latitude sizing model constraints and the dash-dot lines
-are the $\pm18\%$ limits for the high latitude limits.  Since the
-number counts are dominated by the faint end, it's most important
-where the lines end up at faint magnitudes for sizing considerations
-(the co-added depth for the i-band is 26.8).  Nominal single epoch
-depth for i-band is 24.0.
+In Figure \ref{fig:sratio_90} we show the ratio of Besan\c{c}on counts
+to Galfast counts for the six test fields defined in Figure
+\ref{fig:sratio_90}.  The dashed lines are the $\pm30\%$ limits for
+the low latitude sizing model constraints and the dash-dot lines are
+the $\pm20\%$ limits for the high latitude limits requirements. 
+For all Galactic latitudes $b<-30$ the Besan\c{c}on and Galfast models
+disagree at $>$20\% requirement for stellar densities. For low
+Galactic latitudes ($b=-10$) the Besan\c{c}on  and Galfast models are
+in good agreement (i.e.\ within the 20\% requirement on stellar number densities) .
 
-In the case directed toward the galactic bulge, all fields meet the
-requirements at the co-added depth except for $b=-10$.  At the nominal
-single epoch depth, the $b=-10$ case fails and the $b=-30$ case misses
-the $\pm18\%$ requirement, but makes the $\pm30\%$ requirement.
+%In the case directed toward the galactic bulge, all fields meet the
+%requirements at the co-added depth except for $b=-10$.  At the nominal
+%single epoch depth, the $b=-10$ case fails and the $b=-30$ case misses
+%the $\pm20\%$ requirement, but makes the $\pm30\%$ requirement.
+% PUT THIS BACK IN?
 
-For the high latitude fields away from the galactic bulge, the
-deviation from the Besan\c{c}on model is within the stated
-requirement.  The $b=-10$ case, the number counts from Galfast
-significantly under predict relative to the Besan\c{c}on model.  The
-$b=-30$ case shows similar, though not as drastic, under prediction
-and misses the requirement for all but the faintest magnitudes and
-even then only meats the $\pm30\%$ requirement.
+%For the high latitude fields away from the Galactic bulge, the
+%deviation from the Besan\c{c}on model is within the stated
+%requirement.  The $b=-10$ case, the number counts from Galfast
+%significantly under predict relative to the Besan\c{c}on model.  The%
+%$b=-30$ case shows similar, though not as drastic, under prediction
+%and misses the requirement for all but the faintest magnitudes and
+%even then only meats the $\pm30\%$ requirement.
 
 %We repeated this analysis using the GALFAST dust model and the results do not change significantly
 
@@ -753,17 +755,14 @@ agree within $\pm10\%$ of the observed counts (to a coadded i-band
 depth of XXX). This requirement is set due to the variance in the
 counts of galaxies at faint magnitudes (due to the small areal
 coverage of galaxy surveys at these depths).  For magnitudes
-$XXX<i<XXX$ the simulated galaxy catalog meets the LSST requirements.
+$20.25<i<25.75$ the simulated galaxy catalog meets the LSST requirements.
 For brighter magnitudes the simulated catalogs over-predict the galaxy
-counts by upto XXX\%. This discrepancy is to be expected as the volume
-sampled by simulated galaxies (covering $4.5^o \times 4.5^o$) is small
+counts by upto 25\%. This discrepancy is to be expected as the volume
+sampled by the simulated galaxies (covering $4.5^o \times 4.5^o$) is small
 relative to the observations and the cosmic variance in the simulated
-data will be large. For magnitudes fainter than $i>XXX$ the galaxy
-counts fail to meet the number density requirement; deviating by XXX\%
+data will be large. For magnitudes fainter than $i>25.75$ the galaxy
+counts fail to meet the number density requirement; deviating by upto 13\%
 from the observed counts.
-
-
-
 
 % We have
 %taken their compilations from: {\tt
@@ -783,29 +782,42 @@ The vertical dashed line represents the
   5$\sigma$ magnitude limit for galaxies.}
 \end{figure}
 
-\subsubsection{Ramifications of missing requirements}
+\subsubsection{Ramifications of missing the number density requirements}
 
-The impact at bright magnitudes is negligible - to counts 
-
-{\bf XXX Redo}
-At low galactic latitudes the models for the stars are uncertain at a
-level greater than the requirements (i.e the discrepancy between
-Galfast and Besan\c{c}on is > {\bf XX}\%).  This has the potential to
-impact the sizing and compute models for the LSST.
+For stellar counts away from the bulge, the Galfast model matches the
+observed densities of stars to the limit of the SDSS data. Comparison
+with the Besan\c{c}on model shows, however, a discrepancy of over 30\%
+between the predicted counts for all magnitudes greater than $i>23$
+and for all latitudes $b<-35$. In all such cases the LSST model from
+Galfast over-predicts the densities of stars compared to
+Besan\c{c}on. While it is clear that much of the uncertainty in
+predicting stellar counts arises due to variations between the
+Galactic structure models, the fact that Galfast predicts a higher
+density of stars than Besan\c{c}on minimizes the risk that the compute
+and sizing model will be under resourced (i.e.\ it risks over
+provisioning of the compute resources).
 
 The validity of the Besan\c{c}on as ground truth in the plane of the
 galaxy is not obvious.  In fact, SDSS and Galfast star counts agree
-surprisingly well at low galactic latitudes (private communication
-with M. Juri\'{c}).  However, the completeness of SDSS deep in the
-plane has also not been quantified.  Certainly in the densest regions
-of the plane there is significant loss of stars due to blending.
-Further, since the Besan\c{c}on models are drawn from distributions
-with binary corrections applied and the Galfast model does not produce
-unresolved binary systems as multiple objects in the catalogs, the
-Galfast models will under-predict relative to the Besan\c{c}on by
-approximately the unresolved binary fraction.  These questions will be
-resolved through an ongoing comparison to observations from other
-surveys (e.g. Pan-STARRS).
+surprisingly well at low galactic latitudes (M. Juri\'{c}, private
+communication). Away from the bulge the agreement between models at
+$b=10$ is evident from Figure~\ref{fig:gratio}. Toward the bulge the
+stellar densities disagree by more than 30\% at $b=10$. Part of this
+disagreement may arise due to the fact that the Besan\c{c}on models
+are drawn from distributions with binary corrections applied and the
+Galfast model does not produce unresolved binary systems as multiple
+objects in the catalogs (i.e.\ the Galfast models should under-predict
+relative to the Besan\c{c}on by approximately the unresolved binary
+fraction).  These questions will be resolved through an ongoing
+comparison to observations from other surveys (e.g. Pan-STARRS).
+
+For galaxy counts, the  number counts fail to meet
+requirements for magnitudes $i>25.75$. At the limiting depth the
+counts are less than 2$\sigma$ from the observed counts (where
+$\sigma$ is a combination of shot and cosmic variance). While the
+galaxy simulations are within the bounds set by Data Management for
+the sizing model we will resolve these discrepancies by recloning the
+galaxy data.
 
 \subsection{Catalogs:  Requirement 3}
 
@@ -814,15 +826,16 @@ surveys (e.g. Pan-STARRS).
   telescopes and, for a fiducial image quality of 0.72 arcsec,
   deviations from the observed distributions shall contribute $<20$\%
   of the observed effective density of galaxies, n$_{eff}$, used in
-  the weak lensing samples (assuming a fiducial value of n$_{eff} =
+  weak lensing samples (assuming a fiducial value of n$_{eff} =
   28$ galaxies per arcmin$^2$)}\\
 
 
 The ability to use gravitational weak lensing to constrain
 cosmological parameters is dependent on $n_{eff}$, the effective
-density of galaxies on the sky that can be used in weak lensing
+density of galaxies on the sky that can are sufficiently resolve such
+that they can be used in weak lensing
 measurements. The size of $n_{eff}$ depends on the inherent shape
-noise of the galaxies, the size distributions of the galaxies relative
+noise of the galaxies, the size distribution of the galaxies relative
 to the size of the PSF, and the signal-to-noise of the observations.
 Following the methodology of \citet{chang} we calculate $n_{eff}$ for
 the distributions in the base galaxy catalog.  In summary, we use
@@ -833,18 +846,18 @@ n_{eff} = \frac{1}{\Omega}\sum^N_i\frac{\sigma^2_{SN}}{\sigma^2_{SN}+\sigma^2_{m
 where $\sigma_{SN}$ is the intrinsic shape noise, $\sigma_{m,i}$ is
 the shape measurement noise for the i$^{th}$ galaxy, and $N$ is the
 number of galaxies in the sample. The shape noise is derived from the
-ellipticity distribution of the galaxies, with $\sigma_{SN} = 0.26$
+ellipticity distribution of the galaxies with $\sigma_{SN} = 0.26$
 \citep{chang}.  The measurement noise can be approximated using
 Equation 13 of \citet{chang}:
 \begin{equation}
 \sigma_m(\nu,R) = \frac{a}{\nu}\left[1+\left(\frac{b}{R}\right)^c\right]
 \end{equation}
-where $\nu$ is the signal-to-noise ratio of the source,
+where $\nu$ is the signal-to-noise ratio of the source, and
 $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the area of the galaxy relative to
 the point spread function.  We adopt values from \citet{chang} of
-(a,b,c) = (1.58,5.03,0.39), and assume a fiducial PSF size of 0.7
+(a,b,c) = (1.58,5.03,0.39), and assume a fiducial PSF size of 0.72
 arcsec. We use an estimate for the limiting magnitude of the co-added
-images of 26.7.  This value is the best reproduces the values presented in
+images of 26.7.  This value reproduces the values presented in
 \citet{chang}.  We expect the measured value of the limiting depth
 to be brighter than the SRD value of 27.5 in r because the SRD value
 is defined for dark sky at zenith and these observations have a 
@@ -871,8 +884,8 @@ ellipticity distribution. The dependence of $n_{eff}$ on apparent
 magnitude arises due to the steepness of the galaxy number counts. As
 is shown in Figure \ref{fig:neffvm}, however, due to the decrease in
 signal-to-noise of the sources there is a sharp cut-off in the value
-of $n_{eff}$ at $i=24.5$.  Given this, galaxy redshift distributions
-must agree with observations to a limiting magnitude of $i=24.5$ to
+of $n_{eff}$ at $i=25.0$.  Given this, galaxy redshift distributions
+must agree with observations to a limiting magnitude of $i=25.0$ to
 insure an accurate mapping between physical and angular size.
 Finally, the size distribution of the combined two component galaxy
 model must reproduce the measured distributions.
@@ -902,9 +915,9 @@ shows a distribution that is too wide to meet the requirements, and the bottom
 right panel of Figure~\ref{fig:e_hist} shows a distribution that is 
 too narrow to meet the requirement.
 
-\begin{figure}[H]
+\begin{figure}[th]
 \centering
-\includegraphics[width=\textwidth]{validation_figures/e_hist.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/e_hist.png}
 \caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
 the cut made in \citet{chang}.
 Same as the top right panel but for e2.
@@ -937,7 +950,7 @@ or under predicted by $3\sigma$ respectively.\label{fig:nofz18_24}}
 %\includegraphics[width=5in]{validation_figures/Nofz_CumulativeFraction_22_28.png}
 %\caption{N(z) for 22 to 28 with distribution from \cite{coil}\label{fig:nofz22_28_ratio}}
 %\end{figure}
-\begin{figure}[H]
+\begin{figure}[th]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/neff_m_ir.png}
 \caption{This shows $n_{eff}$ as a function of i-band limiting magnitude.  Even though the the density of galaxies is going up steeply, the 
@@ -1025,7 +1038,7 @@ modeling the disk size distribution as a log-normal distribution.  We
 then vary the peak location and width of the disk size distribution
 to map the sensitivity of the measure value of $n_{eff}$ to the peak
 location and distribution width.
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/ln_fit.png}
 \caption{The half light radius distributions from the base catalog and 
@@ -1052,7 +1065,7 @@ $XXX$ which is less that the requirement of  $\pm6$ specified for {\it
   Catalogs:  Requirement 3}
 
 
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=5in]{validation_figures/size_sensitivity.png}
 \caption{Sensitivity of the predicted $n_{eff}$ to the shape of the half light radius distribution.  
@@ -1096,7 +1109,7 @@ white dwarf (backward hatching).  Together the two distributions span
 the required range as shown by the dashed vertical lines in each
 panel.  We also note the density of stars per focal plane at the blue
 side and red side of each color range.
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=5in]{validation_figures/star_lsst_color_hist.png}
 \caption{Normalized counts of main sequence, red giant branch and white dwarf stars as a function of color.  Heavy dashed lines show the requirements given in the requirements document.\label{fig:starcolorspan}}
