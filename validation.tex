@@ -1315,23 +1315,70 @@ catalog.write_catalog("out.txt")
 
 
 \section{Future work}
-We expect the requirements of the project to continue to evolve.  Informed by interations with the Systems Engineering team and the Data Management team we have 
-identified several areas in which future development will likely take place.  Below we itemize these likely areas of future work.
-\begin{itemize}
-\item Implement bright stars (OBA) -- For guiding and wavefront sensing analysis
-\item Implementation of extended and morphological images -- Multifit, supernova analysis, galaxy models
-\item Reduction of SED data size using PCA -- Parallelization of catalogs generation
-\item Add errors to catalogs -- Calibration simulations
-\item Add SNe to the catalogs to the framework -- Supernova sensitivity analysis
-\item Increase size (area) of galaxy catalogs including cosmological signatures -- Large scale structure
-\item Add weak lensing to the catalogs -- Weak lensing
-\item Add extended stellar sources, e.g. clusters -- Deblending
-\item General variability model -- Alert producton and light curve characterization
-\item Further validation of the Milky Way model at low galactic latitudes using Pan-STARRS
-\item SNe
-\item Proper motion induced by binaries
-\item Pan-chromatic variability with spectro-temporal surfaces
-\end{itemize}
-\bibliographystyle{plainnat}
+We have shown that the catalogs framework, as it stands, completely meets all but one of the requirements stated in \citet{requirements}.  Future
+work is necessary to improve the validity, fidelity, generality, and breadth of the existing framework.
+
+The future work of the catalogs framework will focus on three main areas each with a different priority and impact on the project.  The three
+areas are: continued validation and quantification of risk (high priority), engineering development (medium to high priority), and development for
+broader scientific assessment (low to medium priority).
+
+{\bf maybe some words here about why we choose the various priority levels}
+
+\subsection{High priority}
+The first 
+and highest priority is the continuation of the validation tasks.  Even though the validation process was highly successful, there are a few areas
+where further validation is expected.  The first area is in extending the validation of the star counts to deeper magnitudes and lower galactic
+latitudes with observational data.  With the appropriate data from other surveys, like Pan-STARRS \ref{panstarss}, the comparison would
+be very straight forward given that we have a Galfast realization in hand, and should only take a week to complete.  Of course, 
+addressing any differences that arise is more complicated, but since the project has planned for this risk, quantifying any discrepancy between 
+the model and reality is the most important activity.  
+
+A second high priority activity is to validate the solar system model against observed data.  Since solar system surveys are typically small area
+and focused at opposition, a full validation of the solar system model is very difficult to achieve.  The Pan-STARRS survey has been running for {\bf
+XXX} and will soon have enough data to put constraints on how well the \citet{grav11} model represents our solar system.  We intend to engage the 
+Pan-STARRS team to help us further validate the solar system model.
+
+The final high priority activity is to add bright O, B and A type stars to the base galactic structure database.  Bright stars have not been implemented 
+in the Galfast model, but we can use existing all sky catalogs of the bright (V < 18.) sky (Monet private communication) to fill in the bright (and blue)
+end of the stellar distribution of main sequence stars.  In general, these stars do not have a large impact on the science effort, but have a very big 
+impact on how the survey is run in practice.  Specifically, very bright stars will introduce data artifacts (bleed trails, blooming, glints, etc.) that
+cannot be modeled with the current data set.  Additionally, the wave front sensors and guiding sensors can be tested against the real bright star distribution
+on the sky. We have the data in hand to do this extension and just need to adjust the current distributions to match the observed distributions where they meet.
+
+\subsection{Medium Priority}
+One of the aspects of the simulator that is most asked for by both scientists and algorithms developers is the ability to input realistic galaxy morphology
+into simulated images.  The PhoSim has the ability to take a super-sampled galaxy image and sample from it to produce an LSST observation of the galaxy, 
+but the catalogs do not have a library of realistic galaxies to feed to the simulator.  The other 
+aspect of this effort is to simplify the SED handling by creating a set of principal component SEDs for each of the object types.  This would reduce the
+overall size of the SED library and make it possible to simulate a galaxy with an SED per pixel so that realistic color gradients can be included.  Having 
+realistically complex galaxies will help the multi-fit algorithm development effort.
+
+Having realistic galaxy morphology will expose failure modes in the algorithms that do not exist with very simplistic galaxy models, but if there is no
+shear in the catalog there is no signal to compare to the noise introduced by this complexity.  The catalogs framework is capable of handling a per galaxy
+weak lensing shear parametrization.  Working with Debbie Bard and Risa Wexler, we have shown that shear maps can be sampled by the framework and simulated 
+to through phosim.  The task now is to link the shear maps to the galaxies catalogs so that the shear correlation is consistent with the galaxy structure signal.
+
+Finally, having the ability to simulate realistic errors at the catalogs level (without having to go through image simulation and measurement) would be invaluable
+to many teams.  For example, calibration simulations with different OpSim realizations could be generated very quickly for the entire LSST footprint.  This requires
+an error model for the LSST dependent on seeing, airmass, sky brightness, and potentially other factors (e.g. settle time, temperature) if they are produced by OpSim.
+
+\subsection{Low Priority}
+The low priority tasks are upgrades to the framework and mostly facilitate scientific capability analysis.  The first implementation of variability that utilizes a 
+higher fidelity variability model.  Supernovae, for example, have a spectro-temporal surface that defines the SED of the supernova at any instant in time given
+a set of parameters.  This means that an SED per observation must be produced.  This sort of variability could also be used by the RR Ly variability model and
+potentially the AGN variability model.
+
+There is no global supernova model in the base catalogs framework.  Over the lifetime of the survey, there will be approximately one billion supernovae in the 
+full survey volume.  Significant effort must be put into making any supernova model deterministic and fast.  There supernovae must be distributed realistically
+with respect to the galaxy distribution.  Finally, it should be easy to swap out different supernova models to test cosmology and progenitor models.
+
+Another upgrade to the cosmological model is to include wide area simulations so that the large scale structure signal is not affected by the aliasing of a small
+area tiled galaxy catalog.  Even if they existed, the size of a full sky cosmological simulation to the depth of LSST makes it prohibitive to store in a 
+database for performance reasons.  One possible approach to dealing with this is to have a large scale survey to the depth of single epoch observations with 
+a tiled catalog for the deep sky.
+
+The galactic structure model can also be upgraded in various ways.  Two of the upgrades that impact algorithm development and are therefor interesting to the project
+are the addition of extended stellar sources (i.e. clusters) and improving the handling of proper motions induced by binaries.  The former will impact how plans for 
+development of deblending algorithms and the latter will influence the astrometric pipeline development.
 \bibliography{validation}
 \end{document}
