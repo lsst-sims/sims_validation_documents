@@ -1,7 +1,7 @@
 %\documentclass[prd, nofootinbib, floatfix, 12pt]{revtex4}
 %\documentclass[useAMS,usenatbib,11pt,preprint]{aastex}
 %\documentclass[12pt,preprint]{aastex}
-\documentclass[]{article}
+\documentclass[11pt]{article}
 \usepackage{amsmath}
 \usepackage{amsbsy}
 \usepackage{natbib}
@@ -37,7 +37,7 @@
 
 \begin{document} 
 
-\captionsetup{width=0.8\textwidth}
+\captionsetup{width=0.87\textwidth}
 
 \title{The LSST Universe model and its validation}
 
@@ -574,7 +574,7 @@ for sources that are returned from the database query are then
 transformed to their appropriate positions on the sky using the
 bounding boxes of the input tiles.
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/basicDemo.png}
 \caption{The galaxy catalog is replicated (virtually) across the LSST
@@ -614,7 +614,7 @@ complete.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5\textwidth]{validation_figures/ErrorHistogramsLinear.pdf}
+\includegraphics[width=0.65\textwidth]{validation_figures/ErrorHistogramsLinear.pdf}
 \caption{The distribution of maximum errors introduced to the orbital
   positions of asteroids due to the adopted interpolation
   scheme. These distributions are given as a function of asteroid
@@ -724,15 +724,22 @@ in good agreement (i.e.\ within the 20\% requirement on stellar number densities
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_stars_90_besancon_dust.png}
-\caption{Cumulative counts of stars from the Besan\c{c}on (dashed) and Galfast (solid) models for 5 representative fields toward the Galactic bulge (l=0$^o$) \label{fig:scounts_0}}
-\end{figure}
-
-\begin{figure}[h]
+\begin{subfigure}[b]{0.45\textwidth}
+\includegraphics[width=\textwidth]{validation_figures/cumulative_stars_90_besancon_dust.png}
+\label{fig:scounts_0}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\textwidth}
 \centering
-\includegraphics[width=5in]{validation_figures/cumulative_ratio_stars_90_besancon_dust.png}
-\caption{Cumulative ratio of counts of stars from the Besan\c{c}on and Galfast models for 5 representative fields at l=0$^{\circ}$.  At $b=-30^{\circ}$ and $i=22$, the SDSS counts are lower than the Galfast counts by 13\% cumulatively.\label{fig:sratio_90}}
-\end{figure}
+\includegraphics[width=\textwidth]{validation_figures/cumulative_ratio_stars_90_besancon_dust.png}
+\label{fig:sratio_90}
+\end{subfigure}
+\caption{Cumulative counts of stars from the Besan\c{c}on (dashed) and
+  Galfast (solid) models for 5 representative fields toward
+  l=90$^o$. The left panel shows the counts from these models and the
+  SDSS and the right panel the ratio of the Besan\c{c}on and Galfast
+  models. For $b<-30^{\circ}$ and $i<22$, the SDSS counts are 13\%
+  lower than the numbers predicted by the Galfast model.}
+  \end{figure}
 
 \subsubsection{Galaxies \label{sec:galaxycounts}}
 
@@ -752,20 +759,17 @@ the cumulative counts derived from the Metcalfe data.  The error bars
 are estimated from the published uncertainties on the Metcalfe galaxy
 number counts. The requirement on galaxy number densities is that they
 agree within $\pm10\%$ of the observed counts (to a coadded i-band
-depth of XXX). This requirement is set due to the variance in the
+depth of 26.8). This requirement is set due to the variance in the
 counts of galaxies at faint magnitudes (due to the small areal
 coverage of galaxy surveys at these depths).  For magnitudes
-$20.25<i<25.75$ the simulated galaxy catalog meets the LSST requirements.
-For brighter magnitudes the simulated catalogs over-predict the galaxy
-counts by upto 25\%. This discrepancy is to be expected as the volume
-sampled by the simulated galaxies (covering $4.5^o \times 4.5^o$) is small
-relative to the observations and the cosmic variance in the simulated
-data will be large. For magnitudes fainter than $i>25.75$ the galaxy
-counts fail to meet the number density requirement; deviating by upto 13\%
-from the observed counts.
-
-{\bf XXX why are we going to 26.9 and not 27.7? Aren't we converting
-  Metcalfe to SDSS}
+$20.25<i<25.75$ the simulated galaxy catalog meets the LSST
+requirements.  For brighter magnitudes the simulated catalogs
+over-predict the galaxy counts by upto 25\%. This discrepancy is to be
+expected as the volume sampled by the simulated galaxies (covering
+$4.5^o \times 4.5^o$) is small relative to the observations and the
+cosmic variance in the simulated data will be large. For magnitudes
+fainter than $i>25.75$ the galaxy counts fail to meet the number
+density requirement; deviating by upto 13\% from the observed counts.
 
 % We have
 %taken their compilations from: {\tt
@@ -927,7 +931,7 @@ is too wide to meet the $n_{eff}$ requirement, and the bottom right
 panel of Figure~\ref{fig:e_hist} shows a distribution that is too
 narrow to meet the requirement.
 
-\begin{figure}[th]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/e_hist.png}
 \caption{The top two panels are the histograms of e1 and e2 values for
@@ -935,7 +939,7 @@ narrow to meet the requirement.
   objects with $20.0 < i < 25.0$. The lower two panels show
   ellipticity distributions that are too broad (left panel) or too
   narrow (right panel) relative to the $n_{eff}$ requirements.}
-\label{e_hist}}
+\label{e_hist}
 \end{figure}
 
 For completeness, in Figure \ref{fig:nofz18_24}, we show the agreement
@@ -945,9 +949,9 @@ for one magnitude bin intervals from $i=18$ to $i=24$.  As shown in
 
 {\bf XXX why 3 sigma - is that important}
 
-\begin{figure}[th]
+\begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/Nofz_18_24.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/Nofz_18_24.png}
 \caption{The blue histogram in each panel is the measured N(z) for one
   magnitude bins from $18<i<24$.  Over-plotted is the empirical
   distribution from \citet{coil04} normalized to the area of the
@@ -971,10 +975,10 @@ for one magnitude bin intervals from $i=18$ to $i=24$.  As shown in
 %\includegraphics[width=5in]{validation_figures/Nofz_CumulativeFraction_22_28.png}
 %\caption{N(z) for 22 to 28 with distribution from \cite{coil}\label{fig:nofz22_28_ratio}}
 %\end{figure}
-\begin{figure}[th]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/neff_m_ir.png}
-\caption{This shows $n_{eff}$ as a function of i-band limiting magnitude.  Even though the the density of galaxies is going up steeply, the 
+\caption{$n_{eff}$ as a function of i-band limiting magnitude.  Even though the the density of galaxies is going up steeply, the 
 size of the galaxies relative to the PSF is falling off quickly enough that galaxies fainter the $i=25$ don't contribute much to $n_{eff}$.\label{fig:neffvm}}
 \end{figure}
 
@@ -1018,7 +1022,7 @@ radius distribution.  Because of the stability of the half light
 radius distribution in the presence of noise, we compare the half
 light radius from the universe model to observed data sets.
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
   \centering
@@ -1040,7 +1044,7 @@ light radius from the universe model to observed data sets.
 \end{figure}
 
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/sec_mom_half_light_mean_sigma.png}
 \caption{The mean and standard deviation of the half-light and second
@@ -1061,7 +1065,7 @@ modeling the disk size distribution as a log-normal distribution.  We
 then vary the peak location and width of the disk size distribution
 to map the sensitivity of the measure value of $n_{eff}$ to the peak
 location and distribution width.
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/ln_fit.png}
 \caption{The half light radius distributions from the base catalog and 
@@ -1087,9 +1091,9 @@ $2$, which meets the requirement of $\pm6$ specified for {\it
   Catalogs: Requirement 3}
 
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/size_sensitivity.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/size_sensitivity.png}
 \caption{Sensitivity of the predicted $n_{eff}$ to the shape of the
   half light radius distribution.  The surface is normalized to the
   value of $n_{eff}$ as measured using the half light radius
@@ -1122,6 +1126,7 @@ requirement that the colors span the range given in {\it catalogs:
 \begin{center}
 \begin{tabular}{c|r|r}
   Color Range& Blue Density (deg$^{-2}$) & Red Density (deg$^{-2}$)\\
+\hline
   $ -0.2 < u-g <        2.7 $&9&7\\
   $  -0.4  <  g-r <       1.7 $&18&200\\
   $ -0.3   <  r-i <    2.3 $&23&44\\
@@ -1135,9 +1140,9 @@ stars (forward hatching) and the white dwarf (backward hatching).
 Together the two distributions span the required range as shown by the
 dashed vertical lines in each panel (the density of stars at the blue
 and red extrema of these distributions is noted in the table above). 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/star_lsst_color_hist.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/star_lsst_color_hist.png}
 \caption{Normalized counts of main sequence, red giant branch and white dwarf stars as a function of color.  Heavy dashed lines show the requirements given in the requirements document.\label{fig:starcolorspan}}
 \end{figure}
 
@@ -1169,9 +1174,9 @@ stellar locus to single epoch depth in all 4 principal colors:
 ${\Delta}s=-0.003, {\Delta}w=0.001, {\Delta}x=-0.005,
 {\Delta}y=-0.013$.
 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
-\includegraphics[width=5in]{validation_figures/principal_colors_hist.png}
+\includegraphics[width=0.5\textwidth]{validation_figures/principal_colors_hist.png}
 \caption{Histograms of the principal colors of stars in the base
   catalog compared to SDSS principal colors (zero color in these
   plots) to the stretch single epoch depth of $r < 24.8$. The mean and
@@ -1179,7 +1184,7 @@ ${\Delta}s=-0.003, {\Delta}w=0.001, {\Delta}x=-0.005,
   upper right.\label{fig:principalcolorshist}}
 \end{figure}
 
-\begin{figure} [ht]
+\begin{figure} [h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/s_met.png}
 \caption{The principal color s as a function of metallicity.\label{fig:sfeh}}
@@ -1237,25 +1242,25 @@ a redesign of the class-schema framework}\\
 The ability to create new catalogs is available within the framework
 through the use of user-designed subclasses and class mixins
 \citep{mixin}.  New types of catalog can be generated by creating a
-new class from the InstanceCatalog base class. The columns required in
-this new catalog are defined as class attributes. The data for these
-columns is gathered from the database directly or using methods
-defined in the class for the catalog itself. These data gathering
-methods can take the form of a {\tt get\_[column\_name]} method or in
-the form of compound columns with their own {\tt get\_} methods.
+new class from the InstanceCatalog base class. Data (i.e.\ output
+columns) required by this catalog are defined as class
+attributes. These data are then gathered either from the database
+directly or using functions methods defined in the class itself. These
+data gathering methods can take the form of a {\tt
+  get\_[column\_name]} method or in the form of compound columns with
+their own {\tt get\_} methods.
 
 The InstanceCatalog metaclass verifies that all new columns specified
-for a new catalog or object reside in the database or can be generated
-by user defined methods and functions.  If no method exists and there
-is no associated database entry for the column then an error is
-raised. Furthermore, this error is raised prior to the query being run
-because the instantiation of the class initiates a dry run of the
-table output. As a result, the user is protected from errors after the
-data is pulled from the database and since all the necessary columns
-are determined during the dry run only one single query of the
-database is required to pull all necessary data.
+for a new catalog or object reside in the database or that they can be
+generated by user defined methods and functions.  If no method exists
+and there is no associated database entry for the column then an error
+is raised. Furthermore, this error is raised prior to the query being
+run because the instantiation of the class initiates a dry run of the
+table output. As a result, the user is protected from errors prior to
+generating the data since all of the necessary columns are determined
+during the dry run.
 
-An example of the definition of this class structure is provided
+An example of the extension of this class structure is provided
 below. For this case the user defines the attributes that they wish to
 extract form the database (by creating the {\it BasicCatalog} class)
 and the operations they wish to apply to these attributes (by creating
@@ -1267,13 +1272,8 @@ astrometric operations) are available to the new class through this
 subclassing process (i.e.\ the user simply defines the new operations
 that they need).
 
-
-that extracts a set of user defined columns
-from the database (position and id) and transforms the positions into
-degrees. Operations on attributes extracted from the database are
-defined in a Python Mixin ({\it AstrometryMixin}) and the format of
-the output of
-the data is defined in a cl 
+This process simplifies the creation of new object types, tables,
+functionality, and databases by an external user. 
 
 \begin{verbatim}
 class BasicCatalog(InstanceCatalog):
