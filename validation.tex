@@ -314,8 +314,6 @@ Stellar  populations included within the current implementation of the model are
 \item Cepheids
 \end{itemize}
 
-{\bf XXX OBA stars for future work}
-
 Approximately 10\% of the stellar sources are variable at a level
 detectable by LSST.  Variability is modeled for sources within the
 base catalogs by defining a light curve, its amplitude, a period, and
@@ -382,7 +380,7 @@ and software shall be accessible by the LSST project and science
 collaborations}\\
 
 CatSim is released as open source software using the GPLv3 license
-\citep{XXX}. The terms of this license are such that the software is
+\citep{gpl}. The terms of this license are such that the software is
 made available for copying, modification, and redistribution
 (including derivative works). Adopting GPLv3 ensures that works
 derived from the LSST software will also be released under the same
@@ -439,7 +437,7 @@ between CatSim and the photon simulator (PhoSim) are documented by the
 OpSim and PhoSim teams respectively.  These interfaces are described in:
 \begin{itemize}
 \item OpSim to CatSim -- ({\tt https://lsstcorp.org/sites/default/files/SSTARUserGuide.pdf}; accessed 07/29/2013)
-\item CatSim to PhoSim --{\bf XXX where is this}
+\item CatSim to PhoSim -- (\citet(phosim) and {\tt https://dev.lsstcorp.org/trac/wiki/IS\_instance\_catalog}; accessed 07/29/2013)
 \end{itemize}
 
 \subsection{Framework Requirement 4} 
@@ -469,10 +467,9 @@ astrophysical sources. Determinism for this process is ensured by
 defining the initial time, $T_o$, for the light curve model (i.e.\
 essentially specifying the phase of the light curve for a particular
 time). A value for $T_o$ is assigned to all variable sources within
-the catalog.  Stochastic variability, that uses a random number
-generator (e.g.\ the damped random walk of an AGN light curve), have a
-common seed for each source that is tied to its object id.
-{\bf XXX is this true}
+the catalog.  Any variability that uses a random number
+generator (e.g.\ the damped random walk of an AGN light curve) should have a
+seed for each source so that all observations of the lightcurve are self consistent.
 
 Special consideration must be paid to keeping ids in the output
 catalogs unique.  Since each object database is independent (i.e.\
@@ -836,10 +833,14 @@ $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the area of the galaxy relative to
 the point spread function.  We adopt values from \citet{chang} of
 (a,b,c) = (1.58,5.03,0.39), and assume a fiducial PSF size of 0.7
 arcsec. We use an estimate for the limiting magnitude of the co-added
-images of 26.7.  {\bf XXX why?} This takes into account the fact that
-the measurements are on extended sources as well as the fact that the
-SRD value of 27.5 in r is for dark sky observations at zenith.  The
-galaxy sample is the ``Gold Sample'' of galaxies with $i < 25.3$.  For
+images of 26.7.  This value is the best reproduces the values presented in
+\citet{chang}.  We expect the measured value of the limiting depth
+to be brighter than the SRD value of 27.5 in r because the SRD value
+is defined for dark sky at zenith and these observations have a 
+realistic distribution of airmass and sky brightness.  The fact
+that the measurements are on extended sources also contributes to 
+the best fit value being brighter than the nominal SRD value.
+The galaxy sample is the ``Gold Sample'' of galaxies with $i < 25.3$.  For
 each galaxy, $r_{gal}$ can be calculate from the flux ratio of the
 bulge and disk components as well as the effective half light radii of
 each component (see Appendix B in \citet{chang} for a derivation of
@@ -952,9 +953,7 @@ on the half-light and second moment radii by truncating the Sersic
 profiles at a specified radius (i.e.\ reproducing the effect of the
 light profile dropping below the noise in the image).  We truncate the
 profiles at multiples of the half light radius, $R_{hl}$: $1.33R_{hl},
-1.78R_{hl}, 3.16R_{hl}, 10R_{hl}, $and$100R_{hl}$. {\bf XXX what does
-  this correspond to in S/N?}
-
+1.78R_{hl}, 3.16R_{hl}, 10R_{hl}, $and$100R_{hl}$. 
 
 Figures \ref{fig:hl_hist} and \ref{fig:mom_hist} show the effect of
 progressively decreasing the signal-to-noise of a light profile.  As
@@ -1018,9 +1017,11 @@ location and distribution width.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/ln_fit.png}
-\caption{{\bf XXX This figure needs to be remade, it was done with
-    only objects 20 - 24.5.}\label{fig:ln_fit}, why doesnt the
-  lognormal fit why isnt there a discussion of base +psf}
+\caption{The half light radius distributions from the base catalog and 
+COSMOS catalog are well fit by a log-normal distribution.  The distributions
+are not identical.  Figure \ref{fig:size_sens} shows the impact on the  
+measured $n_{eff}$ that having different distributions makes.
+    \label{fig:ln_fit}}
 \end{figure}
 
 Figure \ref{fig:size_sens} shows the sensitivity of $n_{eff}$ to the
@@ -1097,11 +1098,11 @@ We use stars selected from the same fields as used in the number counts analysis
 In order to avoid complications associated with the difference between the LSST and SDSS photometric systems, we calculate the un-extincted 
 magnitudes in the SDSS bandpasses using the best fit spectrum for each star.  We then calculate
 the principal colors for each star using the relations in
-\citet{ivezic04}, but removing the r-band dependence in $P\prime_{2}$
-(the $P\prime_{2}$  correction
-in \citet{ivezic04} was used to correct for an empirical effect {\bf
-  XXX what effect} that is not present in photometry calculated on idealized spectra with idealized throughput
-curves). Figure
+\citet{ivezic04}.  \citet{ivezic04} noticed that when fitting for the coefficents of $P_{2}$ that a magnitude dependent offset remained.  They 
+attributed this to measurement systematics and applied an empirical correction to the fits in order to remove the $r-band$ dependence of the 
+principal colors.  Since we calculate the photometry with idealized spectra and throughput curves, we do not notice a trend with magnitude, and therefore 
+have not applied the empirical correction used in \citet{ivezic04}.
+Figure
 \ref{fig:principalcolorshist} shows that the principal colors as calculated from the base catalog are in good agreement with
 the location of the stellar locus in the SDSS (zero color).  The base catalog easily meets the requirement of $\pm0.02mag$ deviation
 from the stellar locus to single epoch depth in all 4 principal colors: ${\Delta}s=-0.003, {\Delta}w=0.001, {\Delta}x=-0.005, {\Delta}y=-0.013$.  
@@ -1117,7 +1118,6 @@ dependence which is consistent with SDSS observations.
   standard deviation for each
 histogram are given in the legend in the upper right.\label{fig:principalcolorshist}}
 \end{figure}
-{\bf XXX plot the requirements}
 
 \begin{figure} [ht]
 \centering
@@ -1178,8 +1178,8 @@ internally to the photon simulator).
 a redesign of the class-schema framework}\\
 
 The ability to create new catalogs is available within the framework
-through the use of user-designed subclasses and class mixins {\bf XXX
-  ref}. New types of catalog can be generated by creating a new class using
+through the use of user-designed subclasses and class mixins \citep{mixin}.
+New types of catalog can be generated by creating a new class using
 the InstanceCatalog base class. The columns required in this new catalog are defined
 as class attributes. The data for these columns is gathered from the
 database directly or using methods defined in the class for the
@@ -1261,7 +1261,7 @@ catalog.write_catalog("out.txt")
 We expect the requirements of the project to continue to evolve.  Informed by interations with the Systems Engineering team and the Data Management team we have 
 identified several areas in which future development will likely take place.  Below we itemize these likely areas of future work.
 \begin{itemize}
-\item Implement bright stars -- For guiding and wavefront sensing analysis
+\item Implement bright stars (OBA) -- For guiding and wavefront sensing analysis
 \item Implementation of extended and morphological images -- Multifit, supernova analysis, galaxy models
 \item Reduction of SED data size using PCA -- Parallelization of catalogs generation
 \item Add errors to catalogs -- Calibration simulations
