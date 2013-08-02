@@ -153,13 +153,13 @@ document.
 
 The base catalog is stored as a SQL database (using a Microsoft
 SQLServer). Data are accessed through a Python interface that uses
-SQLalchemy ({\tt http://www.sqlalchemy.org}) to provide a database
+SQLalchemy ({\tt http://ls.st/f7e}) to provide a database
 agnostic view of the sources. For LSST pointing, sources can be
 queried as a function of position and time with the returned data
 accounting for any change in brightness due to variability. For large
 scale runs, the base catalog is queried using sequences of
 observations derived from the Operations Simulator \citep{cook09} (see
-also: {\tt http://www.lsst.org/lsst/opsim}).  The Operation Simulator
+also: {\tt http://ls.st/bta}).  The Operation Simulator
 simulates LSST pointings that meet the cadence and depth requirements
 of the LSST science cases while accounting for historical weather
 patterns for Cerro Pachon and the visibility of the LSST footprint on
@@ -353,7 +353,7 @@ A more accurate modeling of the asteroid phase curves would require
 more realistic rotation and composition models which may be included
 in future work.  The location of the Earth at the time of a
 particular observation is incorporated through the orbital ephemeris software oorb
-(\citet{granvik};{\tt http://code.google.com/p/oorb/}) that calculates a V
+(\citet{granvik};{\tt http://ls.st/rd4}) that calculates a V
 band apparent magnitude which is then used with the object's assigned
 C or S type SED to derive the corresponding LSST band observations.
 
@@ -389,12 +389,12 @@ configuration files and example scripts) are stored in the LSST
 git repositories,
 
 \begin{itemize}
-\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/catalogs/generation.git/} -- Code to query
+\item {\tt http://ls.st/kx9} -- Code to query
 base catalogs.
-\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/catalogs/measures.git/} -- Code to format
+\item {\tt http://ls.st/e3v} -- Code to format
 and manipulate catalogs produced by the generation packages.  This includes photometric, 
 astrometric, and variability calculations.
-\item {\tt https://dev.lsstcorp.org/cgit/LSST/sims/throughputs.git/}
+\item {\tt http://ls.st/oi8}
   -- A repository
 of system throughputs for the LSST reference design.
 \end{itemize}
@@ -420,10 +420,10 @@ instructions, example applications, a description of the database
 schema, and the interfaces and APIs used in CatSim. This documentation
 is available at the following locations:
 \begin{itemize}
-\item catalog generation and measures -- {\tt http://www.astro.washington.edu/users/krughoff/documentation/}
+\item catalog generation and measures -- See links from: {\tt http://ls.st/nly}
 {\bf XXX change this}
 
-\item base catalog schema and description -- {\tt https://dev.lsstcorp.org/trac/wiki/IS\_Catsim\_Database\_Documentation}
+\item base catalog schema and description -- {\tt http://ls.st/9m1}
 \end{itemize}
 
 
@@ -436,8 +436,8 @@ The interfaces between the operations simulator (OpSim) and CatSim and
 between CatSim and the photon simulator (PhoSim) are documented by the
 OpSim and PhoSim teams respectively.  These interfaces are described in:
 \begin{itemize}
-\item OpSim to CatSim -- ({\tt https://lsstcorp.org/sites/default/files/SSTARUserGuide.pdf}; accessed 07/29/2013)
-\item CatSim to PhoSim -- (\citet{phosim} and {\tt https://dev.lsstcorp.org/trac/wiki/IS\_instance\_catalog}; accessed 07/29/2013)
+\item OpSim to CatSim -- ({\tt http://ls.st/gx1}; accessed 07/29/2013)
+\item CatSim to PhoSim -- (\citet{phosim} and {\tt http://ls.st/20f}; accessed 07/29/2013)
 \end{itemize}
 
 \subsection{Framework Requirement 4} 
@@ -506,7 +506,7 @@ parallelized on a pointing by pointing basis.  To parallelize CatSim
 to larger systems many processes are run in a pleasingly parallel mode
 with each process running a single pointing.  This approach marries
 nicely with schedulers such as the Portable Batch System (e.g.\ {\tt
-  http://www.pbsworks.com/}) and Condor \citep{condor}.  The
+  http://ls.st/rdv}) and Condor \citep{condor}.  The
 limitation on the level of parallelism is the database I/O.  The
 current hardware (8 2.26 GHz Xeon cores, 24 GB memory, 40TB disk space
 in a RAID 6 configuration) has shown to be scalable up to 70
@@ -565,7 +565,7 @@ triangular mesh id \citep[HTM][]{htm}.
 Galaxies are stored in a single table that is $4.5^o$ on a side and
 comprises 17, 428,284 galaxies. The schema for these galaxies is
 described in {\tt
-  https://dev.lsstcorp.org/trac/wiki/IS\_Catsim\_Database\_Documentation\#galaxy}.
+  http://ls.st/i1e}.
 Through a database stored procedure we provide a virtual replication
 of this table; tiling it across the full sky (see
 Figure~\ref{fig:galcoverage}). All queries outside of the footprint of
@@ -747,7 +747,7 @@ requirement on stellar number densities) .
 The left panel of Figure \ref{fig:gcounts} shows a comparison of the
 cumulative galaxy counts in CatSim to a compilation of observations
 provided by Metcalfe et al. (see {\tt
-  http://star-www.dur.ac.uk/~nm/pubhtml/counts/counts.html}).  This
+  http://ls.st/fus}).  This
 comparison is undertaken in the $i$ band to minimize the effects of
 dust extinction which are somewhat uncertain in the Metcalfe
 compilations.  A single transform of I$_{kc}$ = i$_{AB}$ - 0.6 has
