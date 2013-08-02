@@ -437,7 +437,7 @@ between CatSim and the photon simulator (PhoSim) are documented by the
 OpSim and PhoSim teams respectively.  These interfaces are described in:
 \begin{itemize}
 \item OpSim to CatSim -- ({\tt https://lsstcorp.org/sites/default/files/SSTARUserGuide.pdf}; accessed 07/29/2013)
-\item CatSim to PhoSim -- (\citet(phosim) and {\tt https://dev.lsstcorp.org/trac/wiki/IS\_instance\_catalog}; accessed 07/29/2013)
+\item CatSim to PhoSim -- (\citet{phosim} and {\tt https://dev.lsstcorp.org/trac/wiki/IS\_instance\_catalog}; accessed 07/29/2013)
 \end{itemize}
 
 \subsection{Framework Requirement 4} 
@@ -508,10 +508,11 @@ with each process running a single pointing.  This approach marries
 nicely with schedulers such as the Portable Batch System (e.g.\ {\tt
   http://www.pbsworks.com/}) and Condor \citep{condor}.  The
 limitation on the level of parallelism is the database I/O.  The
-current hardware (10 core, ??? GB, 40TB raid) has shown to be scalable
-up to 70 concurrent processes, resulting in the generation of up to
-~200 pointings or visits per day (this represents $\sim$20\% of the
-real time LSST data production).  The throughput of this system can be
+current hardware (8 2.26 GHz Xeon cores, 24 GB memory, 40TB disk space
+in a RAID 6 configuration) has shown to be scalable up to 70
+concurrent processes, resulting in the generation of up to ~200
+pointings or visits per day (this represents $\sim$20\% of the real
+time LSST data production).  The throughput of this system can be
 increase by duplicating the database server or upgrading the hardware.
 
 \section{Validation of the Requirements on the Catalog Simulations}
@@ -574,7 +575,7 @@ for sources that are returned from the database query are then
 transformed to their appropriate positions on the sky using the
 bounding boxes of the input tiles.
 
-\begin{figure}[t]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/basicDemo.png}
 \caption{The galaxy catalog is replicated (virtually) across the LSST
@@ -604,7 +605,7 @@ variable and depends on the asteroid population (i.e.\ it is set by
 the velocity of the asteroid and the complexity of its orbital
 track). For main belt asteroids the positions are stored every two
 days together with the Chebyshev polynomial coefficients required to
-interpolate between these positions. Figure~\ref{asteroid} shows that,
+interpolate between these positions. Figure~\ref{fig:asteroid} shows that,
 using a cubic interpolation, asteroid positions are returned with an
 rms accuracy of $<1$ mas (sufficient to meet requirement {\it
   Catalogs: Requirements 5}). These cached positions are indexed using
@@ -696,14 +697,14 @@ latitudes there is insufficient observational data to constrain the
 Galfast of Besan\c{c}on models.
 
 In Figure \ref{fig:sratio_90} we show the ratio of Besan\c{c}on counts
-to Galfast counts for the six test fields defined in Figure
-\ref{fig:sratio_90}.  The dashed lines are the $\pm30\%$ limits for
-the low latitude sizing model constraints and the dash-dot lines are
-the $\pm20\%$ limits for the high latitude limits requirements. 
-For all Galactic latitudes $b<-30$ the Besan\c{c}on and Galfast models
-disagree at $>$20\% requirement for stellar densities. For low
-Galactic latitudes ($b=-10$) the Besan\c{c}on  and Galfast models are
-in good agreement (i.e.\ within the 20\% requirement on stellar number densities) .
+to Galfast counts for the six test fields.  The dashed lines are the
+$\pm30\%$ limits for the low latitude sizing model constraints and the
+dash-dot lines are the $\pm20\%$ limits for the high latitude limits
+requirements.  For all Galactic latitudes $b<-30$ the Besan\c{c}on and
+Galfast models disagree at $>$20\% requirement for stellar
+densities. For low Galactic latitudes ($b=-10$) the Besan\c{c}on and
+Galfast models are in good agreement (i.e.\ within the 20\%
+requirement on stellar number densities) .
 
 %In the case directed toward the galactic bulge, all fields meet the
 %requirements at the co-added depth except for $b=-10$.  At the nominal
@@ -726,12 +727,10 @@ in good agreement (i.e.\ within the 20\% requirement on stellar number densities
 \centering
 \begin{subfigure}[b]{0.45\textwidth}
 \includegraphics[width=\textwidth]{validation_figures/cumulative_stars_90_besancon_dust.png}
-\label{fig:scounts_0}
 \end{subfigure}
 \begin{subfigure}[b]{0.45\textwidth}
 \centering
 \includegraphics[width=\textwidth]{validation_figures/cumulative_ratio_stars_90_besancon_dust.png}
-\label{fig:sratio_90}
 \end{subfigure}
 \caption{Cumulative counts of stars from the Besan\c{c}on (dashed) and
   Galfast (solid) models for 5 representative fields toward
@@ -739,6 +738,8 @@ in good agreement (i.e.\ within the 20\% requirement on stellar number densities
   SDSS and the right panel the ratio of the Besan\c{c}on and Galfast
   models. For $b<-30^{\circ}$ and $i<22$, the SDSS counts are 13\%
   lower than the numbers predicted by the Galfast model.}
+\label{fig:scounts_90}
+\label{fig:sratio_90}
   \end{figure}
 
 \subsubsection{Galaxies \label{sec:galaxycounts}}
@@ -939,7 +940,7 @@ narrow to meet the requirement.
   objects with $20.0 < i < 25.0$. The lower two panels show
   ellipticity distributions that are too broad (left panel) or too
   narrow (right panel) relative to the $n_{eff}$ requirements.}
-\label{e_hist}
+\label{fig:e_hist}
 \end{figure}
 
 For completeness, in Figure \ref{fig:nofz18_24}, we show the agreement
@@ -1006,10 +1007,10 @@ profiles at the following multiples of the half light radius,
 $R_{hl}$: $1.33R_{hl}, 1.78R_{hl}, 3.16R_{hl}, 10R_{hl},
 $and$100R_{hl}$.
 
-Figures \ref{fig:hl_hist} and \ref{fig:mom_hist} show the effect of
-progressively decreasing the signal-to-noise of a light profile.  As
-the signal-to-noise decreases the peak and width of the distributions
-of half light and second moment radii decrease (see Figure
+Figure~\ref{fig:size_hist} shows the effect of progressively
+decreasing the signal-to-noise of a light profile.  As the
+signal-to-noise decreases the peak and width of the distributions of
+half light and second moment radii decrease (see Figure
 \ref{fig:mom_hl_line}).  Going from $100R_{hl}$ to $10R_{hl}$, the
 mean of the second moment radius distribution decreases by $14\%$ . By
 $1.78R_{hl}$ it is 50\% of the $100R_{hl}$ value.  In comparison, the
@@ -1027,12 +1028,10 @@ light radius from the universe model to observed data sets.
 \begin{subfigure}[b]{0.4\textwidth}
   \centering
  \includegraphics[width=\textwidth]{validation_figures/half_light_hist.png}
-  \label{fig:hl_hist}
 \end{subfigure}
 \begin{subfigure}[b]{0.4\textwidth}
   \centering
   \includegraphics[width=\textwidth]{validation_figures/Second_moment_hist.png}
-  \label{fig:mom_hist}
 \end{subfigure}
 \caption{Modelling the impact of signal-to-noise on measures of
   radii. The truncation for each distribution is listed in the legend
@@ -1041,6 +1040,7 @@ light radius from the universe model to observed data sets.
   lower signal-to-noise measurements.  The left panel shows the
   distributions for half light radii and the right panel for second
   moment radii}
+\label{fig:size_hist}
 \end{figure}
 
 
