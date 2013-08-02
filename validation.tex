@@ -402,7 +402,7 @@ of system throughputs for the LSST reference design.
 These repositories are available for anonymous (read-only) checkout or
 (with a username and password) for read and write.
 
-The source catalogs for the LSST Universe model are stored in a
+The source catalogs for the LSST universe model are stored in a
 Microsoft SQLServer database (SQLServer 2003) that is housed and
 maintained at the University of Washington. All data stored within
 this database are accessible using the CatSim framework and through
@@ -764,6 +764,9 @@ data will be large. For magnitudes fainter than $i>25.75$ the galaxy
 counts fail to meet the number density requirement; deviating by upto 13\%
 from the observed counts.
 
+{\bf XXX why are we going to 26.9 and not 27.7? Aren't we converting
+  Metcalfe to SDSS}
+
 % We have
 %taken their compilations from: {\tt
 %  http://star-www.dur.ac.uk/~nm/pubhtml/counts/idata.txt} accessed on
@@ -786,38 +789,46 @@ The vertical dashed line represents the
 
 For stellar counts away from the bulge, the Galfast model matches the
 observed densities of stars to the limit of the SDSS data. Comparison
-with the Besan\c{c}on model shows, however, a discrepancy of over 30\%
-between the predicted counts for all magnitudes greater than $i>23$
-and for all latitudes $b<-35$. In all such cases the LSST model from
-Galfast over-predicts the densities of stars compared to
-Besan\c{c}on. While it is clear that much of the uncertainty in
-predicting stellar counts arises due to variations between the
-Galactic structure models, the fact that Galfast predicts a higher
-density of stars than Besan\c{c}on minimizes the risk that the compute
-and sizing model will be under resourced (i.e.\ it risks over
-provisioning of the compute resources).
+with the Besan\c{c}on model, however, shows a discrepancy of over 30\%
+between the predicted counts for latitudes $b<-35$ (and $i>23$).  In
+all such cases the LSST model from Galfast over-predicts the densities
+of stars compared to Besan\c{c}on. While it is clear that there is
+significant uncertainty between the models, the fact that Galfast
+predicts a higher density of stars than Besan\c{c}on and that it
+reproduces the densities of stars in the SDSS, minimizes the risk that
+the compute and sizing model will be under resourced (i.e.\ it risks
+over provisioning of the compute resources).
+
+For lower Galactic latitudes ($b=10$ ) and away from the bulge, there
+is good agreement between the stellar structure models (see
+Figure~\ref{fig:gratio}) but limited observational data to validate
+either model. Toward the bulge the stellar densities disagree by more
+than 30\% at $b=-10$ with Besan\c{c}on predicting a higher density of
+stars. This is outside of both the simulation requirements and the
+margin for the sizing model but is only for a small part of the survey
+volume (see DMR-21 in the DM Risk Register for the proposed actions in
+response to this risk).  
 
 The validity of the Besan\c{c}on as ground truth in the plane of the
 galaxy is not obvious.  In fact, SDSS and Galfast star counts agree
 surprisingly well at low galactic latitudes (M. Juri\'{c}, private
-communication). Away from the bulge the agreement between models at
-$b=10$ is evident from Figure~\ref{fig:gratio}. Toward the bulge the
-stellar densities disagree by more than 30\% at $b=10$. Part of this
-disagreement may arise due to the fact that the Besan\c{c}on models
-are drawn from distributions with binary corrections applied and the
-Galfast model does not produce unresolved binary systems as multiple
-objects in the catalogs (i.e.\ the Galfast models should under-predict
-relative to the Besan\c{c}on by approximately the unresolved binary
-fraction).  These questions will be resolved through an ongoing
-comparison to observations from other surveys (e.g. Pan-STARRS).
+communication).  Part of the current disagreement may arise due to the
+fact that the Besan\c{c}on models are drawn from distributions with
+binary corrections applied while the Galfast model does not produce
+unresolved binary systems as multiple objects in the catalogs (i.e.\
+the Galfast models should under-predict relative to the Besan\c{c}on
+by approximately the unresolved binary fraction).  To resolve these
+questions, for bright magnitudes, a comparison will be taken with
+existing survey data including those from Pan-STARRS.
 
-For galaxy counts, the  number counts fail to meet
-requirements for magnitudes $i>25.75$. At the limiting depth the
-counts are less than 2$\sigma$ from the observed counts (where
-$\sigma$ is a combination of shot and cosmic variance). While the
-galaxy simulations are within the bounds set by Data Management for
-the sizing model we will resolve these discrepancies by recloning the
-galaxy data.
+For galaxy counts, the number counts fail to meet requirements for
+magnitudes $i>25.75$. At the limiting depth of the coadded survey
+these counts are less than 2$\sigma$ from the observed counts (where
+$\sigma$ is the observational uncertainty due to a combination of shot
+and cosmic variance). While the galaxy simulations are within the
+bounds set by Data Management for the sizing model (i.e.\ $<30$\%)
+this issue will be resolved by recloning the galaxy data to match
+deeper number count models.
 
 \subsection{Catalogs:  Requirement 3}
 
@@ -831,22 +842,21 @@ galaxy data.
 
 
 The ability to use gravitational weak lensing to constrain
-cosmological parameters is dependent on $n_{eff}$, the effective
-density of galaxies on the sky that can are sufficiently resolve such
-that they can be used in weak lensing
-measurements. The size of $n_{eff}$ depends on the inherent shape
-noise of the galaxies, the size distribution of the galaxies relative
-to the size of the PSF, and the signal-to-noise of the observations.
-Following the methodology of \citet{chang} we calculate $n_{eff}$ for
-the distributions in the base galaxy catalog.  In summary, we use
-Equation 9 to calculate $n_{eff}$:
+cosmological parameters is dependent on $n_{eff}$; the effective
+density of galaxies on the sky that are resolve sufficiently such that
+shear can be measured from the shape of a galaxy. The size of
+$n_{eff}$ depends on the inherent shape noise of the galaxies, the
+size distribution of the galaxies relative to the size of the PSF, and
+the signal-to-noise of the observations.  Following the methodology of
+\citet{chang} we calculate $n_{eff}$ for the distributions in the base
+galaxy catalog.  In summary, we use Equation 9 to calculate $n_{eff}$:
 \begin{equation}
 n_{eff} = \frac{1}{\Omega}\sum^N_i\frac{\sigma^2_{SN}}{\sigma^2_{SN}+\sigma^2_{m,i}}
 \end{equation}
 where $\sigma_{SN}$ is the intrinsic shape noise, $\sigma_{m,i}$ is
-the shape measurement noise for the i$^{th}$ galaxy, and $N$ is the
-number of galaxies in the sample. The shape noise is derived from the
-ellipticity distribution of the galaxies with $\sigma_{SN} = 0.26$
+the shape measurement uncertainty for the i$^{th}$ galaxy, and $N$ is
+the number of galaxies in the sample. The shape noise is derived from
+the ellipticity distribution of the galaxies with $\sigma_{SN} = 0.26$
 \citep{chang}.  The measurement noise can be approximated using
 Equation 13 of \citet{chang}:
 \begin{equation}
@@ -856,39 +866,41 @@ where $\nu$ is the signal-to-noise ratio of the source, and
 $R=\frac{r_{gal}^2}{r_{PSF}^2}$ is the area of the galaxy relative to
 the point spread function.  We adopt values from \citet{chang} of
 (a,b,c) = (1.58,5.03,0.39), and assume a fiducial PSF size of 0.72
-arcsec. We use an estimate for the limiting magnitude of the co-added
+arcsec. We use an estimate for the limiting magnitude for the co-added
 images of 26.7.  This value reproduces the values presented in
-\citet{chang}.  We expect the measured value of the limiting depth
-to be brighter than the SRD value of 27.5 in r because the SRD value
-is defined for dark sky at zenith and these observations have a 
-realistic distribution of airmass and sky brightness.  The fact
-that the measurements are on extended sources also contributes to 
-the best fit value being brighter than the nominal SRD value.
-The galaxy sample is the ``Gold Sample'' of galaxies with $i < 25.3$.  For
-each galaxy, $r_{gal}$ can be calculate from the flux ratio of the
-bulge and disk components as well as the effective half light radii of
-each component (see Appendix B in \citet{chang} for a derivation of
-this calculation).
+\citet{chang}.  We expect the measured value of the limiting depth to
+be brighter than the SRD value of 27.5 in r because the SRD value is
+defined for dark sky at zenith while the \citet{chang} data have a
+distribution of airmass and sky brightness.  
+%The fact that
+%the measurements are on extended sources also contributes to the best
+%fit value being brighter than the nominal SRD value.  
+For our comparison we define a ``Gold Sample'' of galaxies with $i <
+25.3$ (see \citealt{LSSTScienceBook}).  For each galaxy, $r_{gal}$ is
+calculated from the flux ratio of the bulge and disk components as
+well as the effective half light radii of each component (see Appendix
+B in \citet{chang} for a derivation of this calculation).
 
 Using this framework, we test the sensitivity of the measured
-$n_{eff}$ on our assumptions for the ellipticity, size, magnitude, and
-redshift distributions of the galaxies in the Universe model.  For all
-calculations that follow we use the k=1 criterion of \citet{chang}
-meaning that galaxies with $\sigma_m < \sigma_{SN}$ are culled from
-the sample. This assumes that no improvement has been made in the
-measurement of shear over current techniques.  The galaxy shape noise
-distribution has been measured by the COSMOS project \citep{cosmos}
-and, to first order, the dependence of $n_{eff}$ on the shape of the
-distribution can be expressed in terms of the variance of the
-ellipticity distribution. The dependence of $n_{eff}$ on apparent
-magnitude arises due to the steepness of the galaxy number counts. As
-is shown in Figure \ref{fig:neffvm}, however, due to the decrease in
-signal-to-noise of the sources there is a sharp cut-off in the value
-of $n_{eff}$ at $i=25.0$.  Given this, galaxy redshift distributions
-must agree with observations to a limiting magnitude of $i=25.0$ to
-insure an accurate mapping between physical and angular size.
-Finally, the size distribution of the combined two component galaxy
-model must reproduce the measured distributions.
+$n_{eff}$ against our assumptions for the ellipticity, size,
+magnitude, and redshift distributions of the galaxies in the universe
+model.  For all calculations that follow we use the $k=1$ criterion of
+\citet{chang}; meaning that galaxies with $\sigma_m < \sigma_{SN}$ are
+culled from the sample. This assumes that no improvement has been made
+in the measurement of shear over current techniques.  
+
+The galaxy shape noise distribution has been measured by the COSMOS
+project \citep{cosmos} and, to first order, the dependence of
+$n_{eff}$ on the shape of the distribution can be expressed in terms
+of the variance of the ellipticity distribution. The dependence of
+$n_{eff}$ on apparent magnitude arises due to the steepness of the
+galaxy number counts. As is shown in Figure \ref{fig:neffvm}, however,
+due to the decrease in signal-to-noise of the sources there is a sharp
+cut-off in the value of $n_{eff}$ at $i=25.0$.  Given this, galaxy
+redshift distributions must agree with observations to a limiting
+magnitude of $i=25.0$ to ensure an accurate mapping between physical
+and angular size.  Finally, the size distribution of the combined two
+component galaxy model must reproduce the measured distributions.
 
 The ellipticity distribution is measured from the base catalog by
 sampling the composite Sersi{\'c} (bulge and disk together) using the
@@ -907,33 +919,42 @@ The measured variance in the ellipticity distribution of the galaxies
 in the simulation catalog is $\sigma_{SN} = 0.26$; identical to that
 reported by \citet{chang}. The shape differs slightly from the COSMOS
 distribution with a broader tail and wider central component. (see
-Figure \ref{fig:e_hist}).  As shown in
-the bottom two panels of Figure~\ref{fig:e_hist} these
-slight variations in ellipticity distribution will not impact the
-measured value of $n_{eff}$.  The bottom left panel of Figure~\ref{fig:e_hist}
-shows a distribution that is too wide to meet the requirements, and the bottom
-right panel of Figure~\ref{fig:e_hist} shows a distribution that is 
-too narrow to meet the requirement.
+Figure \ref{fig:e_hist}).  As shown in the bottom two panels of
+Figure~\ref{fig:e_hist} these slight variations in ellipticity
+distribution do not impact the measured value of $n_{eff}$.  The
+bottom left panel of Figure~\ref{fig:e_hist} shows a distribution that
+is too wide to meet the $n_{eff}$ requirement, and the bottom right
+panel of Figure~\ref{fig:e_hist} shows a distribution that is too
+narrow to meet the requirement.
 
 \begin{figure}[th]
 \centering
 \includegraphics[width=0.5\textwidth]{validation_figures/e_hist.png}
-\caption{Histogram of e1 values for the base catalog and COSMOS sample.  These distributions are for objects with $20.0 < i < 24.5$ to match
-the cut made in \citet{chang}.
-Same as the top right panel but for e2.
-The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too large.
-The base catalog distribution with the width scaled such that the requirement is just missed by predicting an $n_{eff}$ value that is too small.
+\caption{The top two panels are the histograms of e1 and e2 values for
+  the base catalog and COSMOS sample.  These distributions are for
+  objects with $20.0 < i < 25.0$. The lower two panels show
+  ellipticity distributions that are too broad (left panel) or too
+  narrow (right panel) relative to the $n_{eff}$ requirements.}
 \label{e_hist}}
 \end{figure}
 
-For completeness, we show the redshift distributions for 1 magnitude bins from $i=18$ to $i=24$.  See Figure \ref{fig:nofz18_24}.  As shown in \ref{fig:neffvm}
-galaxies with $i > 25$ do not contribute significantly to $n_{eff}$. 
+For completeness, in Figure \ref{fig:nofz18_24}, we show the agreement
+between simulated and observed \citep{coil04} redshift distributions
+for one magnitude bin intervals from $i=18$ to $i=24$.  As shown in
+\ref{fig:neffvm} galaxies with $i > 25$ do not contribute significantly to $n_{eff}$.
+
+{\bf XXX why 3 sigma - is that important}
 
 \begin{figure}[th]
 \centering
 \includegraphics[width=5in]{validation_figures/Nofz_18_24.png}
-\caption{The blue histogram in each panel is the measured N(z) for 1 magnitude bins from $18<i<24$.  Over-plotted is the empirical distribution from \citet{coil04} normalized to the area of the measured distribution.  The dashed and dotted red lines show what happens if the governing parameter for the \citet{coil04} distribution, $z_o$, is over
-or under predicted by $3\sigma$ respectively.\label{fig:nofz18_24}}
+\caption{The blue histogram in each panel is the measured N(z) for one
+  magnitude bins from $18<i<24$.  Over-plotted is the empirical
+  distribution from \citet{coil04} normalized to the area of the
+  measured distribution.  The dashed and dotted red lines show what
+  happens if the governing parameter for the \citet{coil04}
+  distribution, $z_o$, is over or under predicted by $3\sigma$
+  respectively.\label{fig:nofz18_24}}
 \end{figure}
 %\begin{figure}
 %\centering
@@ -958,42 +979,44 @@ size of the galaxies relative to the PSF is falling off quickly enough that gala
 \end{figure}
 
 
-\subsubsection{Galaxy radius measurements}
+\subsubsection{Galaxy radii measurements}
 There are many definitions of galaxy size: half light radius, first
 moment radius, second moment radius, Petrosian radius, Kron radius,
 etc.  For the validation of the galaxy size distributions we utilize
-data from the COSMOS Advanced Camera for Surveys catalog \citep{cosmos} as it
-extends to depths greater than $i=24.5$, is of higher resolution than
-ground-based data (i.e.\ with an image quality of $<0.1$ arcsec), and
-covers a representative area of the sky (2 deg$^2$). The COSMOS catalog reports both the second moments and the 
-half light radius. 
+data from the COSMOS Advanced Camera for Surveys catalog
+\citep{cosmos} as it extends to depths greater than $i=24.5$, is of
+higher resolution than ground-based data (i.e.\ with an image quality
+of $<0.1$ arcsec), and covers a representative area of the sky (2
+deg$^2$). The COSMOS catalog reports both the second moments and the
+half light radius.
 
 One concern in comparing observed and model radii is that the base
-catalog are effectively infinite signal to noise, whereas the
+catalog is effectively infinite signal-to-noise, whereas the
 measurements from COSMOS are not.  We, therefore, consider the impact
 of the S/N on the derived sizes in order to define the appropriate
 measure to use for comparison. We model the effects of signal-to-noise
 on the half-light and second moment radii by truncating the Sersic
 profiles at a specified radius (i.e.\ reproducing the effect of the
 light profile dropping below the noise in the image).  We truncate the
-profiles at multiples of the half light radius, $R_{hl}$: $1.33R_{hl},
-1.78R_{hl}, 3.16R_{hl}, 10R_{hl}, $and$100R_{hl}$. 
+profiles at the following multiples of the half light radius,
+$R_{hl}$: $1.33R_{hl}, 1.78R_{hl}, 3.16R_{hl}, 10R_{hl},
+$and$100R_{hl}$.
 
 Figures \ref{fig:hl_hist} and \ref{fig:mom_hist} show the effect of
 progressively decreasing the signal-to-noise of a light profile.  As
 the signal-to-noise decreases the peak and width of the distributions
 of half light and second moment radii decrease (see Figure
-\ref{fig:mom_hl_line}).  Going from $100R_{hl}$ to $10R_{hl}$ the mean
-of the second moment radius distribution decreases by $0.14\%$ and is
-half the high signal-to-noise value at $1.78R_{hl}$.  By comparison,
-the mean of the half light radius distribution decreases by less than
+\ref{fig:mom_hl_line}).  Going from $100R_{hl}$ to $10R_{hl}$, the
+mean of the second moment radius distribution decreases by $14\%$ . By
+$1.78R_{hl}$ it is 50\% of the $100R_{hl}$ value.  In comparison, the
+mean of the half light radius distribution decreases by less than
 $1\%$ going from $100R_{hl}$ to $10R_{hl}$ and is $22\%$ of the high
 signal-to-noise distribution.  The width of the distributions exhibit
 similar behavior with the second moment radius distribution impacted
 much more heavily by the reduced signal-to-noise than the half light
 radius distribution.  Because of the stability of the half light
 radius distribution in the presence of noise, we compare the half
-light radius from the Universe model to observed data sets.
+light radius from the universe model to observed data sets.
 
 \begin{figure}[ht]
 \centering
@@ -1030,9 +1053,9 @@ half light distribution as a log normal distribution.  Figure
 \ref{fig:ln_fit} shows log-normal fits to the base catalog and COSMOS
 data half light radius distributions.  The half light radius
 distribution for the base catalog is dominated by the disk components
-since there are many more disk only objects than bulge only objects
+since there are many more disk-only objects than bulge-only objects
 and the disk components have large half light radius values (relative
-to the bulge). We measure $n_{eff}$ for a variety of half light radius
+to the bulge). We measure $n_{eff}$ for a variety of half light radii
 distributions by taking the base catalog bulge size distribution and
 modeling the disk size distribution as a log-normal distribution.  We
 then vary the peak location and width of the disk size distribution
@@ -1049,29 +1072,32 @@ measured $n_{eff}$ that having different distributions makes.
 \end{figure}
 
 Figure \ref{fig:size_sens} shows the sensitivity of $n_{eff}$ to the
-size distribution.  The x axis is the width of the size distribution
-and the y axis the location of the peak of the size distribution. The
-contours represent the change in $n_{eff}$ (from its nominal value) as
-a function of $x$ and $y$. Over-plotted are points corresponding to
-the best fit log normal distributions to the COSMOS data set (black
-circle) and the base catalog data set (black square).  The difference
-between the COSMOS distribution and the base catalog size distributions
-results in a change in $n_{eff}$ of less than 2. 
+size distribution.  The contours represent the change in $n_{eff}$
+(from its nominal value) as a function of distribution width and
+peak. Over-plotted are points corresponding to the best fit log-normal
+distributions to the COSMOS data set (black circle) and the base
+catalog data set (black square).  The difference between the COSMOS
+distribution and the base catalog size distributions results in a
+change in $n_{eff}$ of less than two.
 
 Combining in quadrature the error in $n_{eff}$ from the shape noise of
 the galaxies, the size distributions of the galaxies, and the
 signal-to-noise of the observations the total $n_{eff}$ uncertainty is
-$XXX$ which is less that the requirement of  $\pm6$ specified for {\it
-  Catalogs:  Requirement 3}
+$2$, which meets the requirement of $\pm6$ specified for {\it
+  Catalogs: Requirement 3}
 
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=5in]{validation_figures/size_sensitivity.png}
-\caption{Sensitivity of the predicted $n_{eff}$ to the shape of the half light radius distribution.  
-The surface is normalized to the value of $n_{eff}$ as measured using the half light radius distribution from COSMOS.  The black circle
-is the location of the COSMOS data in this plane which by construction falls on the zero contour.  The black square is the prediction of
-the measured $n_{eff}$ using the half light radius distribution from the base catalog.\label{fig:size_sens}}
+\caption{Sensitivity of the predicted $n_{eff}$ to the shape of the
+  half light radius distribution.  The surface is normalized to the
+  value of $n_{eff}$ as measured using the half light radius
+  distribution from COSMOS.  The black circle is the location of the
+  COSMOS data (which by construction falls on the zero contour).  The
+  black square is the prediction of the measured $n_{eff}$ using the
+  half light radius distribution from the base
+  catalog.\label{fig:size_sens}}
 \end{figure}
 
 \subsection{Catalogs: Requirement 4}
@@ -1090,25 +1116,25 @@ the distributions of stars within a focal plane, the Galactic model
 must have realistic color distributions.  This includes both the range
 of colors spanned by the stellar sources and the fidelity to which
 these stars reproduce the observed stellar locus. In Figure
-\ref{fig:starcolorspan} we verify that we the stellar catalog meets
-the requirement that the colors span the range
+\ref{fig:starcolorspan} we verify that the stellar catalog meets the
+requirement that the colors span the range given in {\it catalogs:
+  requirement 4},
 \begin{center}
 \begin{tabular}{c|r|r}
-Color Range& Blue Density (deg$^2$) & Red Density (deg$^2$)\\
-      $ -0.2 < u-g <        2.7 $&9&7\\
-       $  -0.4  <  g-r <       1.7 $&18&200\\
-        $ -0.3   <  r-i <    2.3 $&23&44\\
-        $  -0.25 < i-z <       1.2 $&255&42\\ 
-        $  -0.2 <  z-y   <    0.8 $&967&6
+  Color Range& Blue Density (deg$^{-2}$) & Red Density (deg$^{-2}$)\\
+  $ -0.2 < u-g <        2.7 $&9&7\\
+  $  -0.4  <  g-r <       1.7 $&18&200\\
+  $ -0.3   <  r-i <    2.3 $&23&44\\
+  $  -0.25 < i-z <       1.2 $&255&42\\ 
+  $  -0.2 <  z-y   <    0.8 $&967&6
 \end{tabular}
 \end{center}
-For each color ($u-g$, $g-r$, $r-i$,
-$i-z$, and $z-y$) we plot the normalized histogram for the main
-sequence and red giant branch (RGB) stars (forward hatching) and the
-white dwarf (backward hatching).  Together the two distributions span
-the required range as shown by the dashed vertical lines in each
-panel.  We also note the density of stars per focal plane at the blue
-side and red side of each color range.
+For each color ($u-g$, $g-r$, $r-i$, $i-z$, and $z-y$) we plot the
+normalized histogram for the main sequence and red giant branch (RGB)
+stars (forward hatching) and the white dwarf (backward hatching).
+Together the two distributions span the required range as shown by the
+dashed vertical lines in each panel (the density of stars at the blue
+and red extrema of these distributions is noted in the table above). 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=5in]{validation_figures/star_lsst_color_hist.png}
@@ -1116,22 +1142,32 @@ side and red side of each color range.
 \end{figure}
 
 To verify the veracity of the main sequence stellar locus, we use the
-principal colors of the stellar locus as described by \citet{helmi02}, and 
-fit for in the SDSS photometric system by \citet{ivezic04}.
-We use stars selected from the same fields as used in the number counts analysis for all fields with $b<-30$.
-In order to avoid complications associated with the difference between the LSST and SDSS photometric systems, we calculate the un-extincted 
-magnitudes in the SDSS bandpasses using the best fit spectrum for each star.  We then calculate
-the principal colors for each star using the relations in
-\citet{ivezic04}.  \citet{ivezic04} noticed that when fitting for the coefficents of $P_{2}$ that a magnitude dependent offset remained.  They 
-attributed this to measurement systematics and applied an empirical correction to the fits in order to remove the $r-band$ dependence of the 
-principal colors.  Since we calculate the photometry with idealized spectra and throughput curves, we do not notice a trend with magnitude, and therefore 
-have not applied the empirical correction used in \citet{ivezic04}.
-Figure
-\ref{fig:principalcolorshist} shows that the principal colors as calculated from the base catalog are in good agreement with
-the location of the stellar locus in the SDSS (zero color).  The base catalog easily meets the requirement of $\pm0.02mag$ deviation
-from the stellar locus to single epoch depth in all 4 principal colors: ${\Delta}s=-0.003, {\Delta}w=0.001, {\Delta}x=-0.005, {\Delta}y=-0.013$.  
-The increase in scatter in the s band when compared to other colors arises from a metallicity dependence in the color.  Figure \ref{fig:sfeh} shows this 
-dependence which is consistent with SDSS observations.
+principal colors of the stellar locus as described by \citet{helmi02},
+and fit for in the SDSS photometric system by \citet{ivezic04}.  We
+use stars selected from the same fields as used in the number counts
+analysis for all fields with $b<-30$.  In order to avoid complications
+associated with the difference between the LSST and SDSS photometric
+systems, we calculate the un-extincted magnitudes in the SDSS
+bandpasses using the best fit spectrum for each star.  We then
+calculate the principal colors for each star using the relations in
+\citet{ivezic04}.  \citet{ivezic04} noticed that when fitting for the
+coefficents of $P_{2}$ that a magnitude dependent offset remained.
+They attributed this to measurement systematics and applied an
+empirical correction to the fits in order to remove the $r-band$
+dependence of the principal colors.  Since we calculate the photometry
+with idealized spectra and throughput curves, we do not notice a trend
+with magnitude, and therefore have not applied the empirical
+correction used in \citet{ivezic04}.  Figure
+\ref{fig:principalcolorshist} shows that the principal colors, as
+calculated from the base catalog, are in good agreement with the
+location of the stellar locus for the SDSS.  We note that the increase
+in scatter in the s band when compared to other colors arises from a
+metallicity dependence in the color.  Figure \ref{fig:sfeh} shows this
+dependence which is consistent with SDSS observations. The base
+catalog meets the $\pm0.02mag$ requirement on the deviation from the
+stellar locus to single epoch depth in all 4 principal colors:
+${\Delta}s=-0.003, {\Delta}w=0.001, {\Delta}x=-0.005,
+{\Delta}y=-0.013$.
 
 \begin{figure}[ht]
 \centering
@@ -1139,8 +1175,8 @@ dependence which is consistent with SDSS observations.
 \caption{Histograms of the principal colors of stars in the base
   catalog compared to SDSS principal colors (zero color in these
   plots) to the stretch single epoch depth of $r < 24.8$. The mean and
-  standard deviation for each
-histogram are given in the legend in the upper right.\label{fig:principalcolorshist}}
+  standard deviation for each histogram are given in the legend in the
+  upper right.\label{fig:principalcolorshist}}
 \end{figure}
 
 \begin{figure} [ht]
@@ -1150,22 +1186,19 @@ histogram are given in the legend in the upper right.\label{fig:principalcolorsh
 \end{figure}
 
 
-Figure \ref{fig:principalcolorshist} shows that the requirement of mean deviation from the color locus defined by the four principal colors by less than 
-0.02 magnitudes is met in all four bands.
-
 \subsection{Catalogs Requirement 5}
 
-{\it All models for the astrometric transforms applied to the catalogs (including interpolation functions) 
-shall have an accuracy better than 1.6 mas}\\
+{\it All models for the astrometric transforms applied to the catalogs
+  (including interpolation functions) shall have an rms uncertainty less than 1 mas}\\
 
 All operations on positions are undertaken using double precision
 accuracy. Angular operations are converted to Cartesian coordinates to
-provide accuracy at the celestial poles and to minimize the
+ensure accuracy at the celestial poles and to minimize the
 complications of the coordinate wraparound at the
 meridian. Astrometric accuracy of the CatSim simulation framework is
 determined from the performance of the Starlink positional astronomy
 library (SLALIB; \citealt{wallace}). This software library enables
-astrometric transformations and operations with accuracies on the
+astrometric transformations and operations with accuracies of the
 order of a milliarcsecond or better.  The principal SLALIB routines
 used by the CatSim framework are those for precession, nutation,
 stellar aberration, rotation of the Earth, diurnal aberration, and
@@ -1179,9 +1212,9 @@ milliarcseconds per 1000 years). Aberration and light deflection
 corrections are undertaken in an iterative manner with uncertainties
 of $<$1 milliarcsecond and the Earth position and velocity corrections
 are based on the methods of \citep{stumpff} with a maximum error of
-0.3 milliarcseconds. All of these components, added in quadrature,
-meet the requirements described in the simulation requirements
-document \citet{requirements}.
+0.3 milliarcseconds. All of these components, added in quadrature, are
+consistent with the requirements described in the simulation
+requirements document \citet{requirements}.
 
 The largest of the uncertainties in any of the astrometric transforms
 are those that arise due to the color dependence of refraction. For a
@@ -1190,7 +1223,7 @@ humidity, and lapse rate) the rms astrometric uncertainty is 2.5 mas
 over the wavelength range from 0.3 to 1 $\mu$m . This represents a
 systematic error on wavelength dependent positions (i.e.\ it is
 effectively an error on the parameterization of the model), which is
-fit for in deriving an astrometric solution. For the case of CatSim,
+fit for when deriving an astrometric solution. For the case of CatSim,
 while differential chromatic refraction can be applied to catalogs
 that are output for science evaluation, the data input to the photon
 simulator does not include this effect (i.e.\ it is generated
@@ -1202,14 +1235,14 @@ internally to the photon simulator).
 a redesign of the class-schema framework}\\
 
 The ability to create new catalogs is available within the framework
-through the use of user-designed subclasses and class mixins \citep{mixin}.
-New types of catalog can be generated by creating a new class using
-the InstanceCatalog base class. The columns required in this new catalog are defined
-as class attributes. The data for these columns is gathered from the
-database directly or using methods defined in the class for the
-catalog itself. These data gathering methods can take the form of a {\tt
-  get\_[column\_name]} method or in the form of compound columns with
-their own {\tt get\_} methods. 
+through the use of user-designed subclasses and class mixins
+\citep{mixin}.  New types of catalog can be generated by creating a
+new class from the InstanceCatalog base class. The columns required in
+this new catalog are defined as class attributes. The data for these
+columns is gathered from the database directly or using methods
+defined in the class for the catalog itself. These data gathering
+methods can take the form of a {\tt get\_[column\_name]} method or in
+the form of compound columns with their own {\tt get\_} methods.
 
 The InstanceCatalog metaclass verifies that all new columns specified
 for a new catalog or object reside in the database or can be generated
